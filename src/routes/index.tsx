@@ -1,26 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav } from "@/components/vivify/Nav";
+import { Hero } from "@/components/vivify/Hero";
+import { Framework } from "@/components/vivify/Framework";
+import { Skills } from "@/components/vivify/Skills";
+import { Projects } from "@/components/vivify/Projects";
+import { Testimonial } from "@/components/vivify/Testimonial";
+import { Contact, Footer } from "@/components/vivify/Contact";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <main className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
+      <Nav />
+      <Hero />
+      <Framework />
+      <Skills />
+      <Projects />
+      <Testimonial />
+      <Contact />
+      <Footer />
+    </main>
+  );
 }
