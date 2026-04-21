@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { SectionHeader } from "./Framework";
+import projectVoice from "@/assets/project-voice.png";
+import projectMake from "@/assets/project-make.png";
+import projectRag from "@/assets/project-rag.png";
+import projectGhl from "@/assets/project-ghl.png";
 
 type Project = {
   tag: string;
@@ -9,6 +13,7 @@ type Project = {
   solution: string;
   result: string;
   stack: string[];
+  image: string;
 };
 
 const projects: Project[] = [
