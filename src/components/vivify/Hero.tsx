@@ -3,7 +3,7 @@ export function Hero() {
     <section id="top" className="relative h-screen min-h-[680px] w-full overflow-hidden">
       {/* Video background */}
       <video
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
         autoPlay
         loop
         muted
@@ -14,9 +14,9 @@ export function Hero() {
         <source src="/videos/hero.mp4" type="video/mp4" />
       </video>
       {/* Overlays */}
-      <div className="absolute inset-0 bg-black/65" />
-      <div className="absolute inset-0 grid-bg opacity-60" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#000_85%)]" />
+      <div className="absolute inset-0 bg-black/35" />
+      <div className="absolute inset-0 grid-bg opacity-30" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_10%,rgba(0,0,0,0.85)_90%)]" />
       <div className="scanline absolute inset-0 overflow-hidden" />
 
       {/* Content */}
@@ -28,16 +28,16 @@ export function Hero() {
 
         <h1
           data-text="VIVIENE"
-          className="glitch font-display text-[clamp(4rem,16vw,12rem)] font-black leading-none tracking-tighter"
+          className="glitch font-display text-[clamp(4rem,16vw,12rem)] font-black leading-none tracking-tighter [text-shadow:0_4px_30px_rgba(0,0,0,0.9),0_0_20px_rgba(0,0,0,0.8)]"
         >
           VIVIENE
         </h1>
 
-        <p className="mt-6 max-w-2xl font-display text-lg text-foreground/85 sm:text-2xl">
+        <p className="mt-6 max-w-2xl font-display text-lg text-foreground sm:text-2xl [text-shadow:0_2px_12px_rgba(0,0,0,0.95)]">
           Turning <span className="neon-text">Complex Workflows</span> into Intelligent Systems.
         </p>
 
-        <p className="mt-4 max-w-xl font-mono-ui text-xs text-foreground/55 uppercase tracking-[0.25em]">
+        <p className="mt-4 max-w-xl font-mono-ui text-xs text-foreground/75 uppercase tracking-[0.25em] [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
           n8n · Make · GHL · Supabase · Gemini · OpenAI
         </p>
 
