@@ -28,6 +28,7 @@ const projects: Project[] = [
     result:
       "100% automated booking pipeline. Zero missed calls, full conversation logs, and a measurable lift in confirmed orders during peak season.",
     stack: ["Twilio", "OpenAI", "n8n", "Google Calendar"],
+    image: projectVoice,
   },
   {
     tag: "Make.com + Gemini",
@@ -40,6 +41,7 @@ const projects: Project[] = [
     result:
       "AI-powered semantic renaming + auto-sorting. Full searchable archive with zero manual intervention.",
     stack: ["Make.com", "Gemini", "Gmail", "Google Drive"],
+    image: projectMake,
   },
   {
     tag: "RAG Pipeline",
@@ -52,6 +54,7 @@ const projects: Project[] = [
     result:
       "Real-time RAG. Agents respond with current info the moment a document is updated. Zero manual reindexing.",
     stack: ["n8n", "Supabase", "pgvector", "Gemini"],
+    image: projectRag,
   },
   {
     tag: "GHL Automation",
@@ -64,6 +67,7 @@ const projects: Project[] = [
     result:
       "Response time reduced to <30 seconds. Higher booked-call rate with zero human babysitting.",
     stack: ["GoHighLevel", "SMS", "Email", "Conditional Logic"],
+    image: projectGhl,
   },
 ];
 
