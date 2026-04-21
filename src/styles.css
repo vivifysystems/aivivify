@@ -63,38 +63,42 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  /* VIVIFY — Dark + Electric Green + Glassmorphism */
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.13 0 0 / 0.5);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.08 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  /* Electric Green #00FF41 ≈ oklch(0.87 0.29 142) */
+  --primary: oklch(0.87 0.29 142);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.18 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.16 0 0);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.87 0.29 142);
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.65 0.25 25);
+  --destructive-foreground: oklch(0.97 0 0);
+  --border: oklch(0.87 0.29 142 / 0.25);
+  --input: oklch(0.2 0 0);
+  --ring: oklch(0.87 0.29 142);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --sidebar: oklch(0.05 0 0);
+  --sidebar-foreground: oklch(0.97 0 0);
+  --sidebar-primary: oklch(0.87 0.29 142);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
+  --sidebar-accent-foreground: oklch(0.97 0 0);
+  --sidebar-border: oklch(0.87 0.29 142 / 0.2);
+  --sidebar-ring: oklch(0.87 0.29 142);
+  --neon: #00FF41;
+  --shadow-neon: 0 0 20px oklch(0.87 0.29 142 / 0.5), 0 0 40px oklch(0.87 0.29 142 / 0.25);
 }
 
 .dark {
@@ -140,5 +144,109 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
+}
+
+/* ================= VIVIFY utilities ================= */
+.font-display {
+  font-family: "Space Grotesk", "Orbitron", ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+.font-mono-ui {
+  font-family: ui-monospace, "JetBrains Mono", "Fira Code", monospace;
+}
+
+.glass {
+  background: color-mix(in oklab, white 4%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--neon) 18%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 6%, transparent),
+    0 10px 40px -20px color-mix(in oklab, var(--neon) 30%, transparent);
+}
+.glass-strong {
+  background: color-mix(in oklab, black 60%, transparent);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid color-mix(in oklab, var(--neon) 25%, transparent);
+}
+
+.neon-text {
+  color: var(--neon);
+  text-shadow: 0 0 12px color-mix(in oklab, var(--neon) 60%, transparent);
+}
+.neon-border {
+  border: 1px solid var(--neon);
+  box-shadow: var(--shadow-neon);
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--neon) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--neon) 8%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+/* Glitch effect */
+.glitch {
+  position: relative;
+  color: #fff;
+  text-shadow:
+    0 0 18px color-mix(in oklab, var(--neon) 50%, transparent);
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.glitch::before {
+  color: var(--neon);
+  transform: translate(2px, 0);
+  mix-blend-mode: screen;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  animation: glitch-top 3.4s infinite steps(2, end);
+}
+.glitch::after {
+  color: #ff2bd6;
+  transform: translate(-2px, 0);
+  mix-blend-mode: screen;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  animation: glitch-bot 2.8s infinite steps(2, end);
+}
+@keyframes glitch-top {
+  0%, 92%, 100% { transform: translate(2px, 0); }
+  93% { transform: translate(-4px, -2px); }
+  95% { transform: translate(6px, 1px); }
+  97% { transform: translate(-2px, 2px); }
+}
+@keyframes glitch-bot {
+  0%, 90%, 100% { transform: translate(-2px, 0); }
+  91% { transform: translate(4px, 2px); }
+  94% { transform: translate(-6px, -1px); }
+  96% { transform: translate(2px, -2px); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float { animation: float-y 6s ease-in-out infinite; }
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+.scanline::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--neon) 8%, transparent), transparent);
+  height: 30%;
+  animation: scan 6s linear infinite;
+  pointer-events: none;
 }
