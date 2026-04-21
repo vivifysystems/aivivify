@@ -12,17 +12,17 @@ export function Contact() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <a
-            href="mailto:hello@vivify.systems"
+            href="mailto:vivify.systems@gmail.com"
             className="glass group flex items-center justify-between rounded-2xl p-7 transition-all hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.2)]"
           >
             <div>
               <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">Email</p>
-              <p className="mt-2 font-display text-xl">hello@vivify.systems</p>
+              <p className="mt-2 font-display text-xl">vivify.systems@gmail.com</p>
             </div>
             <span className="text-2xl text-primary transition-transform group-hover:translate-x-1">→</span>
           </a>
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/vivienepitogo"
             target="_blank"
             rel="noreferrer"
             className="glass group flex items-center justify-between rounded-2xl p-7 transition-all hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.2)]"
@@ -56,9 +56,9 @@ export function Footer() {
             </div>
             <ul className="flex flex-wrap gap-3">
               {[
-                { label: "LinkedIn", href: "https://www.linkedin.com/" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/vivienepitogo" },
                 { label: "Upwork", href: "https://www.upwork.com/" },
-                { label: "OnlineJobs.ph", href: "https://www.onlinejobs.ph/" },
+                { label: "OnlineJobs.ph", href: "https://v2.onlinejobs.ph/jobseekers/info/4855809" },
               ].map((l) => (
                 <li key={l.label}>
                   <a
@@ -74,7 +74,7 @@ export function Footer() {
             </ul>
           </div>
           <div className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-5 text-xs text-foreground/40 sm:flex-row sm:items-center">
-            <p>© {new Date().getFullYear()} VIVIFY Automation · Built by Viviene</p>
+            <p>© 2026 Viviene Pitogo | VIVIFY Automation</p>
             <p className="font-mono-ui uppercase tracking-widest">status: <span className="text-primary">all systems operational</span></p>
           </div>
         </div>

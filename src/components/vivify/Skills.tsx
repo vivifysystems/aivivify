@@ -7,7 +7,15 @@ const stacks = [
   },
   {
     group: "AI / LLMs",
-    items: ["OpenAI", "Google Gemini", "RAG Pipelines", "Voice Agents"],
+    items: [
+      "OpenAI GPT-4o",
+      "Claude 3.5",
+      "Google Gemini",
+      "Manus",
+      "Agentic Workflows",
+      "RAG Architecture",
+      "Voice Agents",
+    ],
   },
   {
     group: "Data & Backend",

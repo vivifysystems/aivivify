@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { SectionHeader } from "./Framework";
+import projectVoice from "@/assets/project-voice.png";
+import projectMake from "@/assets/project-make.png";
+import projectRag from "@/assets/project-rag.png";
+import projectGhl from "@/assets/project-ghl.png";
 
 type Project = {
   tag: string;
@@ -9,6 +13,7 @@ type Project = {
   solution: string;
   result: string;
   stack: string[];
+  image: string;
 };
 
 const projects: Project[] = [
@@ -23,6 +28,7 @@ const projects: Project[] = [
     result:
       "100% automated booking pipeline. Zero missed calls, full conversation logs, and a measurable lift in confirmed orders during peak season.",
     stack: ["Twilio", "OpenAI", "n8n", "Google Calendar"],
+    image: projectVoice,
   },
   {
     tag: "Make.com + Gemini",
@@ -35,6 +41,7 @@ const projects: Project[] = [
     result:
       "AI-powered semantic renaming + auto-sorting. Full searchable archive with zero manual intervention.",
     stack: ["Make.com", "Gemini", "Gmail", "Google Drive"],
+    image: projectMake,
   },
   {
     tag: "RAG Pipeline",
@@ -47,6 +54,7 @@ const projects: Project[] = [
     result:
       "Real-time RAG. Agents respond with current info the moment a document is updated. Zero manual reindexing.",
     stack: ["n8n", "Supabase", "pgvector", "Gemini"],
+    image: projectRag,
   },
   {
     tag: "GHL Automation",
@@ -59,6 +67,7 @@ const projects: Project[] = [
     result:
       "Response time reduced to <30 seconds. Higher booked-call rate with zero human babysitting.",
     stack: ["GoHighLevel", "SMS", "Email", "Conditional Logic"],
+    image: projectGhl,
   },
 ];
 
@@ -89,9 +98,18 @@ export function Projects() {
             <button
               key={i}
               onClick={() => setActive(p)}
-              className="glass group relative overflow-hidden rounded-2xl p-7 text-left transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.25)]"
+              className="glass group relative overflow-hidden rounded-2xl p-5 text-left transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.25)]"
             >
-              <div className="flex items-center justify-between">
+              <div className="relative mb-5 overflow-hidden rounded-xl border border-white/10 bg-black">
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  loading="lazy"
+                  className="h-44 w-full object-cover object-top opacity-85 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              </div>
+              <div className="flex items-center justify-between px-2">
                 <span className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
                   {p.tag}
                 </span>
@@ -99,12 +117,12 @@ export function Projects() {
                   CASE 0{i + 1}
                 </span>
               </div>
-              <h3 className="mt-5 font-display text-2xl font-bold leading-tight">
+              <h3 className="mt-4 px-2 font-display text-2xl font-bold leading-tight">
                 {p.title}
               </h3>
-              <p className="mt-2 text-sm text-foreground/60">{p.client}</p>
+              <p className="mt-2 px-2 text-sm text-foreground/60">{p.client}</p>
 
-              <div className="mt-6 flex flex-wrap gap-2">
+              <div className="mt-5 flex flex-wrap gap-2 px-2">
                 {p.stack.map((s) => (
                   <span
                     key={s}
@@ -115,7 +133,7 @@ export function Projects() {
                 ))}
               </div>
 
-              <div className="mt-6 inline-flex items-center gap-2 font-mono-ui text-xs uppercase tracking-widest text-primary opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="mt-5 inline-flex items-center gap-2 px-2 pb-1 font-mono-ui text-xs uppercase tracking-widest text-primary opacity-0 transition-opacity group-hover:opacity-100">
                 Open case study →
               </div>
             </button>
