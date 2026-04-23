@@ -136,18 +136,21 @@ export function Projects() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           kicker="Projects"
-          title="Highlighted Production Systems"
+          title="Featured Production Systems"
           sub="Seven systems shipped or shipping. Click any card to view the workflow proof — problem, solution, and measurable result."
         />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid auto-rows-[minmax(0,1fr)] gap-6 sm:grid-cols-2 lg:grid-cols-6">
           {projects.map((p, i) => (
             <TiltCard
               key={i}
               as="article"
               data-reveal
               data-reveal-index={i}
-              className="glass group relative flex flex-col overflow-hidden rounded-2xl text-left"
+              className={cn(
+                "glass group relative flex flex-col overflow-hidden rounded-2xl text-left",
+                bentoSpan(i),
+              )}
             >
               <div className="relative aspect-[3/2] overflow-hidden border-b border-white/10 bg-black">
                 {p.image ? (
