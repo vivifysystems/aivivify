@@ -56,7 +56,7 @@ export function Footer() {
             </div>
             <ul className="flex flex-wrap gap-3">
               {[
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/vivienepitogo" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/vivienepitogo/" },
                 { label: "Upwork", href: "https://www.upwork.com/" },
                 { label: "OnlineJobs.ph", href: "https://v2.onlinejobs.ph/jobseekers/info/4855809" },
               ].map((l) => (

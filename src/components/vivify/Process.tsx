@@ -1,4 +1,5 @@
 import { SectionHeader } from "./Framework";
+import { TiltCard, useStaggerReveal } from "./TiltCard";
 
 const steps = [
   {
@@ -19,6 +20,7 @@ const steps = [
 ];
 
 export function Process() {
+  useStaggerReveal("#process [data-reveal]");
   return (
     <section id="process" className="relative px-6 py-28">
       <div className="mx-auto max-w-6xl">
@@ -30,9 +32,11 @@ export function Process() {
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {steps.map((s, i) => (
-            <div
+            <TiltCard
               key={s.n}
-              className="glass group relative overflow-hidden rounded-2xl p-8 transition-all hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_0_36px_rgba(0,255,65,0.28)]"
+              data-reveal
+              data-reveal-index={i}
+              className="glass group relative overflow-hidden rounded-2xl p-8"
             >
               <div className="flex items-center justify-between">
                 <span className="font-display text-6xl font-black leading-none text-primary [text-shadow:0_0_24px_rgba(0,255,65,0.45)]">
@@ -50,7 +54,7 @@ export function Process() {
                   →
                 </span>
               )}
-            </div>
+            </TiltCard>
           ))}
         </div>
 

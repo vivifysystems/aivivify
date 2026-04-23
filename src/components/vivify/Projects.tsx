@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { SectionHeader } from "./Framework";
+import { TiltCard, useStaggerReveal } from "./TiltCard";
 import coverFileManagement from "@/assets/cover-file-management.png";
 import coverRag from "@/assets/cover-rag.jpeg";
 import coverLeadNurturing from "@/assets/cover-lead-nurturing.png";
@@ -20,9 +21,10 @@ type Project = {
   title: string;
   value: string;
   stack: string[];
-  image: string;
-  proofImage: string;
+  image?: string;
+  proofImage?: string;
   impact: string;
+  beta?: boolean;
 };
 
 const projects: Project[] = [
@@ -103,10 +105,21 @@ const projects: Project[] = [
     impact:
       "5×+ output per week with consistent branding. One source file becomes a transcribed blog + scheduled multi-platform posts — zero manual editing.",
   },
+  {
+    tag: "Multi-Agent · LLM",
+    title: "Advanced Multi-Agent Research System",
+    value:
+      "An orchestrated network of specialized AI agents that plan, research, critique, and synthesize long-form intelligence reports autonomously.",
+    stack: ["LangGraph", "OpenAI", "Anthropic", "Supabase"],
+    impact:
+      "Currently in private beta. Early benchmarks show 10× faster research cycles vs. a single-agent baseline, with self-correcting outputs that need minimal human review.",
+    beta: true,
+  },
 ];
 
 export function Projects() {
   const [active, setActive] = useState<Project | null>(null);
+  useStaggerReveal("#projects [data-reveal]");
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setActive(null);
@@ -123,33 +136,49 @@ export function Projects() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           kicker="Projects"
-          title="Project Gallery"
-          sub="Six production systems. Click any card to view the workflow proof — problem, solution, and measurable result."
+          title="Highlighted Production Systems"
+          sub="Seven systems shipped or shipping. Click any card to view the workflow proof — problem, solution, and measurable result."
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
-            <article
+            <TiltCard
               key={i}
-              className="glass group relative flex flex-col overflow-hidden rounded-2xl text-left transition-all duration-300 hover:-translate-y-2 hover:border-primary/60 hover:shadow-[0_0_40px_rgba(0,255,65,0.28)]"
+              as="article"
+              data-reveal
+              data-reveal-index={i}
+              className="glass group relative flex flex-col overflow-hidden rounded-2xl text-left"
             >
               <div className="relative aspect-[3/2] overflow-hidden border-b border-white/10 bg-black">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="grid-bg flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background">
+                    <span className="font-display text-5xl font-black text-primary/80 [text-shadow:0_0_24px_rgba(0,255,65,0.5)]">
+                      ⌬
+                    </span>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/0 to-transparent" />
                 <span className="absolute left-3 top-3 rounded-full border border-primary/40 bg-background/70 px-2.5 py-1 font-mono-ui text-[10px] uppercase tracking-[0.25em] text-primary backdrop-blur">
                   {p.tag}
                 </span>
+                {p.beta && (
+                  <span className="badge-beta absolute right-3 top-3 rounded-full border border-primary/70 bg-primary/15 px-2.5 py-1 font-mono-ui text-[10px] font-bold uppercase tracking-[0.25em] text-primary backdrop-blur">
+                    Beta · In Progress
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-1 flex-col p-6">
                 <div className="flex items-center justify-between">
                   <span className="font-mono-ui text-[10px] text-foreground/40">
-                    CASE 0{i + 1}
+                    CASE {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
                 <h3 className="mt-3 font-display text-xl font-bold leading-tight">
@@ -172,12 +201,12 @@ export function Projects() {
 
                 <button
                   onClick={() => setActive(p)}
-                  className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/5 px-4 py-2.5 font-mono-ui text-[11px] uppercase tracking-[0.2em] text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_rgba(0,255,65,0.4)]"
+                  className="arrow-slide-host mt-6 inline-flex items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/5 px-4 py-2.5 font-mono-ui text-[11px] uppercase tracking-[0.2em] text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_rgba(0,255,65,0.4)]"
                 >
-                  View Workflow Proof →
+                  View Workflow Proof <span className="arrow-slide" aria-hidden>→</span>
                 </button>
               </div>
-            </article>
+            </TiltCard>
           ))}
         </div>
       </div>
@@ -215,11 +244,24 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             Workflow Proof
           </p>
           <div className="mt-3 overflow-hidden rounded-xl border border-primary/30 bg-black">
-            <img
-              src={project.proofImage}
-              alt={`${project.title} workflow screenshot`}
-              className="h-auto w-full object-contain"
-            />
+            {project.proofImage ? (
+              <img
+                src={project.proofImage}
+                alt={`${project.title} workflow screenshot`}
+                className="h-auto w-full object-contain"
+              />
+            ) : (
+              <div className="grid-bg flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background p-8 text-center">
+                <div>
+                  <p className="font-display text-2xl font-bold text-primary">
+                    🔬 Workflow under active development
+                  </p>
+                  <p className="mt-3 text-sm text-foreground/70">
+                    Diagrams and demo footage will be published when the system exits private beta.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
