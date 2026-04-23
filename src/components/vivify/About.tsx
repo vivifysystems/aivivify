@@ -87,8 +87,23 @@ function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
 
 export function About() {
   return (
-    <section id="about" className="relative px-6 py-28">
-      <div className="mx-auto max-w-6xl">
+    <section id="about" className="relative overflow-hidden px-6 py-28">
+      {/* Cinematic dark-themed background video */}
+      <video
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+      <div className="pointer-events-none absolute inset-0 bg-black/70" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.9)_95%)]" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeader
           kicker="About"
           title="Turning Chaos into Intelligent Systems: My Journey"
