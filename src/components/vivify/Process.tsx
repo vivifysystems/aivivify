@@ -1,5 +1,6 @@
 import { SectionHeader } from "./Framework";
 import { TiltCard, useStaggerReveal } from "./TiltCard";
+import { DinoBackdrop } from "./DinoBackdrop";
 
 const steps = [
   {
@@ -22,7 +23,8 @@ const steps = [
 export function Process() {
   useStaggerReveal("#process [data-reveal]");
   return (
-    <section id="process" className="relative px-6 py-28">
+    <section id="process" className="relative overflow-hidden px-6 py-28">
+      <DinoBackdrop side="right" />
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           kicker="Process"

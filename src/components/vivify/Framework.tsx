@@ -1,4 +1,5 @@
 import { TiltCard, useStaggerReveal } from "./TiltCard";
+import { DinoBackdrop } from "./DinoBackdrop";
 
 const steps = [
   { letter: "V", title: "Visualize", desc: "Mapping manual bottlenecks into structured blueprints." },
@@ -12,7 +13,8 @@ const steps = [
 export function Framework() {
   useStaggerReveal("#performance [data-reveal]");
   return (
-    <section id="performance" className="relative px-6 py-28">
+    <section id="performance" className="relative overflow-hidden px-6 py-28">
+      <DinoBackdrop side="left" flip />
       <div className="mx-auto max-w-6xl">
         <SectionHeader kicker="Performance" title="The VIVIFY Framework" sub="A 6-step engineering process behind every system I deliver." />
 
