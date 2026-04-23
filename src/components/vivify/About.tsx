@@ -191,7 +191,14 @@ export function About() {
                   className="flex items-start gap-2 text-sm text-foreground/85"
                 >
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-sm bg-primary shadow-[0_0_6px_var(--neon)]" />
-                  <span>{f}</span>
+                  <span>
+                    {f}
+                    {f.includes("dinosaur") && (
+                      <span className="dino-float ml-2" title="Rawr! 🦖" aria-label="friendly dinosaur">
+                        🦖
+                      </span>
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>
