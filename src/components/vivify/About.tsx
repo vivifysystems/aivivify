@@ -35,7 +35,7 @@ const stats = [
 
 const funFacts = [
   "I once built a fully automated coffee brewing system.",
-  "My spirit animal is a friendly dinosaur 🦖 (you might meet him on our call!).",
+  "My spirit animal is a friendly dinosaur (you might meet him on our call!).",
   "I'm constantly experimenting with new AI models to push the boundaries of what's possible.",
 ];
 
