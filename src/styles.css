@@ -343,3 +343,78 @@
     transition: none !important;
   }
 }
+
+/* ================= Horizontal auto-scrolling card marquee (AI ALOU style) ================= */
+@keyframes card-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.card-marquee-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: card-marquee 60s linear infinite;
+  will-change: transform;
+}
+.card-marquee-track:hover {
+  animation-play-state: paused;
+}
+.card-marquee-mask {
+  mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+}
+
+/* Card hover: intense neon glow + diagonal shine sweep */
+.project-card {
+  transition:
+    box-shadow 0.5s ease,
+    border-color 0.5s ease,
+    transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in oklab, var(--neon) 60%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--neon) 55%, transparent),
+    0 0 40px color-mix(in oklab, var(--neon) 40%, transparent),
+    0 0 80px color-mix(in oklab, var(--neon) 20%, transparent);
+}
+.card-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.card-shine::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    color-mix(in oklab, var(--neon) 35%, transparent) 50%,
+    transparent 100%
+  );
+  transform: translateX(0) skewX(-20deg);
+  transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.project-card:hover .card-shine::before {
+  transform: translateX(450%) skewX(-20deg);
+}
+
+/* Disable on touch / reduced motion */
+@media (hover: none) {
+  .card-marquee-track { animation: none; }
+  .project-card:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-marquee-track { animation: none; }
+  .card-shine::before { display: none; }
+}
