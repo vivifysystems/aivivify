@@ -250,3 +250,12 @@
   animation: scan 6s linear infinite;
   pointer-events: none;
 }
+
+/* ================= Marquee ================= */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee-scroll 38s linear infinite;
+}
