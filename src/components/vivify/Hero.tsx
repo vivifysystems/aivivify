@@ -19,6 +19,9 @@ export function Hero() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_10%,rgba(0,0,0,0.85)_90%)]" />
       <div className="scanline absolute inset-0 overflow-hidden" />
 
+      {/* Bottom gradient to mask video watermark and improve scroll cue readability */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-[#0a0a0a]" />
+
       {/* Content */}
       <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center">
         <div className="glass mb-8 inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
