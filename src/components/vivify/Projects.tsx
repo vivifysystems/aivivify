@@ -6,103 +6,102 @@ import coverLeadNurturing from "@/assets/cover-lead-nurturing.png";
 import coverFinancialSync from "@/assets/cover-financial-sync.png";
 import coverLeadRouting from "@/assets/cover-lead-routing.png";
 import coverSocialEngine from "@/assets/cover-social-engine.png";
+import coverVoice from "@/assets/project-voice.png";
+import proofVoice from "@/assets/proof-voice-receptionist.jpg";
+import proofFileManagement from "@/assets/proof-file-management.png";
+import proofRag from "@/assets/proof-rag.png";
+import proofLeadNurturing from "@/assets/proof-lead-nurturing.png";
+import proofFinancialSync from "@/assets/proof-financial-sync.png";
+import proofLeadRouting from "@/assets/proof-lead-routing.png";
+import proofSocialEngine from "@/assets/proof-social-engine.png";
 
 type Project = {
   tag: string;
   title: string;
   value: string;
-  problem: string;
-  solution: string;
-  result: string;
   stack: string[];
   image: string;
-  proofUrl?: string;
+  proofImage: string;
+  impact: string;
 };
 
 const projects: Project[] = [
   {
+    tag: "n8n + VAPI",
+    title: "24/7 AI Voice Receptionist ('Bobby')",
+    value:
+      "Automated booking and customer support for high-volume local businesses using n8n and VAPI.",
+    stack: ["n8n", "VAPI", "Google Calendar", "Airtable"],
+    image: coverVoice,
+    proofImage: proofVoice,
+    impact:
+      "Handles 100% of after-hours calls — books, reschedules, and cancels appointments without human input. Recovers ~30+ missed-call bookings per month for local businesses.",
+  },
+  {
     tag: "Gmail + Gemini",
     title: "Intelligent File Management",
     value:
-      "Auto-rename, classify, and file every email attachment so your Drive becomes a searchable archive — with zero manual work.",
-    problem:
-      "Inboxes flooded with attachments named “Record.csv”, “scan_001.pdf” — impossible to search, sort, or audit later.",
-    solution:
-      "Make.com scenario monitors Gmail, sends each file to Gemini for semantic analysis, generates a meaningful filename, and routes it into the correct Drive folder while logging every move in Sheets.",
-    result:
-      "AI-powered semantic renaming + auto-sorting. Full searchable archive with zero manual intervention.",
+      "AI-powered semantic renaming and sorting of Gmail attachments using Make.com and Gemini.",
     stack: ["Make.com", "Gemini", "Gmail", "Google Drive"],
     image: coverFileManagement,
+    proofImage: proofFileManagement,
+    impact:
+      "Eliminates ~5 hours/week of manual filing. Every attachment becomes instantly searchable and audit-ready — turning a chaotic inbox into a structured archive.",
   },
   {
     tag: "RAG Pipeline",
     title: "Self-Updating AI Knowledge Base",
     value:
-      "Your AI agents always answer with the latest source-of-truth — documents are embedded the moment they change.",
-    problem:
-      "AI agents hallucinated or returned stale answers because their knowledge base wasn’t kept in sync with source documents.",
-    solution:
-      "n8n pipeline watches Google Drive, chunks and embeds new/updated files, and upserts vectors into Supabase pgvector — feeding a Gemini-powered agent with always-fresh context.",
-    result:
-      "Real-time RAG. Agents respond with current info the moment a document is updated. Zero manual reindexing.",
+      "A dynamic pipeline that 'teaches' AI agents from new Google Drive uploads using n8n and Supabase.",
     stack: ["n8n", "Supabase", "pgvector", "Gemini"],
     image: coverRag,
+    proofImage: proofRag,
+    impact:
+      "Zero stale answers. Support agents respond with current SOPs the moment a doc is updated, cutting hallucinations and removing manual reindexing entirely.",
   },
   {
     tag: "GHL Automation",
     title: "Multi-Channel Lead Nurturing",
     value:
-      "Reach every new lead in under 30 seconds across SMS, email, and DM — with smart branching that adapts to their reply.",
-    problem:
-      "Leads went cold within minutes. Reps couldn’t reply fast enough across SMS, email, and DM channels.",
-    solution:
-      "GoHighLevel workflow with smart branching: instant SMS + email on form submit, conditional follow-ups based on reply intent (INTERESTED → contract send), with timeouts and graceful fallbacks.",
-    result:
-      "Response time reduced to <30 seconds. Higher booked-call rate with zero human babysitting.",
+      "Smart branching logic for automated SMS, Call, and Email follow-ups built in GoHighLevel (GHL).",
     stack: ["GoHighLevel", "SMS", "Email", "Conditional Logic"],
     image: coverLeadNurturing,
+    proofImage: proofLeadNurturing,
+    impact:
+      "Response time reduced to <30 seconds. Higher booked-call conversion with zero human babysitting — every lead nurtured on the right channel at the right moment.",
   },
   {
     tag: "Xero + Asana",
     title: "Xero & Asana Financial Sync",
     value:
-      "Invoices, payments, and project tasks stay in lockstep — finance and delivery teams finally see the same numbers.",
-    problem:
-      "Finance lived in Xero, delivery lived in Asana. Status mismatches caused billing errors and missed milestones.",
-    solution:
-      "Two-way sync: invoice status in Xero updates the matching Asana task, and completed milestones in Asana trigger draft invoices in Xero — fully reconciled in a master sheet.",
-    result:
-      "Zero double-entry. Finance and ops share one source of truth, with audit trail on every change.",
-    stack: ["Xero", "Asana", "n8n", "Google Sheets"],
+      "Automated accounting audit logs and task synchronization between Xero and Asana via Make.com.",
+    stack: ["Xero", "Asana", "Make.com", "Google Sheets"],
     image: coverFinancialSync,
+    proofImage: proofFinancialSync,
+    impact:
+      "Zero double-entry. Finance and ops share one source of truth with a full audit trail — eliminating billing errors and missed milestones.",
   },
   {
-    tag: "Lead Routing",
-    title: "Complex Lead Routing & Personalization",
+    tag: "Zapier",
+    title: "Complex Lead Routing",
     value:
-      "Every inbound lead is scored, enriched, and routed to the right rep with a personalized first-touch message.",
-    problem:
-      "High-value leads were treated identically to tire-kickers, slowing conversion and wasting senior rep time.",
-    solution:
-      "Multi-step workflow enriches leads via Clearbit, scores them on fit + intent, routes by territory/tier, and drafts a personalized opener using GPT-4o.",
-    result:
-      "Higher SQL rate, faster handoffs, and senior reps focused only on top-tier opportunities.",
-    stack: ["n8n", "Clearbit", "GPT-4o", "HubSpot"],
+      "Advanced path-based routing and personalization for high-ticket sales pipelines using Zapier.",
+    stack: ["Zapier", "Asana", "Gmail", "GPT-4o"],
     image: coverLeadRouting,
+    proofImage: proofLeadRouting,
+    impact:
+      "Higher SQL rate and faster handoffs. Senior reps focus only on top-tier opportunities while every lead receives a personalized, stage-specific touch.",
   },
   {
     tag: "Content Engine",
     title: "Social Media Content Engine",
     value:
-      "Turn one long-form idea into a week of LinkedIn posts, Reels, and Shorts — published on schedule, on-brand.",
-    problem:
-      "Consistent multi-platform posting was eating hours every week and still missed cadence.",
-    solution:
-      "Pipeline that scripts, generates voiceover + captions, renders short-form video, and schedules posts across LinkedIn, Facebook Reels, and YouTube Shorts.",
-    result:
-      "5×+ output per week with consistent branding and zero manual editing.",
-    stack: ["n8n", "ElevenLabs", "OpenAI", "Buffer"],
+      "Auto-transcribing media and intelligent cross-posting to LinkedIn and Facebook using Zapier and AI.",
+    stack: ["Zapier", "AI by Zapier", "LinkedIn", "Facebook Pages"],
     image: coverSocialEngine,
+    proofImage: proofSocialEngine,
+    impact:
+      "5×+ output per week with consistent branding. One source file becomes a transcribed blog + scheduled multi-platform posts — zero manual editing.",
   },
 ];
 
@@ -196,7 +195,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="glass-strong relative max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-2xl p-8 animate-[fade-in_0.25s_ease-out]"
+        className="glass-strong relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl p-8 animate-[fade-in_0.25s_ease-out]"
       >
         <button
           onClick={onClose}
@@ -211,32 +210,43 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         <h3 className="mt-3 font-display text-3xl font-bold">{project.title}</h3>
         <p className="mt-2 text-sm text-foreground/70">{project.value}</p>
 
-        <div className="mt-8 space-y-6">
-          <Block label="Problem" body={project.problem} />
-          <Block label="Solution" body={project.solution} accent />
-          <Block label="Result" body={project.result} />
+        <div className="mt-6">
+          <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+            Workflow Proof
+          </p>
+          <div className="mt-3 overflow-hidden rounded-xl border border-primary/30 bg-black">
+            <img
+              src={project.proofImage}
+              alt={`${project.title} workflow screenshot`}
+              className="h-auto w-full object-contain"
+            />
+          </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
-          {project.stack.map((s) => (
-            <span
-              key={s}
-              className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono-ui text-[10px] uppercase tracking-widest text-primary"
-            >
-              {s}
-            </span>
-          ))}
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="rounded-xl border border-primary/40 bg-primary/5 p-5">
+            <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+              Technical Stack
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {project.stack.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono-ui text-[10px] uppercase tracking-widest text-primary"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+            <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+              Business Impact
+            </p>
+            <p className="mt-3 leading-relaxed text-foreground/85">{project.impact}</p>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function Block({ label, body, accent }: { label: string; body: string; accent?: boolean }) {
-  return (
-    <div className={`rounded-xl border p-5 ${accent ? "border-primary/40 bg-primary/5" : "border-white/10 bg-white/[0.02]"}`}>
-      <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">{label}</p>
-      <p className="mt-2 text-foreground/85 leading-relaxed">{body}</p>
     </div>
   );
 }
