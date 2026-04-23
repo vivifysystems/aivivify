@@ -244,11 +244,24 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             Workflow Proof
           </p>
           <div className="mt-3 overflow-hidden rounded-xl border border-primary/30 bg-black">
-            <img
-              src={project.proofImage}
-              alt={`${project.title} workflow screenshot`}
-              className="h-auto w-full object-contain"
-            />
+            {project.proofImage ? (
+              <img
+                src={project.proofImage}
+                alt={`${project.title} workflow screenshot`}
+                className="h-auto w-full object-contain"
+              />
+            ) : (
+              <div className="grid-bg flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background p-8 text-center">
+                <div>
+                  <p className="font-display text-2xl font-bold text-primary">
+                    🔬 Workflow under active development
+                  </p>
+                  <p className="mt-3 text-sm text-foreground/70">
+                    Diagrams and demo footage will be published when the system exits private beta.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
