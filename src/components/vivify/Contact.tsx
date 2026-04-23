@@ -64,7 +64,7 @@ export function Footer() {
                   <a
                     href={l.href}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-primary/30 px-4 py-2 font-mono-ui text-[11px] uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
                   >
                     {l.label} ↗
