@@ -6,7 +6,7 @@ import coverLeadNurturing from "@/assets/cover-lead-nurturing.png";
 import coverFinancialSync from "@/assets/cover-financial-sync.png";
 import coverLeadRouting from "@/assets/cover-lead-routing.png";
 import coverSocialEngine from "@/assets/cover-social-engine.png";
-import coverVoice from "@/assets/project-voice.png";
+import coverVoice from "@/assets/cover-voice-receptionist.png";
 import proofVoice from "@/assets/proof-voice-receptionist.jpg";
 import proofFileManagement from "@/assets/proof-file-management.png";
 import proofRag from "@/assets/proof-rag.png";
