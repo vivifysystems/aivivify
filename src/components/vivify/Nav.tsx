@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "#performance", label: "Performance" },
-  { href: "#skills", label: "Skills" },
+  { href: "#process", label: "Process" },
   { href: "#projects", label: "Projects" },
+  { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -46,7 +46,7 @@ export function Nav() {
           href="#contact"
           className="hidden rounded-full border border-primary/60 bg-primary/10 px-4 py-1.5 font-mono-ui text-xs uppercase tracking-widest text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_var(--neon)] md:inline-flex"
         >
-          Hire me
+          Book a Discovery Call
         </a>
         <button
           onClick={() => setOpen((v) => !v)}

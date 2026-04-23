@@ -40,24 +40,31 @@ export function Hero() {
           Turning <span className="neon-text">Complex Workflows</span> into Intelligent Systems.
         </p>
 
-        <p className="mt-4 max-w-xl font-mono-ui text-xs text-foreground/75 uppercase tracking-[0.25em] [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
-          n8n · Make · GHL · Supabase · Gemini · OpenAI
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-foreground/85 sm:text-base [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
+          I build custom AI agents and automated pipelines that reclaim{" "}
+          <span className="neon-text font-semibold">20+ hours of your week</span>. Scalable,
+          high-ROI solutions for modern businesses using n8n, Make, and Zapier.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="#projects"
-            className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_0_30px_rgba(0,255,65,0.45)] transition-transform hover:scale-105"
-          >
-            View Projects
-            <span aria-hidden>→</span>
-          </a>
-          <a
-            href="#performance"
-            className="glass inline-flex items-center gap-2 rounded-full px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-foreground transition-colors hover:text-primary"
-          >
-            The VIVIFY Framework
-          </a>
+        <div className="mt-10 flex flex-col items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="#contact"
+              className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_0_30px_rgba(0,255,65,0.45)] transition-transform hover:scale-105"
+            >
+              Book a Free Discovery Call
+              <span aria-hidden>→</span>
+            </a>
+            <a
+              href="#projects"
+              className="glass inline-flex items-center gap-2 rounded-full px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-foreground transition-colors hover:text-primary"
+            >
+              View Projects
+            </a>
+          </div>
+          <p className="font-mono-ui text-[11px] uppercase tracking-[0.25em] text-foreground/65 [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
+            Let's map out your automation roadmap in 15 minutes.
+          </p>
         </div>
       </div>
 

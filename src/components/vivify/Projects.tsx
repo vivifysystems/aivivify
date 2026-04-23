@@ -82,15 +82,15 @@ const projects: Project[] = [
       "Zero double-entry. Finance and ops share one source of truth with a full audit trail — eliminating billing errors and missed milestones.",
   },
   {
-    tag: "Zapier",
+    tag: "Zapier · AI · CRM",
     title: "Complex Lead Routing",
     value:
-      "Advanced path-based routing and personalization for high-ticket sales pipelines using Zapier.",
-    stack: ["Zapier", "Asana", "Gmail", "GPT-4o"],
+      "Path-based routing and AI personalization for high-ticket sales — every lead lands with the right rep, with the right context, at the right moment.",
+    stack: ["Zapier", "AI", "CRM"],
     image: coverLeadRouting,
     proofImage: proofLeadRouting,
     impact:
-      "Higher SQL rate and faster handoffs. Senior reps focus only on top-tier opportunities while every lead receives a personalized, stage-specific touch.",
+      "Higher SQL rate and faster handoffs. Senior reps focus only on top-tier opportunities while every lead receives a personalized, stage-specific touch — no hot lead ever goes cold.",
   },
   {
     tag: "Content Engine",
