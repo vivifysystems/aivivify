@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SectionHeader } from "./Framework";
 import { TiltCard, useStaggerReveal } from "./TiltCard";
+import { cn } from "@/lib/utils";
 import coverFileManagement from "@/assets/cover-file-management.png";
 import coverRag from "@/assets/cover-rag.jpeg";
 import coverLeadNurturing from "@/assets/cover-lead-nurturing.png";
@@ -15,6 +16,22 @@ import proofLeadNurturing from "@/assets/proof-lead-nurturing.png";
 import proofFinancialSync from "@/assets/proof-financial-sync.png";
 import proofLeadRouting from "@/assets/proof-lead-routing.png";
 import proofSocialEngine from "@/assets/proof-social-engine.png";
+
+// Bento grid spans (lg = 6 cols). Mix of large hero tiles and standard tiles
+// for an asymmetric, high-tech layout. Mobile/tablet stays uniform.
+const bentoSpan = (i: number): string => {
+  const map: Record<number, string> = {
+    0: "lg:col-span-3 lg:row-span-2", // Bobby — hero
+    1: "lg:col-span-3",
+    2: "lg:col-span-3",
+    3: "lg:col-span-2",
+    4: "lg:col-span-2",
+    5: "lg:col-span-2",
+    6: "lg:col-span-3",
+    7: "lg:col-span-3",
+  };
+  return map[i] ?? "lg:col-span-2";
+};
 
 type Project = {
   tag: string;
