@@ -166,6 +166,7 @@ export function Projects() {
               data-reveal-index={i}
               className={cn(
                 "glass group relative flex flex-col overflow-hidden rounded-2xl text-left",
+                "project-card",
                 bentoSpan(i),
               )}
             >
