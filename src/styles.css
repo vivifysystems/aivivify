@@ -314,3 +314,32 @@
 .badge-beta {
   animation: beta-pulse 2s ease-out infinite;
 }
+
+/* === 3D Tilt + Parallax Glint === */
+.project-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.project-card [data-depth] {
+  will-change: transform;
+}
+.card-glint {
+  background: transparent;
+}
+@media (hover: none) {
+  .tilt-card,
+  .project-card {
+    transform: none !important;
+  }
+  .project-card [data-depth] {
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card,
+  .project-card,
+  .project-card [data-depth] {
+    transform: none !important;
+    transition: none !important;
+  }
+}
