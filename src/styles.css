@@ -280,6 +280,18 @@
     0 0 90px color-mix(in oklab, var(--neon) 25%, transparent);
 }
 
+/* Project cards get a subtle 3% scale + intensified glow on hover */
+.project-card.tilt-card {
+  transition: transform 0.5s ease-out, box-shadow 0.4s ease-out;
+}
+.project-card.tilt-card:hover {
+  transform: perspective(900px) translateY(-6px) scale(1.03);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--neon) 85%, transparent),
+    0 0 50px color-mix(in oklab, var(--neon) 60%, transparent),
+    0 0 110px color-mix(in oklab, var(--neon) 35%, transparent);
+}
+
 /* Slide arrow utility for CTAs */
 .arrow-slide {
   display: inline-block;

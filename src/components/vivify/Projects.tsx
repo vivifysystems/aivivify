@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SectionHeader } from "./Framework";
 import { TiltCard, useStaggerReveal } from "./TiltCard";
+import { cn } from "@/lib/utils";
 import coverFileManagement from "@/assets/cover-file-management.png";
 import coverRag from "@/assets/cover-rag.jpeg";
 import coverLeadNurturing from "@/assets/cover-lead-nurturing.png";
@@ -15,6 +16,22 @@ import proofLeadNurturing from "@/assets/proof-lead-nurturing.png";
 import proofFinancialSync from "@/assets/proof-financial-sync.png";
 import proofLeadRouting from "@/assets/proof-lead-routing.png";
 import proofSocialEngine from "@/assets/proof-social-engine.png";
+
+// Bento grid spans (lg = 6 cols). Mix of large hero tiles and standard tiles
+// for an asymmetric, high-tech layout. Mobile/tablet stays uniform.
+const bentoSpan = (i: number): string => {
+  const map: Record<number, string> = {
+    0: "lg:col-span-3 lg:row-span-2", // Bobby — hero
+    1: "lg:col-span-3",
+    2: "lg:col-span-3",
+    3: "lg:col-span-2",
+    4: "lg:col-span-2",
+    5: "lg:col-span-2",
+    6: "lg:col-span-3",
+    7: "lg:col-span-3",
+  };
+  return map[i] ?? "lg:col-span-2";
+};
 
 type Project = {
   tag: string;
@@ -136,18 +153,22 @@ export function Projects() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           kicker="Projects"
-          title="Highlighted Production Systems"
+          title="Featured Production Systems"
           sub="Seven systems shipped or shipping. Click any card to view the workflow proof — problem, solution, and measurable result."
         />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid auto-rows-[minmax(0,1fr)] gap-6 sm:grid-cols-2 lg:grid-cols-6">
           {projects.map((p, i) => (
             <TiltCard
               key={i}
               as="article"
               data-reveal
               data-reveal-index={i}
-              className="glass group relative flex flex-col overflow-hidden rounded-2xl text-left"
+              className={cn(
+                "glass group relative flex flex-col overflow-hidden rounded-2xl text-left",
+                "project-card",
+                bentoSpan(i),
+              )}
             >
               <div className="relative aspect-[3/2] overflow-hidden border-b border-white/10 bg-black">
                 {p.image ? (
