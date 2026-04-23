@@ -1,5 +1,3 @@
-import dinoVideo from "/dino.mp4?url";
-
 /**
  * Ghostly dinosaur video backdrop. Uses mix-blend-mode: screen + filter to
  * key out the green-screen background and blend into the dark theme.
@@ -17,7 +15,7 @@ export function DinoBackdrop({
       className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
     >
       <video
-        src={dinoVideo}
+        src="/dino.mp4"
         autoPlay
         loop
         muted
