@@ -1,84 +1,23 @@
-import { useEffect, useRef } from "react";
-
 export function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-
-    let raf = 0;
-    let width = 0;
-    let height = 0;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    type P = { x: number; y: number; vx: number; vy: number; r: number; a: number };
-    let particles: P[] = [];
-
-    const resize = () => {
-      width = canvas.clientWidth;
-      height = canvas.clientHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.min(90, Math.floor((width * height) / 18000));
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: -0.15 - Math.random() * 0.35,
-        r: Math.random() * 1.6 + 0.4,
-        a: 0.05 + Math.random() * 0.1,
-      }));
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const tick = () => {
-      ctx.clearRect(0, 0, width, height);
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.y < -5) {
-          p.y = height + 5;
-          p.x = Math.random() * width;
-        }
-        if (p.x < -5) p.x = width + 5;
-        if (p.x > width + 5) p.x = -5;
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(0, 255, 65, ${p.a})`;
-        ctx.shadowColor = "rgba(0, 255, 65, 0.6)";
-        ctx.shadowBlur = 6;
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
   return (
     <section id="top" className="relative h-screen min-h-[680px] w-full overflow-hidden">
-      {/* Animated neon particle background */}
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        className="absolute inset-0 z-0 h-full w-full"
-      />
+      {/* Video background */}
+      <video
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        poster=""
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
       {/* Overlays */}
-      <div className="absolute inset-0 z-0 grid-bg opacity-25" />
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,transparent_10%,rgba(0,0,0,0.85)_90%)]" />
-      <div className="scanline absolute inset-0 z-0 overflow-hidden" />
+      <div className="absolute inset-0 bg-black/35" />
+      <div className="absolute inset-0 grid-bg opacity-30" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_10%,rgba(0,0,0,0.85)_90%)]" />
+      <div className="scanline absolute inset-0 overflow-hidden" />
 
       {/* Bottom gradient to mask video watermark and improve scroll cue readability */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-[#0a0a0a]/70 to-[#0a0a0a]" />
@@ -110,9 +49,7 @@ export function Hero() {
         <div className="mt-10 flex flex-col items-center gap-3">
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://calendly.com/vivienecreates/automation-discovery-call"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contact"
               className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_0_30px_rgba(0,255,65,0.45)] transition-transform hover:scale-105"
             >
               Book a Free Discovery Call

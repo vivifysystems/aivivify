@@ -43,9 +43,7 @@ export function Nav() {
           ))}
         </ul>
         <a
-          href="https://calendly.com/vivienecreates/automation-discovery-call"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#contact"
           className="hidden rounded-full border border-primary/60 bg-primary/10 px-4 py-1.5 font-mono-ui text-xs uppercase tracking-widest text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_var(--neon)] md:inline-flex"
         >
           Book a Discovery Call
