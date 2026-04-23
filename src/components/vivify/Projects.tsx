@@ -195,7 +195,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="glass-strong relative max-h-[88vh] w-full max-w-2xl overflow-y-auto rounded-2xl p-8 animate-[fade-in_0.25s_ease-out]"
+        className="glass-strong relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl p-8 animate-[fade-in_0.25s_ease-out]"
       >
         <button
           onClick={onClose}
@@ -210,32 +210,43 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         <h3 className="mt-3 font-display text-3xl font-bold">{project.title}</h3>
         <p className="mt-2 text-sm text-foreground/70">{project.value}</p>
 
-        <div className="mt-8 space-y-6">
-          <Block label="Problem" body={project.problem} />
-          <Block label="Solution" body={project.solution} accent />
-          <Block label="Result" body={project.result} />
+        <div className="mt-6">
+          <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+            Workflow Proof
+          </p>
+          <div className="mt-3 overflow-hidden rounded-xl border border-primary/30 bg-black">
+            <img
+              src={project.proofImage}
+              alt={`${project.title} workflow screenshot`}
+              className="h-auto w-full object-contain"
+            />
+          </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
-          {project.stack.map((s) => (
-            <span
-              key={s}
-              className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono-ui text-[10px] uppercase tracking-widest text-primary"
-            >
-              {s}
-            </span>
-          ))}
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="rounded-xl border border-primary/40 bg-primary/5 p-5">
+            <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+              Technical Stack
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {project.stack.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono-ui text-[10px] uppercase tracking-widest text-primary"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+            <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+              Business Impact
+            </p>
+            <p className="mt-3 leading-relaxed text-foreground/85">{project.impact}</p>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function Block({ label, body, accent }: { label: string; body: string; accent?: boolean }) {
-  return (
-    <div className={`rounded-xl border p-5 ${accent ? "border-primary/40 bg-primary/5" : "border-white/10 bg-white/[0.02]"}`}>
-      <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">{label}</p>
-      <p className="mt-2 text-foreground/85 leading-relaxed">{body}</p>
     </div>
   );
 }
