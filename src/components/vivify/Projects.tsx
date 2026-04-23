@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { SectionHeader } from "./Framework";
-import { TiltCard, useStaggerReveal } from "./TiltCard";
+import { useStaggerReveal } from "./TiltCard";
 import coverFileManagement from "@/assets/cover-file-management.png";
 import coverRag from "@/assets/cover-rag.jpeg";
 import coverLeadNurturing from "@/assets/cover-lead-nurturing.png";
