@@ -147,18 +147,23 @@ export function Projects() {
               as="article"
               data-reveal
               data-reveal-index={i}
-              className="glass group relative flex flex-col overflow-hidden rounded-2xl text-left"
+              className="project-card glass group relative flex flex-col overflow-hidden rounded-2xl text-left"
             >
+              <div
+                className="card-glint pointer-events-none absolute inset-0 z-10 rounded-[inherit] transition-[background] duration-150"
+                aria-hidden
+              />
               <div className="relative aspect-[3/2] overflow-hidden border-b border-white/10 bg-black">
                 {p.image ? (
                   <img
                     src={p.image}
                     alt={p.title}
                     loading="lazy"
+                    data-depth="2.5"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 ) : (
-                  <div className="grid-bg flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background">
+                  <div data-depth="2.5" className="grid-bg flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/10 via-background to-background">
                     <span className="font-display text-5xl font-black text-primary/80 [text-shadow:0_0_24px_rgba(0,255,65,0.5)]">
                       ⌬
                     </span>
@@ -181,14 +186,14 @@ export function Projects() {
                     CASE {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <h3 className="mt-3 font-display text-xl font-bold leading-tight">
+                <h3 data-depth="1.8" className="mt-3 font-display text-xl font-bold leading-tight">
                   {p.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-foreground/65">
+                <p data-depth="1.2" className="mt-3 text-sm leading-relaxed text-foreground/65">
                   {p.value}
                 </p>
 
-                <div className="mt-5 flex flex-wrap gap-1.5">
+                <div data-depth="1.5" className="mt-5 flex flex-wrap gap-1.5">
                   {p.stack.slice(0, 4).map((s) => (
                     <span
                       key={s}
@@ -201,6 +206,7 @@ export function Projects() {
 
                 <button
                   onClick={() => setActive(p)}
+                  data-depth="2.0"
                   className="arrow-slide-host mt-6 inline-flex items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/5 px-4 py-2.5 font-mono-ui text-[11px] uppercase tracking-[0.2em] text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_rgba(0,255,65,0.4)]"
                 >
                   View Workflow Proof <span className="arrow-slide" aria-hidden>→</span>
