@@ -17,14 +17,16 @@ export function Contact() {
           >
             <div>
               <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">Email</p>
-              <p className="mt-2 font-display text-xl">vivify.systems@gmail.com</p>
+              <p className="mt-2 font-display text-xl text-primary underline-offset-4 group-hover:underline">
+                vivify.systems@gmail.com
+              </p>
             </div>
             <span className="text-2xl text-primary transition-transform group-hover:translate-x-1">→</span>
           </a>
           <a
-            href="https://www.linkedin.com/in/vivienepitogo"
+            href="https://calendly.com/vivienecreates/automation-discovery-call"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="glass group flex items-center justify-between rounded-2xl p-7 transition-all hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.2)]"
           >
             <div>
