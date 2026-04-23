@@ -49,7 +49,9 @@ export function Hero() {
         <div className="mt-10 flex flex-col items-center gap-3">
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="#contact"
+              href="https://calendly.com/vivienecreates/automation-discovery-call"
+              target="_blank"
+              rel="noreferrer"
               className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_0_30px_rgba(0,255,65,0.45)] transition-transform hover:scale-105"
             >
               Book a Free Discovery Call
