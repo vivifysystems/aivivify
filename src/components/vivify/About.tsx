@@ -43,8 +43,14 @@ function useInView<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const [seen, setSeen] = useState(false);
   useEffect(() => {
-    if (!ref.current || seen) return;
     const el = ref.current;
+    if (!el || seen) return;
+    // If already in view on mount, trigger immediately
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setSeen(true);
+      return;
+    }
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -52,7 +58,7 @@ function useInView<T extends HTMLElement>() {
           io.disconnect();
         }
       },
-      { threshold: 0.3 },
+      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -60,11 +66,11 @@ function useInView<T extends HTMLElement>() {
   return { ref, seen };
 }
 
-function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
+function CountUp({ to, suffix = "", animate = true }: { to: number; suffix?: string; animate?: boolean }) {
   const { ref, seen } = useInView<HTMLParagraphElement>();
-  const [n, setN] = useState(0);
+  const [n, setN] = useState(animate ? 0 : to);
   useEffect(() => {
-    if (!seen) return;
+    if (!seen || !animate) return;
     const start = performance.now();
     const dur = 1200;
     let raf = 0;
@@ -76,7 +82,7 @@ function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [seen, to]);
+  }, [seen, to, animate]);
   return (
     <p ref={ref} className="font-display text-4xl font-black text-primary [text-shadow:0_0_18px_rgba(0,255,65,0.45)]">
       {n}
@@ -147,7 +153,7 @@ export function About() {
                   key={s.v}
                   className="rounded-xl border border-primary/25 bg-primary/5 p-4 text-center transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_0_24px_rgba(0,255,65,0.25)]"
                 >
-                  <CountUp to={s.k} suffix={s.suffix} />
+                  <CountUp to={s.k} suffix={s.suffix} animate={s.suffix !== "/7"} />
                   <p className="mt-1 font-mono-ui text-[9px] uppercase tracking-[0.2em] text-foreground/60">
                     {s.v}
                   </p>
