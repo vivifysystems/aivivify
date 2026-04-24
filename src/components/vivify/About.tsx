@@ -67,22 +67,60 @@ function useInView<T extends HTMLElement>() {
 }
 
 function CountUp({ to, suffix = "", animate = true }: { to: number; suffix?: string; animate?: boolean }) {
-  const { ref, seen } = useInView<HTMLParagraphElement>();
+  const ref = useRef<HTMLParagraphElement | null>(null);
   const [n, setN] = useState(animate ? 0 : to);
+  const startedRef = useRef(false);
   useEffect(() => {
-    if (!seen || !animate) return;
-    const start = performance.now();
-    const dur = 1200;
-    let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / dur);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setN(Math.round(to * eased));
-      if (p < 1) raf = requestAnimationFrame(tick);
+    if (!animate) {
+      setN(to);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+    const run = () => {
+      if (startedRef.current) return;
+      startedRef.current = true;
+      const start = performance.now();
+      const dur = 1200;
+      let raf = 0;
+      const tick = (t: number) => {
+        const p = Math.min(1, (t - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setN(Math.round(to * eased));
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(raf);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [seen, to, animate]);
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      run();
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            run();
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.01, rootMargin: "0px 0px -5% 0px" },
+    );
+    io.observe(el);
+    // Safety fallback: if observer never fires within 3s, just set the value.
+    const fallback = window.setTimeout(() => {
+      if (!startedRef.current) {
+        setN(to);
+      }
+    }, 3000);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(fallback);
+    };
+  }, [to, animate]);
   return (
     <p ref={ref} className="font-display text-4xl font-black text-primary [text-shadow:0_0_18px_rgba(0,255,65,0.45)]">
       {n}
