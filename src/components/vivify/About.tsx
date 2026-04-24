@@ -39,33 +39,6 @@ const funFacts = [
   "I'm constantly experimenting with new AI models to push the boundaries of what's possible.",
 ];
 
-function useInView<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
-  const [seen, setSeen] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || seen) return;
-    // If already in view on mount, trigger immediately
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      setSeen(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setSeen(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [seen]);
-  return { ref, seen };
-}
-
 function CountUp({ to, suffix = "", animate = true }: { to: number; suffix?: string; animate?: boolean }) {
   const ref = useRef<HTMLParagraphElement | null>(null);
   const [n, setN] = useState(animate ? 0 : to);
