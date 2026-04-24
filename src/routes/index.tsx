@@ -21,9 +21,9 @@ function Index() {
       <Hero />
       <Marquee />
       <Process />
-      <Framework />
       <Skills />
       <Projects />
+      <Framework />
       <About />
       <Testimonial />
       <Contact />
