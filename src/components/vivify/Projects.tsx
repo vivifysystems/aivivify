@@ -131,6 +131,45 @@ export function Projects() {
     document.body.style.overflow = active ? "hidden" : "";
   }, [active]);
 
+  // JS-driven marquee — guarantees motion regardless of OS "Reduce Motion"
+  // setting and keeps direction/speed identical across breakpoints.
+  useEffect(() => {
+    const track = document.querySelector<HTMLDivElement>(
+      "#projects .card-marquee-track",
+    );
+    if (!track) return;
+
+    const SPEED = 60; // pixels per second — consistent on all breakpoints
+    let offset = 0;
+    let last = performance.now();
+    let paused = false;
+    let raf = 0;
+
+    const onEnter = () => (paused = true);
+    const onLeave = () => (paused = false);
+    track.addEventListener("mouseenter", onEnter);
+    track.addEventListener("mouseleave", onLeave);
+
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      if (!paused) {
+        offset -= SPEED * dt;
+        const half = track.scrollWidth / 2;
+        if (half > 0 && -offset >= half) offset += half;
+        track.style.transform = `translate3d(${offset}px, 0, 0)`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      track.removeEventListener("mouseenter", onEnter);
+      track.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
   return (
     <section id="projects" className="relative px-6 py-28">
       <div className="mx-auto max-w-6xl">

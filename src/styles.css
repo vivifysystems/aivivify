@@ -353,11 +353,7 @@
   display: flex;
   gap: 1.5rem;
   width: max-content;
-  animation: card-marquee 60s linear infinite;
   will-change: transform;
-}
-.card-marquee-track:hover {
-  animation-play-state: paused;
 }
 .card-marquee-mask {
   mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
@@ -414,7 +410,6 @@
   .project-card:hover { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .card-marquee-track { animation: none; }
   .card-shine::before { display: none; }
 }
 
