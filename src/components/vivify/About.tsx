@@ -8,7 +8,7 @@ const milestones = [
   {
     year: "2021",
     title: "First Workflow",
-    desc: "Stitched together my first Zapier flow to kill repetitive admin work — and never looked back.",
+    desc: "Started exploring automation as a side curiosity — first Zapier flow, first taste of what was possible.",
   },
   {
     year: "2023",

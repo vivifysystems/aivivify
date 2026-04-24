@@ -37,16 +37,19 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl font-display text-lg text-foreground sm:text-2xl [text-shadow:0_2px_12px_rgba(0,0,0,0.95)]">
-          Turning <span className="neon-text">Complex Workflows</span> into Intelligent Systems.
+          Your business <span className="neon-text">shouldn't depend</span> on you showing up.
         </p>
 
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-foreground/85 sm:text-base [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
-          I build custom AI agents and automated pipelines that reclaim{" "}
-          <span className="neon-text font-semibold">20+ hours of your week</span>. Scalable,
-          high-ROI solutions for modern businesses using n8n, Make, and Zapier.
+          I build the systems that run it while you don't. Custom AI agents and automated
+          pipelines using <span className="neon-text font-semibold">n8n, Make, and Zapier</span>{" "}
+          — so your ops never stop, even when you do.
         </p>
 
-        <div className="mt-10 flex flex-col items-center gap-3">
+        <div className="mt-10 flex flex-col items-center gap-5">
+          <p className="font-mono-ui text-base font-semibold uppercase tracking-[0.2em] text-foreground sm:text-lg [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
+            Let's map out your automation roadmap in 15 minutes.
+          </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
               href="https://calendly.com/vivienecreates/automation-discovery-call"
@@ -64,9 +67,6 @@ export function Hero() {
               View Projects
             </a>
           </div>
-          <p className="font-mono-ui text-[11px] uppercase tracking-[0.25em] text-foreground/65 [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
-            Let's map out your automation roadmap in 15 minutes.
-          </p>
         </div>
       </div>
 

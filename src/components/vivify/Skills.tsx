@@ -16,7 +16,7 @@ const stacks = [
       "OpenAI GPT-4o",
       "Claude 3.5",
       "Google Gemini",
-      "Manus",
+      "VAPI",
       "Agentic Workflows",
       "RAG Architecture",
       "Voice Agents",

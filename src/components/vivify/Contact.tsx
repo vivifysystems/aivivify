@@ -7,7 +7,7 @@ export function Contact() {
         <SectionHeader
           kicker="Contact"
           title="Let’s build something hands-off."
-          sub="Tell me about the workflow you’re tired of running manually — I’ll architect a system that runs itself."
+          sub="Missed leads? Drowning in manual follow-ups? Spending hours on tasks your tools should handle? Tell me what's broken — I'll build the system that fixes it for good."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -57,7 +57,6 @@ export function Footer() {
             <ul className="flex flex-wrap gap-3">
               {[
                 { label: "LinkedIn", href: "https://www.linkedin.com/in/vivienepitogo/" },
-                { label: "Upwork", href: "https://www.upwork.com/" },
                 { label: "OnlineJobs.ph", href: "https://v2.onlinejobs.ph/jobseekers/info/4855809" },
               ].map((l) => (
                 <li key={l.label}>
