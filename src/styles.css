@@ -411,7 +411,6 @@
 
 /* Disable on touch / reduced motion */
 @media (hover: none) {
-  .card-marquee-track { animation: none; }
   .project-card:hover { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
