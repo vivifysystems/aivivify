@@ -29,14 +29,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "VIVIFY Automation — Intelligent Systems by Viviene" },
-      { name: "description", content: "VIVIFY Automation builds intelligent AI systems and automations using n8n, Make, and GHL — turning complex workflows into bulletproof, hands-off operations." },
+      { title: "Viviene | Portfolio" },
+      { name: "description", content: "Vivify Automation designs AI-powered automations that streamline workflows and run business operations on autopilot." },
       { name: "author", content: "Viviene — VIVIFY Automation" },
-      { property: "og:title", content: "VIVIFY Automation — Intelligent Systems by Viviene" },
-      { property: "og:description", content: "Turning complex workflows into intelligent systems. AI agents, RAG pipelines, and end-to-end automation." },
+      { property: "og:title", content: "Viviene | Portfolio" },
+      { property: "og:description", content: "Vivify Automation designs AI-powered automations that streamline workflows and run business operations on autopilot." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Viviene | Portfolio" },
+      { name: "twitter:description", content: "Vivify Automation designs AI-powered automations that streamline workflows and run business operations on autopilot." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/24856ebd-354a-454f-9e76-7b3cd025496c/id-preview-39e0ec6a--24616372-b998-4d94-a061-af56f51a4c31.lovable.app-1777032135801.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/24856ebd-354a-454f-9e76-7b3cd025496c/id-preview-39e0ec6a--24616372-b998-4d94-a061-af56f51a4c31.lovable.app-1777032135801.png" },
     ],
     links: [
       {
