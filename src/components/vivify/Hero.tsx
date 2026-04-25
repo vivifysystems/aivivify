@@ -26,7 +26,7 @@ export function Hero() {
       <div className="relative z-20 mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-6 text-center">
         <div className="glass mb-8 inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary shadow-[0_0_8px_var(--neon)]" />
-          AI Automation Engineer · Online
+          AI Automation Specialist · Available for Projects
         </div>
 
         <h1
