@@ -33,12 +33,6 @@ const stats = [
   { k: 24, suffix: "/7", v: "Hands-off operation" },
 ];
 
-const funFacts = [
-  "I once built a fully automated coffee brewing system.",
-  "My spirit animal is a friendly dinosaur (you might meet him on our call!).",
-  "I'm constantly experimenting with new AI models to push the boundaries of what's possible.",
-];
-
 function CountUp({ to, suffix = "", animate = true }: { to: number; suffix?: string; animate?: boolean }) {
   const ref = useRef<HTMLParagraphElement | null>(null);
   const [n, setN] = useState(animate ? 0 : to);
