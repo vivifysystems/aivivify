@@ -33,12 +33,6 @@ const stats = [
   { k: 24, suffix: "/7", v: "Hands-off operation" },
 ];
 
-const funFacts = [
-  "I once built a fully automated coffee brewing system.",
-  "My spirit animal is a friendly dinosaur (you might meet him on our call!).",
-  "I'm constantly experimenting with new AI models to push the boundaries of what's possible.",
-];
-
 function CountUp({ to, suffix = "", animate = true }: { to: number; suffix?: string; animate?: boolean }) {
   const ref = useRef<HTMLParagraphElement | null>(null);
   const [n, setN] = useState(animate ? 0 : to);
@@ -142,7 +136,7 @@ export function About() {
               <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/30" />
             </div>
             <div className="mt-4 text-center font-mono-ui text-[10px] uppercase tracking-[0.35em] text-primary">
-              Viviene Pitogo · Automation Engineer
+              Viviene Pitogo · AI Automation Specialist
             </div>
           </div>
 
@@ -193,32 +187,16 @@ export function About() {
 
           <div className="glass rounded-2xl p-8">
             <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
-              Beyond the Code
+              Who I Work With
             </p>
-            <h3 className="mt-3 font-display text-2xl font-bold">A Glimpse Into My World</h3>
+            <h3 className="mt-3 font-display text-2xl font-bold">
+              Built for Founders Who Are Done Doing It Manually
+            </h3>
             <p className="mt-4 text-sm leading-relaxed text-foreground/80">
-              When I'm not architecting intelligent systems, you'll find me chasing sunrises on
-              new hiking trails, deep in a sci-fi novel, or tinkering with smart-home gadgets.
-              Curiosity is the engine — automation is just where I aim it.
+              I work best with e-commerce brands, marketing agencies, and service businesses
+              that are scaling fast but drowning in repetitive ops. If you're managing leads,
+              bookings, content, or client comms manually — that's the gap I close.
             </p>
-            <ul className="mt-5 space-y-2">
-              {funFacts.map((f) => (
-                <li
-                  key={f}
-                  className="flex items-start gap-2 text-sm text-foreground/85"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-sm bg-primary shadow-[0_0_6px_var(--neon)]" />
-                  <span>
-                    {f}
-                    {f.includes("dinosaur") && (
-                      <span className="dino-float ml-2" title="Rawr! 🦖" aria-label="friendly dinosaur">
-                        🦖
-                      </span>
-                    )}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
