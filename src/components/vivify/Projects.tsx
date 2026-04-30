@@ -28,6 +28,7 @@ type Project = {
   impact: string;
   beta?: boolean;
   caseStudy?: { problem: string; solution: string; result: string };
+  demoUrl?: string;
 };
 
 const projects: Project[] = [
