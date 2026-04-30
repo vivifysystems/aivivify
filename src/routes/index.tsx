@@ -6,8 +6,8 @@ import { Process } from "@/components/vivify/Process";
 import { Framework } from "@/components/vivify/Framework";
 import { Skills } from "@/components/vivify/Skills";
 import { Projects } from "@/components/vivify/Projects";
-import { Testimonial } from "@/components/vivify/Testimonial";
 import { About } from "@/components/vivify/About";
+import { Results } from "@/components/vivify/Results";
 import { Contact, Footer } from "@/components/vivify/Contact";
 
 export const Route = createFileRoute("/")({
@@ -25,7 +25,7 @@ function Index() {
       <Projects />
       <Framework />
       <About />
-      <Testimonial />
+      <Results />
       <Contact />
       <Footer />
     </main>
