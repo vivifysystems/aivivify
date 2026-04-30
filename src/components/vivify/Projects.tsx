@@ -64,6 +64,7 @@ const projects: Project[] = [
     proofImage: proofRag,
     impact:
       "Zero stale answers. Support agents respond with current SOPs the moment a doc is updated, cutting hallucinations and removing manual reindexing entirely.",
+    demoUrl: "https://drive.google.com/file/d/181UOMmc9xRvEgQr0hXrdjAn-D8HTs_tU/preview",
   },
   {
     tag: "GHL Automation",
@@ -137,6 +138,7 @@ const projects: Project[] = [
       result:
         "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
     },
+    demoUrl: "https://drive.google.com/file/d/17t8nT8wexs1aVj8QrgZLgZrJH2jlQpBn/preview",
   },
 ];
 
