@@ -349,6 +349,29 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             <p className="mt-3 leading-relaxed text-foreground/85">{project.impact}</p>
           </div>
         </div>
+
+        {project.caseStudy && (
+          <div className="mt-8 grid gap-4">
+            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Problem
+              </p>
+              <p className="mt-3 leading-relaxed text-foreground/85">{project.caseStudy.problem}</p>
+            </div>
+            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Solution
+              </p>
+              <p className="mt-3 leading-relaxed text-foreground/85">{project.caseStudy.solution}</p>
+            </div>
+            <div className="rounded-xl border border-primary/40 bg-primary/5 p-5">
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Result
+              </p>
+              <p className="mt-3 leading-relaxed text-foreground/85">{project.caseStudy.result}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
