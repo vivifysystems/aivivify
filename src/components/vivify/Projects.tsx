@@ -28,6 +28,7 @@ type Project = {
   impact: string;
   beta?: boolean;
   caseStudy?: { problem: string; solution: string; result: string };
+  demoUrl?: string;
 };
 
 const projects: Project[] = [
@@ -63,6 +64,7 @@ const projects: Project[] = [
     proofImage: proofRag,
     impact:
       "Zero stale answers. Support agents respond with current SOPs the moment a doc is updated, cutting hallucinations and removing manual reindexing entirely.",
+    demoUrl: "https://drive.google.com/file/d/181UOMmc9xRvEgQr0hXrdjAn-D8HTs_tU/preview",
   },
   {
     tag: "GHL Automation",
@@ -136,6 +138,7 @@ const projects: Project[] = [
       result:
         "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
     },
+    demoUrl: "https://drive.google.com/file/d/17t8nT8wexs1aVj8QrgZLgZrJH2jlQpBn/preview",
   },
 ];
 
@@ -278,6 +281,7 @@ export function Projects() {
 }
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const [showDemo, setShowDemo] = useState(false);
   return (
     <div
       className="fixed inset-0 z-[100] flex items-end justify-center bg-black/80 p-4 backdrop-blur-sm sm:items-center"
@@ -370,6 +374,36 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
               </p>
               <p className="mt-3 leading-relaxed text-foreground/85">{project.caseStudy.result}</p>
             </div>
+          </div>
+        )}
+
+        {project.demoUrl && (
+          <div className="mt-8">
+            {!showDemo ? (
+              <button
+                onClick={() => setShowDemo(true)}
+                className="arrow-slide-host inline-flex items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/5 px-5 py-3 font-mono-ui text-[11px] uppercase tracking-[0.2em] text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_rgba(0,255,65,0.4)]"
+              >
+                ▶ Watch Demo <span className="arrow-slide" aria-hidden>→</span>
+              </button>
+            ) : (
+              <div>
+                <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                  Live Demo
+                </p>
+                <div className="mt-3 overflow-hidden rounded-xl border border-primary/30 bg-black">
+                  <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                    <iframe
+                      src={project.demoUrl}
+                      title={`${project.title} demo`}
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
