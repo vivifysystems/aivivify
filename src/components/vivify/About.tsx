@@ -4,29 +4,6 @@ import portrait from "@/assets/viviene-portrait.png";
 
 const CALENDLY = "https://calendly.com/vivienecreates/automation-discovery-call";
 
-const milestones = [
-  {
-    year: "2021",
-    title: "First Workflow",
-    desc: "Started exploring automation as a side curiosity — first Zapier flow, first taste of what was possible.",
-  },
-  {
-    year: "2023",
-    title: "Going Deep on n8n & Make",
-    desc: "Moved from no-code to low-code: building branching logic, error handling, and self-healing pipelines.",
-  },
-  {
-    year: "2024",
-    title: "AI-Native Systems",
-    desc: "Started shipping LLM-powered agents with RAG, vector stores, and voice — replacing entire roles, not just tasks.",
-  },
-  {
-    year: "2025",
-    title: "VIVIFY Automation",
-    desc: "Launched VIVIFY to help founders turn operational chaos into 24/7 intelligent systems.",
-  },
-];
-
 const stats = [
   { k: 20, suffix: "+", v: "Hrs / week reclaimed" },
   { k: 7, suffix: "", v: "Production systems" },
@@ -142,14 +119,18 @@ export function About() {
 
           <div className="glass rounded-2xl p-8 sm:p-10">
             <p className="font-display text-2xl leading-snug sm:text-3xl">
-              I'm <span className="neon-text">Viviene</span>, an Automation Engineer obsessed
-              with transforming complex, time-consuming workflows into seamless,{" "}
-              <span className="text-primary">intelligent systems</span>.
+              I'm <span className="neon-text">Viviene</span>, a Computer Engineering graduate
+              turned <span className="text-primary">AI Automation Specialist</span>.
             </p>
             <p className="mt-5 text-base leading-relaxed text-foreground/80">
-              My mission is to empower founders like you to reclaim valuable time and focus on
-              the <em>"big work"</em> that truly drives your business forward — while your
-              operations run themselves in the background.
+              Before I ever touched n8n or Make, I was writing code in C++ and building
+              embedded systems. That programming foundation is what separates the workflows I
+              build from ones that break under pressure.
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-foreground/80">
+              I started with my own family's businesses — a catering operation and a computer
+              café — and turned their manual chaos into systems that run without them. Now I
+              build those same systems for founders who are done doing it manually.
             </p>
 
             <div className="mt-8 grid grid-cols-3 gap-4">
@@ -165,79 +146,6 @@ export function About() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* The Spark */}
-        <div className="mt-16 grid gap-6 md:grid-cols-2">
-          <div className="glass rounded-2xl p-8">
-            <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
-              The Spark
-            </p>
-            <h3 className="mt-3 font-display text-2xl font-bold">Why Automation?</h3>
-            <p className="mt-4 text-sm leading-relaxed text-foreground/80">
-              It started with a brutal Monday: hundreds of attachments to rename, sort, and
-              reply to. I lost an entire day to clicks. That night I built my first automation
-              — and watched it do eight hours of work in eight minutes. Since then I've believed
-              the same thing: <span className="text-primary">humans should architect systems, not babysit them.</span>{" "}
-              Automation isn't about replacing people — it's about freeing them to do the work
-              that actually matters.
-            </p>
-          </div>
-
-          <div className="glass rounded-2xl p-8">
-            <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
-              Who I Work With
-            </p>
-            <h3 className="mt-3 font-display text-2xl font-bold">
-              Built for Founders Who Are Done Doing It Manually
-            </h3>
-            <p className="mt-4 text-sm leading-relaxed text-foreground/80">
-              I work best with e-commerce brands, marketing agencies, and service businesses
-              that are scaling fast but drowning in repetitive ops. If you're managing leads,
-              bookings, content, or client comms manually — that's the gap I close.
-            </p>
-          </div>
-        </div>
-
-        {/* Professional evolution timeline */}
-        <div className="mt-16">
-          <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
-            Professional Evolution
-          </p>
-          <h3 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
-            From manual clicks to autonomous systems
-          </h3>
-
-          <div className="relative mt-10">
-            <div
-              aria-hidden
-              className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-primary/70 via-primary/30 to-transparent md:left-1/2"
-            />
-            <ol className="space-y-10">
-              {milestones.map((m, i) => (
-                <li
-                  key={m.year}
-                  className={`relative grid gap-4 md:grid-cols-2 md:gap-12 ${
-                    i % 2 === 0 ? "" : "md:[&>div:first-child]:order-2"
-                  }`}
-                >
-                  <span
-                    aria-hidden
-                    className="absolute left-4 top-2 -translate-x-1/2 rounded-full bg-primary p-1.5 shadow-[0_0_14px_var(--neon)] md:left-1/2"
-                  >
-                    <span className="block h-2 w-2 rounded-full bg-background" />
-                  </span>
-                  <div className="pl-10 md:pl-0 md:text-right md:pr-12">
-                    <p className="font-display text-3xl font-black text-primary">{m.year}</p>
-                  </div>
-                  <div className="glass rounded-2xl p-5 md:ml-12">
-                    <p className="font-display text-lg font-bold">{m.title}</p>
-                    <p className="mt-2 text-sm text-foreground/75">{m.desc}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
           </div>
         </div>
 
