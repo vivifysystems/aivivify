@@ -41,7 +41,15 @@ const projects: Project[] = [
     image: coverVoice,
     proofImage: proofVoice,
     impact:
-      "Handles 100% of after-hours calls — books, reschedules, and cancels appointments without human input. Recovers ~30+ missed-call bookings per month for local businesses.",
+      "Missed calls dropped to zero. Bookings come in 24/7 without any staff involvement.",
+    caseStudy: {
+      problem:
+        "A high-volume local business was missing calls outside business hours and during busy periods. Every missed call was a missed booking with no way to recover it.",
+      solution:
+        "Built an AI voice receptionist named Bobby using n8n and VAPI. Bobby answers calls, handles FAQs, and books appointments directly into Google Calendar — around the clock.",
+      result:
+        "Zero missed calls after hours. Bookings continue even at 2 AM without any human involvement.",
+    },
   },
   {
     tag: "Gmail + Gemini",
@@ -52,7 +60,15 @@ const projects: Project[] = [
     image: coverFileManagement,
     proofImage: proofFileManagement,
     impact:
-      "Eliminates ~5 hours/week of manual filing. Every attachment becomes instantly searchable and audit-ready — turning a chaotic inbox into a structured archive.",
+      "Hours of manual file sorting eliminated. Attachments are renamed, categorized, and filed the moment they arrive.",
+    caseStudy: {
+      problem:
+        "A business was drowning in Gmail attachments — invoices, contracts, reports — all arriving with generic filenames and piling up unsorted in their inbox.",
+      solution:
+        "Built an automated pipeline using Make.com and Gemini that monitors Gmail, semantically renames each attachment based on its content, and sorts it into the correct Google Drive folder automatically.",
+      result:
+        "Zero manual file sorting. Every attachment is named, categorized, and filed within seconds of arrival.",
+    },
   },
   {
     tag: "RAG Pipeline",
@@ -63,7 +79,15 @@ const projects: Project[] = [
     image: coverRag,
     proofImage: proofRag,
     impact:
-      "Zero stale answers. Support agents respond with current SOPs the moment a doc is updated, cutting hallucinations and removing manual reindexing entirely.",
+      "AI agents stay current automatically — no manual retraining or document updates needed.",
+    caseStudy: {
+      problem:
+        "AI agents become outdated the moment new documents, policies, or SOPs are added to a business. Keeping them current required manual re-uploads and constant maintenance.",
+      solution:
+        "Built a RAG pipeline using n8n and Supabase that watches a Google Drive folder. The moment a new file is added, it's automatically chunked, embedded, and stored in a vector database — making it instantly available to AI agents.",
+      result:
+        "Knowledge base updates itself in real time. AI agents always have access to the latest information without any human intervention.",
+    },
     demoUrl: "https://drive.google.com/file/d/181UOMmc9xRvEgQr0hXrdjAn-D8HTs_tU/preview",
   },
   {
@@ -75,7 +99,15 @@ const projects: Project[] = [
     image: coverLeadNurturing,
     proofImage: proofLeadNurturing,
     impact:
-      "Response time reduced to <30 seconds. Higher booked-call conversion with zero human babysitting — every lead nurtured on the right channel at the right moment.",
+      "No lead goes cold. Every prospect gets the right follow-up on the right channel at the right time — automatically.",
+    caseStudy: {
+      problem:
+        "Sales teams were manually deciding when and how to follow up with leads — resulting in inconsistent outreach, forgotten prospects, and lost revenue.",
+      solution:
+        "Built a smart branching automation in GoHighLevel that triggers personalized SMS, call, and email sequences based on lead behavior and pipeline stage.",
+      result:
+        "Follow-up happens automatically across all channels. No lead falls through the cracks regardless of team availability.",
+    },
   },
   {
     tag: "Xero + Asana",
@@ -86,7 +118,15 @@ const projects: Project[] = [
     image: coverFinancialSync,
     proofImage: proofFinancialSync,
     impact:
-      "Zero double-entry. Finance and ops share one source of truth with a full audit trail — eliminating billing errors and missed milestones.",
+      "Financial tasks are logged and assigned automatically — no manual data entry between tools.",
+    caseStudy: {
+      problem:
+        "Finance teams were manually cross-referencing Xero transactions and creating Asana tasks for each one — a repetitive process prone to errors and delays.",
+      solution:
+        "Built a Make.com automation that monitors Xero for new transactions, creates an audit log in Google Sheets, and automatically generates the corresponding task in Asana.",
+      result:
+        "Every financial event is tracked and actioned automatically. Manual data entry between tools eliminated entirely.",
+    },
   },
   {
     tag: "Zapier · AI · CRM",
@@ -97,7 +137,15 @@ const projects: Project[] = [
     image: coverLeadRouting,
     proofImage: proofLeadRouting,
     impact:
-      "Higher SQL rate and faster handoffs. Senior reps focus only on top-tier opportunities while every lead receives a personalized, stage-specific touch — no hot lead ever goes cold.",
+      "Every lead reaches the right rep instantly — with full context, zero manual sorting.",
+    caseStudy: {
+      problem:
+        "High-ticket sales teams were manually reviewing and routing inbound leads — slow, inconsistent, and causing the best leads to sit uncontacted for hours.",
+      solution:
+        "Built a Zapier automation with AI personalization that scores each lead, routes them to the correct sales rep based on criteria, and prepares a personalized context brief before the first call.",
+      result:
+        "Lead response time cut to minutes. Every rep gets the right lead with the right context at the right moment.",
+    },
   },
   {
     tag: "Content Engine",
@@ -108,7 +156,15 @@ const projects: Project[] = [
     image: coverSocialEngine,
     proofImage: proofSocialEngine,
     impact:
-      "5×+ output per week with consistent branding. One source file becomes a transcribed blog + scheduled multi-platform posts — zero manual editing.",
+      "Raw recordings become published posts automatically — content output increased without added effort.",
+    caseStudy: {
+      problem:
+        "A business had hours of recorded video and audio content sitting unused because manually transcribing, editing, and cross-posting to multiple platforms was too time-consuming.",
+      solution:
+        "Built a Zapier pipeline with AI that auto-transcribes uploaded media, generates platform-optimized captions, and cross-posts to LinkedIn and Facebook Pages automatically.",
+      result:
+        "Content publishes itself across platforms within minutes of upload. Zero manual editing or posting required.",
+    },
   },
   {
     tag: "Multi-Agent · LLM",
@@ -117,8 +173,16 @@ const projects: Project[] = [
       "An orchestrated network of specialized AI agents that plan, research, critique, and synthesize long-form intelligence reports autonomously.",
     stack: ["LangGraph", "OpenAI", "Anthropic", "Supabase"],
     impact:
-      "Currently in private beta. Early benchmarks show 10× faster research cycles vs. a single-agent baseline, with self-correcting outputs that need minimal human review.",
+      "Long-form intelligence reports produced autonomously — what took days of research now runs in the background.",
     beta: true,
+    caseStudy: {
+      problem:
+        "Producing comprehensive research reports required hours of manual searching, synthesizing, and writing — not scalable for teams that need regular intelligence output.",
+      solution:
+        "Built an orchestrated multi-agent system using LangGraph, OpenAI, and Anthropic where specialized agents divide responsibilities — one plans, one researches, one critiques, one writes — running the full cycle autonomously.",
+      result:
+        "Full research reports generated end-to-end without human input. Currently in beta with ongoing refinement.",
+    },
   },
   {
     tag: "n8n · Gemini",
