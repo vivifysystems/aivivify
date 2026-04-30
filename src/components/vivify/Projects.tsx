@@ -8,7 +8,9 @@ import coverFinancialSync from "@/assets/cover-financial-sync.png";
 import coverLeadRouting from "@/assets/cover-lead-routing.png";
 import coverSocialEngine from "@/assets/cover-social-engine.png";
 import coverVoice from "@/assets/cover-voice-receptionist.png";
+import coverFbAgent from "@/assets/cover-fb-messenger-agent.png";
 import proofVoice from "@/assets/proof-voice-receptionist.jpg";
+import proofFbAgent from "@/assets/proof-fb-messenger-agent.png";
 import proofFileManagement from "@/assets/proof-file-management.png";
 import proofRag from "@/assets/proof-rag.png";
 import proofLeadNurturing from "@/assets/proof-lead-nurturing.png";
@@ -25,6 +27,7 @@ type Project = {
   proofImage?: string;
   impact: string;
   beta?: boolean;
+  caseStudy?: { problem: string; solution: string; result: string };
 };
 
 const projects: Project[] = [
@@ -115,6 +118,25 @@ const projects: Project[] = [
       "Currently in private beta. Early benchmarks show 10× faster research cycles vs. a single-agent baseline, with self-correcting outputs that need minimal human review.",
     beta: true,
   },
+  {
+    tag: "n8n · Gemini",
+    title: "24/7 Facebook Messenger AI Agent",
+    value:
+      "Turns repetitive Facebook inquiries into instant automated replies — so the business never misses a lead, even during peak hours.",
+    stack: ["n8n", "Google Gemini", "Webhook", "Facebook Messenger"],
+    image: coverFbAgent,
+    proofImage: proofFbAgent,
+    impact:
+      "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
+    caseStudy: {
+      problem:
+        "A local catering business was receiving 15–20 Facebook inquiries daily — pricelist, menu, location — but messages sat unanswered for 3–5 hours during peak order preparation. Potential customers were left waiting or went elsewhere.",
+      solution:
+        "Built a 24/7 AI agent on Facebook Messenger using n8n and Google Gemini, connected to the business's actual knowledge base. It handles all repetitive questions instantly without any human intervention.",
+      result:
+        "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
+    },
+  },
 ];
 
 export function Projects() {
@@ -176,7 +198,7 @@ export function Projects() {
         <SectionHeader
           kicker="Projects"
           title="Highlighted Production Systems"
-          sub="Seven systems shipped or shipping. Click any card to view the workflow proof — problem, solution, and measurable result."
+          sub="Real workflows. Real results. Click any card to see the problem, solution, and outcome."
         />
 
         <div className="card-marquee-mask mt-12 overflow-hidden">
@@ -327,6 +349,29 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             <p className="mt-3 leading-relaxed text-foreground/85">{project.impact}</p>
           </div>
         </div>
+
+        {project.caseStudy && (
+          <div className="mt-8 grid gap-4">
+            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Problem
+              </p>
+              <p className="mt-3 leading-relaxed text-foreground/85">{project.caseStudy.problem}</p>
+            </div>
+            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Solution
+              </p>
+              <p className="mt-3 leading-relaxed text-foreground/85">{project.caseStudy.solution}</p>
+            </div>
+            <div className="rounded-xl border border-primary/40 bg-primary/5 p-5">
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Result
+              </p>
+              <p className="mt-3 leading-relaxed text-foreground/85">{project.caseStudy.result}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
