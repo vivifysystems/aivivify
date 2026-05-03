@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/vivify/Nav";
 import { Hero } from "@/components/vivify/Hero";
 import { Marquee } from "@/components/vivify/Marquee";
@@ -10,11 +9,7 @@ import { About } from "@/components/vivify/About";
 import { Results } from "@/components/vivify/Results";
 import { Contact, Footer } from "@/components/vivify/Contact";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-function Index() {
+export default function Index() {
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
       <Nav />
