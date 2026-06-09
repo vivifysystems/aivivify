@@ -12,6 +12,9 @@ import proofSocialEngine from "@/assets/proof-social-engine.png";
 import proofEmailRouting from "@/assets/proof-email-routing.png";
 import proofSocialAuto from "@/assets/proof-social-auto.png";
 import proofUgcScript from "@/assets/proof-ugc-script.png";
+import coverEmailRouting from "@/assets/cover-email-routing.png";
+import coverSocialAuto from "@/assets/cover-social-auto.png";
+import coverUgcScript from "@/assets/cover-ugc-script.png";
 
 type Project = {
   tag: string;
@@ -205,7 +208,7 @@ const projects: Project[] = [
     value:
       "Watches Gmail for new emails, classifies them using Gemini AI, logs to Google Sheets, drafts a reply, notifies via Slack, then routes each email to the correct team folder automatically.",
     stack: ["N8N", "GEMINI AI", "GMAIL", "GOOGLE SHEETS", "SLACK"],
-    image: proofEmailRouting,
+    image: coverEmailRouting,
     proofImage: proofEmailRouting,
     impact:
       "Inbox triage is fully hands-off. Every email lands in the right team folder with a draft reply ready and Slack notified — in seconds.",
@@ -224,7 +227,7 @@ const projects: Project[] = [
     value:
       "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets — fully automated.",
     stack: ["MAKE.COM", "OPENAI", "AIRTABLE", "BUFFER", "GOOGLE SHEETS"],
-    image: proofSocialAuto,
+    image: coverSocialAuto,
     proofImage: proofSocialAuto,
     impact:
       "An entire content calendar publishes itself — captions written, links shortened, posts scheduled, results logged — zero manual posting.",
@@ -243,7 +246,7 @@ const projects: Project[] = [
     value:
       "Triggers daily at 8AM, reads product research, competitor ads, and audience insights from Google Sheets, builds an AI context brief, generates UGC video scripts via Groq, formats the output, and saves it to a new dated Google Doc automatically.",
     stack: ["N8N", "GROQ AI", "GOOGLE SHEETS", "GOOGLE DRIVE", "GOOGLE DOCS"],
-    image: proofUgcScript,
+    image: coverUgcScript,
     proofImage: proofUgcScript,
     impact:
       "A fresh, ready-to-record UGC script lands in Google Drive every morning before the team even logs in.",
