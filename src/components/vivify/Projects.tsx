@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 import { SectionHeader } from "./Framework";
 import { useStaggerReveal } from "./TiltCard";
-import coverFileManagement from "@/assets/cover-file-management.png";
-import coverRag from "@/assets/cover-rag.jpeg";
-import coverLeadNurturing from "@/assets/cover-lead-nurturing.png";
-import coverFinancialSync from "@/assets/cover-financial-sync.png";
-import coverLeadRouting from "@/assets/cover-lead-routing.png";
-import coverSocialEngine from "@/assets/cover-social-engine.png";
-import coverVoice from "@/assets/cover-voice-receptionist.png";
-import coverFbAgent from "@/assets/cover-fb-messenger-agent.png";
 import proofVoice from "@/assets/proof-voice-receptionist.jpg";
 import proofFbAgent from "@/assets/proof-fb-messenger-agent.png";
 import proofFileManagement from "@/assets/proof-file-management.png";
@@ -17,9 +9,6 @@ import proofLeadNurturing from "@/assets/proof-lead-nurturing.png";
 import proofFinancialSync from "@/assets/proof-financial-sync.png";
 import proofLeadRouting from "@/assets/proof-lead-routing.png";
 import proofSocialEngine from "@/assets/proof-social-engine.png";
-import coverEmailRouting from "@/assets/cover-email-routing.png";
-import coverSocialAuto from "@/assets/cover-social-auto.png";
-import coverUgcScript from "@/assets/cover-ugc-script.png";
 import proofEmailRouting from "@/assets/proof-email-routing.png";
 import proofSocialAuto from "@/assets/proof-social-auto.png";
 import proofUgcScript from "@/assets/proof-ugc-script.png";
@@ -44,7 +33,7 @@ const projects: Project[] = [
     value:
       "Automated booking and customer support for high-volume local businesses using n8n and VAPI.",
     stack: ["n8n", "VAPI", "Google Calendar", "Airtable"],
-    image: coverVoice,
+    image: proofVoice,
     proofImage: proofVoice,
     impact:
       "Missed calls dropped to zero. Bookings come in 24/7 without any staff involvement.",
@@ -63,7 +52,7 @@ const projects: Project[] = [
     value:
       "AI-powered semantic renaming and sorting of Gmail attachments using Make.com and Gemini.",
     stack: ["Make.com", "Gemini", "Gmail", "Google Drive"],
-    image: coverFileManagement,
+    image: proofFileManagement,
     proofImage: proofFileManagement,
     impact:
       "Hours of manual file sorting eliminated. Attachments are renamed, categorized, and filed the moment they arrive.",
@@ -82,7 +71,7 @@ const projects: Project[] = [
     value:
       "A dynamic pipeline that 'teaches' AI agents from new Google Drive uploads using n8n and Supabase.",
     stack: ["n8n", "Supabase", "pgvector", "Gemini"],
-    image: coverRag,
+    image: proofRag,
     proofImage: proofRag,
     impact:
       "AI agents stay current automatically — no manual retraining or document updates needed.",
@@ -102,7 +91,7 @@ const projects: Project[] = [
     value:
       "Smart branching logic for automated SMS, Call, and Email follow-ups built in GoHighLevel (GHL).",
     stack: ["GoHighLevel", "SMS", "Email", "Conditional Logic"],
-    image: coverLeadNurturing,
+    image: proofLeadNurturing,
     proofImage: proofLeadNurturing,
     impact:
       "No lead goes cold. Every prospect gets the right follow-up on the right channel at the right time — automatically.",
@@ -121,7 +110,7 @@ const projects: Project[] = [
     value:
       "Automated accounting audit logs and task synchronization between Xero and Asana via Make.com.",
     stack: ["Xero", "Asana", "Make.com", "Google Sheets"],
-    image: coverFinancialSync,
+    image: proofFinancialSync,
     proofImage: proofFinancialSync,
     impact:
       "Financial tasks are logged and assigned automatically — no manual data entry between tools.",
@@ -140,7 +129,7 @@ const projects: Project[] = [
     value:
       "Path-based routing and AI personalization for high-ticket sales — every lead lands with the right rep, with the right context, at the right moment.",
     stack: ["Zapier", "AI", "CRM"],
-    image: coverLeadRouting,
+    image: proofLeadRouting,
     proofImage: proofLeadRouting,
     impact:
       "Every lead reaches the right rep instantly — with full context, zero manual sorting.",
@@ -159,7 +148,7 @@ const projects: Project[] = [
     value:
       "Auto-transcribing media and intelligent cross-posting to LinkedIn and Facebook using Zapier and AI.",
     stack: ["Zapier", "AI by Zapier", "LinkedIn", "Facebook Pages"],
-    image: coverSocialEngine,
+    image: proofSocialEngine,
     proofImage: proofSocialEngine,
     impact:
       "Raw recordings become published posts automatically — content output increased without added effort.",
@@ -196,7 +185,7 @@ const projects: Project[] = [
     value:
       "Turns repetitive Facebook inquiries into instant automated replies — so the business never misses a lead, even during peak hours.",
     stack: ["n8n", "Google Gemini", "Webhook", "Facebook Messenger"],
-    image: coverFbAgent,
+    image: proofFbAgent,
     proofImage: proofFbAgent,
     impact:
       "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
@@ -216,7 +205,7 @@ const projects: Project[] = [
     value:
       "Watches Gmail for new emails, classifies them using Gemini AI, logs to Google Sheets, drafts a reply, notifies via Slack, then routes each email to the correct team folder automatically.",
     stack: ["N8N", "GEMINI AI", "GMAIL", "GOOGLE SHEETS", "SLACK"],
-    image: coverEmailRouting,
+    image: proofEmailRouting,
     proofImage: proofEmailRouting,
     impact:
       "Inbox triage is fully hands-off. Every email lands in the right team folder with a draft reply ready and Slack notified — in seconds.",
@@ -235,7 +224,7 @@ const projects: Project[] = [
     value:
       "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets — fully automated.",
     stack: ["MAKE.COM", "OPENAI", "AIRTABLE", "BUFFER", "GOOGLE SHEETS"],
-    image: coverSocialAuto,
+    image: proofSocialAuto,
     proofImage: proofSocialAuto,
     impact:
       "An entire content calendar publishes itself — captions written, links shortened, posts scheduled, results logged — zero manual posting.",
@@ -254,7 +243,7 @@ const projects: Project[] = [
     value:
       "Triggers daily at 8AM, reads product research, competitor ads, and audience insights from Google Sheets, builds an AI context brief, generates UGC video scripts via Groq, formats the output, and saves it to a new dated Google Doc automatically.",
     stack: ["N8N", "GROQ AI", "GOOGLE SHEETS", "GOOGLE DRIVE", "GOOGLE DOCS"],
-    image: coverUgcScript,
+    image: proofUgcScript,
     proofImage: proofUgcScript,
     impact:
       "A fresh, ready-to-record UGC script lands in Google Drive every morning before the team even logs in.",
