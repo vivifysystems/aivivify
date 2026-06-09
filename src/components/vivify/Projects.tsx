@@ -17,6 +17,12 @@ import proofLeadNurturing from "@/assets/proof-lead-nurturing.png";
 import proofFinancialSync from "@/assets/proof-financial-sync.png";
 import proofLeadRouting from "@/assets/proof-lead-routing.png";
 import proofSocialEngine from "@/assets/proof-social-engine.png";
+import coverEmailRouting from "@/assets/cover-email-routing.png";
+import coverSocialAuto from "@/assets/cover-social-auto.png";
+import coverUgcScript from "@/assets/cover-ugc-script.png";
+import proofEmailRouting from "@/assets/proof-email-routing.png";
+import proofSocialAuto from "@/assets/proof-social-auto.png";
+import proofUgcScript from "@/assets/proof-ugc-script.png";
 
 type Project = {
   tag: string;
@@ -203,6 +209,63 @@ const projects: Project[] = [
         "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
     },
     demoUrl: "https://drive.google.com/file/d/17t8nT8wexs1aVj8QrgZLgZrJH2jlQpBn/preview",
+  },
+  {
+    tag: "N8N · AI · GMAIL",
+    title: "AI Email Classification & Routing System",
+    value:
+      "Watches Gmail for new emails, classifies them using Gemini AI, logs to Google Sheets, drafts a reply, notifies via Slack, then routes each email to the correct team folder automatically.",
+    stack: ["N8N", "GEMINI AI", "GMAIL", "GOOGLE SHEETS", "SLACK"],
+    image: coverEmailRouting,
+    proofImage: proofEmailRouting,
+    impact:
+      "Inbox triage is fully hands-off. Every email lands in the right team folder with a draft reply ready and Slack notified — in seconds.",
+    caseStudy: {
+      problem:
+        "Teams were drowning in mixed inbound email — sales, support, urgent escalations, marketing — all hitting one inbox and requiring manual sorting before anyone could act.",
+      solution:
+        "Built an n8n workflow that watches Gmail, sends each message to Gemini for intent classification, logs the decision to Google Sheets, drafts a contextual reply, posts a Slack notice, and moves the email into the correct team's folder.",
+      result:
+        "Manual triage eliminated. Response times collapse from hours to seconds while every classification stays auditable.",
+    },
+  },
+  {
+    tag: "MAKE.COM · AI · BUFFER",
+    title: "Social Media Auto Poster",
+    value:
+      "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets — fully automated.",
+    stack: ["MAKE.COM", "OPENAI", "AIRTABLE", "BUFFER", "GOOGLE SHEETS"],
+    image: coverSocialAuto,
+    proofImage: proofSocialAuto,
+    impact:
+      "An entire content calendar publishes itself — captions written, links shortened, posts scheduled, results logged — zero manual posting.",
+    caseStudy: {
+      problem:
+        "Maintaining a consistent multi-channel posting cadence required hours each week writing captions, shortening links, scheduling, and tracking what went out.",
+      solution:
+        "Built a Make.com scenario that reads queued content from Airtable, generates platform-tailored captions with OpenAI, shortens URLs via Bitly, schedules through Buffer, and writes the full audit trail back to Airtable and Google Sheets.",
+      result:
+        "Posting cadence is now consistent and effortless. Content creators ship ideas to Airtable; everything downstream happens on its own.",
+    },
+  },
+  {
+    tag: "N8N · GROQ AI · GOOGLE DRIVE",
+    title: "UGC Script Generator",
+    value:
+      "Triggers daily at 8AM, reads product research, competitor ads, and audience insights from Google Sheets, builds an AI context brief, generates UGC video scripts via Groq, formats the output, and saves it to a new dated Google Doc automatically.",
+    stack: ["N8N", "GROQ AI", "GOOGLE SHEETS", "GOOGLE DRIVE", "GOOGLE DOCS"],
+    image: coverUgcScript,
+    proofImage: proofUgcScript,
+    impact:
+      "A fresh, ready-to-record UGC script lands in Google Drive every morning before the team even logs in.",
+    caseStudy: {
+      problem:
+        "Producing daily UGC scripts meant manually combining product research, competitor ads, and audience insights every morning — slow, repetitive, and a creative bottleneck.",
+      solution:
+        "Built an n8n workflow that fires at 8AM, ingests all three Google Sheets data sources, assembles a rich AI brief, generates scripts through Groq, formats the output, and writes everything into a freshly created dated Google Doc.",
+      result:
+        "Creators wake up to a polished script in Drive. Daily content output becomes predictable without burning creative hours on prep.",
+    },
   },
 ];
 
