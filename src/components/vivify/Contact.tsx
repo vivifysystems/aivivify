@@ -12,12 +12,12 @@ export function Contact() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <a
-            href="mailto:vivify.systems@gmail.com"
+            href="mailto:viviene@vivify.solutions"
             className="glass group flex items-center justify-between rounded-2xl p-7 transition-all hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.2)]"
           >
             <div>
               <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">Email</p>
-              <p className="mt-2 font-display text-xl">vivify.systems@gmail.com</p>
+              <p className="mt-2 font-display text-xl">viviene@vivify.solutions</p>
             </div>
             <span className="text-2xl text-primary transition-transform group-hover:translate-x-1">→</span>
           </a>
