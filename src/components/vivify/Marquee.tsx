@@ -1,3 +1,7 @@
+import supabaseLogo from "@/assets/supabase.png.asset.json";
+import makeLogo from "@/assets/make.png.asset.json";
+import geminiLogo from "@/assets/gemini.png.asset.json";
+
 type Platform = {
   name: string;
   src?: string;
@@ -8,20 +12,14 @@ type Platform = {
 
 const platforms: Platform[] = [
   { name: "n8n", src: "https://n8n.io/favicon.ico" },
-  {
-    name: "Make.com",
-    src: "https://images.ctfassets.net/un655fb9wln6/6HJNHeuWce5PMLaOTqCUzw/00e8de922daf6b6c7f9f2daff22c130e/make-logo-2022.svg",
-  },
+  { name: "Make.com", src: makeLogo.url },
   { name: "Zapier", src: "https://cdn.zapier.com/zapier/images/logos/zapier-logo.svg" },
   { name: "GoHighLevel", text: "GHL", textColor: "#FF6B35" },
   { name: "OpenAI", src: "https://openai.com/favicon.ico", invert: true },
-  { name: "Supabase", src: "https://supabase.com/brand-assets/supabase-logo-icon.png" },
+  { name: "Supabase", src: supabaseLogo.url },
   { name: "Anthropic", src: "https://anthropic.com/favicon.ico" },
   { name: "HubSpot", src: "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png" },
-  {
-    name: "Gemini",
-    src: "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_advanced_1743d7f7a7_512px.png",
-  },
+  { name: "Gemini", src: geminiLogo.url },
   { name: "VAPI", text: "VAPI", textColor: "#ffffff" },
 ];
 

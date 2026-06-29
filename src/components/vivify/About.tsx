@@ -6,7 +6,7 @@ const CALENDLY = "https://calendly.com/vivienecreates/automation-discovery-call"
 
 const stats = [
   { k: 20, suffix: "+", v: "Hrs / week reclaimed" },
-  { k: 7, suffix: "", v: "Production systems" },
+  { k: 12, suffix: "", v: "Production systems" },
   { k: 24, suffix: "/7", v: "Hands-off operation" },
 ];
 
