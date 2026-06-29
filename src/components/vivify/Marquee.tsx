@@ -1,14 +1,28 @@
-const platforms = [
-  "n8n",
-  "Make.com",
-  "Zapier",
-  "GoHighLevel",
-  "OpenAI",
-  "Supabase",
-  "Anthropic",
-  "HubSpot",
-  "Gemini",
-  "VAPI",
+type Platform = {
+  name: string;
+  src?: string;
+  text?: string;
+  textColor?: string;
+  invert?: boolean;
+};
+
+const platforms: Platform[] = [
+  { name: "n8n", src: "https://n8n.io/favicon.ico" },
+  {
+    name: "Make.com",
+    src: "https://images.ctfassets.net/un655fb9wln6/6HJNHeuWce5PMLaOTqCUzw/00e8de922daf6b6c7f9f2daff22c130e/make-logo-2022.svg",
+  },
+  { name: "Zapier", src: "https://cdn.zapier.com/zapier/images/logos/zapier-logo.svg" },
+  { name: "GoHighLevel", text: "GHL", textColor: "#FF6B35" },
+  { name: "OpenAI", src: "https://openai.com/favicon.ico", invert: true },
+  { name: "Supabase", src: "https://supabase.com/brand-assets/supabase-logo-icon.png" },
+  { name: "Anthropic", src: "https://anthropic.com/favicon.ico" },
+  { name: "HubSpot", src: "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png" },
+  {
+    name: "Gemini",
+    src: "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_advanced_1743d7f7a7_512px.png",
+  },
+  { name: "VAPI", text: "VAPI", textColor: "#ffffff" },
 ];
 
 export function Marquee() {
@@ -36,14 +50,27 @@ export function Marquee() {
         }}
       >
         <div className="flex w-max animate-marquee items-center gap-14 whitespace-nowrap py-2">
-          {loop.map((name, i) => (
-            <span
-              key={`${name}-${i}`}
-              className="font-display text-2xl font-bold uppercase tracking-[0.18em] text-foreground/55 transition-colors hover:text-primary sm:text-3xl"
-            >
-              {name}
-            </span>
-          ))}
+          {loop.map((p, i) =>
+            p.src ? (
+              <img
+                key={`${p.name}-${i}`}
+                src={p.src}
+                alt={p.name}
+                loading="lazy"
+                className={`h-8 w-auto object-contain opacity-80 transition-opacity hover:opacity-100 ${
+                  p.invert ? "invert" : ""
+                }`}
+              />
+            ) : (
+              <span
+                key={`${p.name}-${i}`}
+                className="font-display text-2xl font-bold uppercase tracking-[0.18em] sm:text-3xl"
+                style={{ color: p.textColor ?? "#ffffff" }}
+              >
+                {p.text ?? p.name}
+              </span>
+            ),
+          )}
         </div>
       </div>
     </section>
