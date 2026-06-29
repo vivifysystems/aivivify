@@ -7,7 +7,7 @@ export function Contact() {
         <SectionHeader
           kicker="Contact"
           title="Let’s build something hands-off."
-          sub="Missed leads? Drowning in manual follow-ups? Spending hours on tasks your tools should handle? Tell me what's broken — I'll build the system that fixes it for good."
+          sub="If your team is answering the same questions on repeat, chasing leads manually, or missing inquiries after hours — that's the problem I fix. Tell me what's costing you time, and I'll show you exactly what to automate."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">

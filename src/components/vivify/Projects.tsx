@@ -31,6 +31,26 @@ type Project = {
 
 const projects: Project[] = [
   {
+    tag: "n8n · Gemini",
+    title: "24/7 Facebook Messenger AI Agent",
+    value:
+      "Turns repetitive Facebook inquiries into instant automated replies — so the business never misses a lead, even during peak hours.",
+    stack: ["n8n", "Google Gemini", "Webhook", "Facebook Messenger"],
+    image: proofFbAgent,
+    proofImage: proofFbAgent,
+    impact:
+      "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
+    caseStudy: {
+      problem:
+        "A local catering business was receiving 15–20 Facebook inquiries daily — pricelist, menu, location — but messages sat unanswered for 3–5 hours during peak order preparation. Potential customers were left waiting or went elsewhere.",
+      solution:
+        "Built a 24/7 AI agent on Facebook Messenger using n8n and Google Gemini, connected to the business's actual knowledge base. It handles all repetitive questions instantly without any human intervention.",
+      result:
+        "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
+    },
+    demoUrl: "https://drive.google.com/file/d/17t8nT8wexs1aVj8QrgZLgZrJH2jlQpBn/preview",
+  },
+  {
     tag: "n8n + VAPI",
     title: "24/7 AI Voice Receptionist ('Bobby')",
     value:
@@ -181,26 +201,6 @@ const projects: Project[] = [
       result:
         "Full research reports generated end-to-end without human input. Currently in beta with ongoing refinement.",
     },
-  },
-  {
-    tag: "n8n · Gemini",
-    title: "24/7 Facebook Messenger AI Agent",
-    value:
-      "Turns repetitive Facebook inquiries into instant automated replies — so the business never misses a lead, even during peak hours.",
-    stack: ["n8n", "Google Gemini", "Webhook", "Facebook Messenger"],
-    image: proofFbAgent,
-    proofImage: proofFbAgent,
-    impact:
-      "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
-    caseStudy: {
-      problem:
-        "A local catering business was receiving 15–20 Facebook inquiries daily — pricelist, menu, location — but messages sat unanswered for 3–5 hours during peak order preparation. Potential customers were left waiting or went elsewhere.",
-      solution:
-        "Built a 24/7 AI agent on Facebook Messenger using n8n and Google Gemini, connected to the business's actual knowledge base. It handles all repetitive questions instantly without any human intervention.",
-      result:
-        "Response time dropped from 3–5 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours.",
-    },
-    demoUrl: "https://drive.google.com/file/d/17t8nT8wexs1aVj8QrgZLgZrJH2jlQpBn/preview",
   },
   {
     tag: "N8N · AI · GMAIL",

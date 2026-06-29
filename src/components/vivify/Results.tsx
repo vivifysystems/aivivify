@@ -5,6 +5,7 @@ const results = [
   { value: "3–5 hrs → 10 sec", label: "Customer response time reduced" },
   { value: "24/7", label: "Uptime across all deployed systems" },
   { value: "7+", label: "Production workflows shipped" },
+  { value: "1 hr → 6 min", label: "Script production time for 10 UGC scripts" },
 ];
 
 export function Results() {
