@@ -4,35 +4,27 @@ import { useStaggerReveal } from "./TiltCard";
 const stacks = [
   {
     icon: "⚡",
-    group: "Automation",
-    blurb: "Orchestration engines that run your ops 24/7.",
-    items: ["n8n", "Make.com", "Zapier", "GoHighLevel"],
+    group: "Customer Reply Systems",
+    blurb: "AI agents that answer Facebook, website, and chat inquiries instantly — 24/7, no staff needed.",
+    items: [],
   },
   {
     icon: "🧠",
-    group: "AI / LLMs",
-    blurb: "Reasoning, retrieval, and voice — production-grade.",
-    items: [
-      "OpenAI GPT-4o",
-      "Claude 3.5",
-      "Google Gemini",
-      "VAPI",
-      "Agentic Workflows",
-      "RAG Architecture",
-      "Voice Agents",
-    ],
+    group: "Smart Follow-Up",
+    blurb: "Automated sequences that chase every lead across email, SMS, and chat so nothing falls through the cracks.",
+    items: [],
   },
   {
     icon: "🗄️",
-    group: "Data & Backend",
-    blurb: "Durable storage, vectors, and webhook plumbing.",
-    items: ["Supabase", "Postgres", "Vector Stores", "Webhooks / APIs"],
+    group: "Bookings & Scheduling",
+    blurb: "Voice and chat assistants that book appointments directly into your calendar with zero human involvement.",
+    items: [],
   },
   {
     icon: "📡",
-    group: "Comms & CRM",
-    blurb: "Where humans and agents talk to your customers.",
-    items: ["Twilio", "Gmail / Workspace", "Slack", "WhatsApp"],
+    group: "Reports & Data Sync",
+    blurb: "Your tools talk to each other automatically — no manual data entry, no missed updates.",
+    items: [],
   },
 ];
 
@@ -43,8 +35,8 @@ export function Skills() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           kicker="Skills"
-          title="The Stack I Operate"
-          sub="Polyglot across no-code, low-code, and code. Built for resilience."
+          title="What I Build For You"
+          sub="Systems that run your business even when your team isn't available."
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -84,16 +76,18 @@ export function Skills() {
                   <p className="mt-2 text-xs leading-relaxed text-foreground/70">
                     {s.blurb}
                   </p>
-                  <ul className="mt-4 flex flex-wrap gap-1.5">
-                    {s.items.map((it) => (
-                      <li
-                        key={it}
-                        className="rounded-full border border-primary/40 bg-primary/10 px-2 py-1 font-mono-ui text-[10px] uppercase tracking-wider text-primary"
-                      >
-                        {it}
-                      </li>
-                    ))}
-                  </ul>
+                  {s.items.length > 0 && (
+                    <ul className="mt-4 flex flex-wrap gap-1.5">
+                      {s.items.map((it) => (
+                        <li
+                          key={it}
+                          className="rounded-full border border-primary/40 bg-primary/10 px-2 py-1 font-mono-ui text-[10px] uppercase tracking-wider text-primary"
+                        >
+                          {it}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
