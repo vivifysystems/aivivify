@@ -41,9 +41,7 @@ export function Hero() {
         </p>
 
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-foreground/85 sm:text-base [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
-          I build the systems that run it while you don't. Custom AI agents and automated
-          pipelines using <span className="neon-text font-semibold">n8n, Make, and Zapier</span>{" "}
-          — so your ops never stop, even when you do.
+          I build the systems that answer your customers, follow up on every lead, and book your appointments — automatically, 24/7. So no inquiry ever goes cold, no follow-up gets forgotten, and your team focuses on closing, not chasing.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-5">
