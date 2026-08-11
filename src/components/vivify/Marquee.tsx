@@ -6,26 +6,25 @@ import anthropicLogo from "@/assets/logos/anthropic.svg";
 import hubspotLogo from "@/assets/logos/hubspot.svg";
 import geminiLogo from "@/assets/logos/gemini.svg";
 import openaiLogo from "@/assets/logos/openai.svg";
+import ghlLogo from "@/assets/logos/gohighlevel.svg";
+import vapiLogo from "@/assets/logos/vapi.svg";
 
 type Platform = {
   name: string;
-  src?: string;
-  text?: string;
-  textColor?: string;
-  invert?: boolean;
+  src: string;
 };
 
 const platforms: Platform[] = [
   { name: "n8n", src: n8nLogo },
   { name: "Make.com", src: makeLogo },
   { name: "Zapier", src: zapierLogo },
-  { name: "GoHighLevel", text: "GHL", textColor: "#FF6B35" },
+  { name: "GoHighLevel", src: ghlLogo },
   { name: "OpenAI", src: openaiLogo },
   { name: "Supabase", src: supabaseLogo },
   { name: "Anthropic", src: anthropicLogo },
   { name: "HubSpot", src: hubspotLogo },
   { name: "Gemini", src: geminiLogo },
-  { name: "VAPI", text: "VAPI", textColor: "#ffffff" },
+  { name: "VAPI", src: vapiLogo },
 ];
 
 export function Marquee() {
@@ -53,27 +52,15 @@ export function Marquee() {
         }}
       >
         <div className="flex w-max animate-marquee items-center gap-14 whitespace-nowrap py-2">
-          {loop.map((p, i) =>
-            p.src ? (
-              <img
-                key={`${p.name}-${i}`}
-                src={p.src}
-                alt={p.name}
-                loading="lazy"
-                className={`h-8 w-auto object-contain opacity-80 transition-opacity hover:opacity-100 ${
-                  p.invert ? "invert" : ""
-                }`}
-              />
-            ) : (
-              <span
-                key={`${p.name}-${i}`}
-                className="font-display text-2xl font-bold uppercase tracking-[0.18em] sm:text-3xl"
-                style={{ color: p.textColor ?? "#ffffff" }}
-              >
-                {p.text ?? p.name}
-              </span>
-            ),
-          )}
+          {loop.map((p, i) => (
+            <img
+              key={`${p.name}-${i}`}
+              src={p.src}
+              alt={p.name}
+              loading="lazy"
+              className="h-8 w-auto object-contain opacity-80 grayscale brightness-[2] transition-opacity hover:opacity-100"
+            />
+          ))}
         </div>
       </div>
     </section>
