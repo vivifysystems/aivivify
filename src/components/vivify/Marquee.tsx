@@ -1,6 +1,11 @@
-import supabaseLogo from "@/assets/supabase.png.asset.json";
-import makeLogo from "@/assets/make.png.asset.json";
-import geminiLogo from "@/assets/gemini.png.asset.json";
+import n8nLogo from "@/assets/logos/n8n.svg";
+import makeLogo from "@/assets/logos/make.svg";
+import zapierLogo from "@/assets/logos/zapier.svg";
+import supabaseLogo from "@/assets/logos/supabase.svg";
+import anthropicLogo from "@/assets/logos/anthropic.svg";
+import hubspotLogo from "@/assets/logos/hubspot.svg";
+import geminiLogo from "@/assets/logos/gemini.svg";
+import openaiLogo from "@/assets/logos/openai.svg";
 
 type Platform = {
   name: string;
@@ -11,15 +16,15 @@ type Platform = {
 };
 
 const platforms: Platform[] = [
-  { name: "n8n", src: "https://n8n.io/favicon.ico" },
-  { name: "Make.com", src: makeLogo.url },
-  { name: "Zapier", src: "https://cdn.zapier.com/zapier/images/logos/zapier-logo.svg" },
+  { name: "n8n", src: n8nLogo },
+  { name: "Make.com", src: makeLogo },
+  { name: "Zapier", src: zapierLogo },
   { name: "GoHighLevel", text: "GHL", textColor: "#FF6B35" },
-  { name: "OpenAI", src: "https://openai.com/favicon.ico", invert: true },
-  { name: "Supabase", src: supabaseLogo.url },
-  { name: "Anthropic", src: "https://anthropic.com/favicon.ico" },
-  { name: "HubSpot", src: "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png" },
-  { name: "Gemini", src: geminiLogo.url },
+  { name: "OpenAI", src: openaiLogo },
+  { name: "Supabase", src: supabaseLogo },
+  { name: "Anthropic", src: anthropicLogo },
+  { name: "HubSpot", src: hubspotLogo },
+  { name: "Gemini", src: geminiLogo },
   { name: "VAPI", text: "VAPI", textColor: "#ffffff" },
 ];
 
