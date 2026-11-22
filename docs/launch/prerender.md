@@ -1,39 +1,26 @@
-# Static prerendering: proposed production change
+# Static prerendering
 
-Status: **implemented and tested locally; not active.** Production still runs `vite build` from the current
-`vercel.json` (SPA rewrite of every path to `/index.html`).
+Vercel builds the site with `npm run build:prerender` (see `vercel.json`). Every route in the sitemap is
+served as a static HTML file that already contains its own title, description, canonical URL, Open Graph tags,
+headings and copy. React then hydrates the page in the browser.
 
-## What exists now
+## How it works
 
 - `src/routes.tsx`: one route tree shared by the browser and the server render.
 - `src/lib/route-meta.ts`: one table of titles, descriptions, canonical URLs and `noindex` flags, used by
   `useRouteMeta()` in the browser and by `headTags()` in static HTML (tested in `route-meta.test.ts`).
-- `src/entry-server.tsx` + `scripts/prerender.mjs`: render all 33 sitemap routes to
-  `dist/<route>/index.html` and the 404 page to `dist/404.html`.
+- `src/entry-server.tsx` + `scripts/prerender.mjs`: render every sitemap route to `dist/<route>/index.html` and
+  the 404 page to `dist/404.html`.
 - `src/main.tsx` hydrates when `#root` already contains HTML, and renders normally otherwise, so the same
   bundle works with both builds.
 - `npm run build:prerender` = `vite build` → SSR build → prerender.
-- `scripts/serve-static.mjs`: local emulation of clean-URL static hosting with real 404 status.
+- `scripts/serve-static.mjs`: local emulation of clean-URL static hosting with a real 404 status.
 
-## Verified locally (2026-11-20)
-
-| Request                  | Status  | `<title>`                                             | robots / canonical                  |
-| ------------------------ | ------- | ----------------------------------------------------- | ----------------------------------- |
-| `/`                      | 200     | VIVIFY Solutions \| AI Automation & Business Systems  | index / `https://vivify.solutions/` |
-| `/systems/ai-chatbot`    | 200     | AI Website Chatbot \| VIVIFY Solutions                | index / matching canonical          |
-| `/work?tool=Zapier`      | 200     | Work & portfolio                                      | canonical without query             |
-| `/nope`, `/systems/nope` | **404** | Page not found                                        | `noindex`, no canonical             |
-
-Hydration produced no React warnings on 7 routes, with and without reduced motion. Page HTML contains the
-real headings and copy, so link previews (which don't run JavaScript) show the right title and
-description per page.
-
-## Change needed in production (needs approval)
-
-Replace `vercel.json` with `docs/launch/vercel.prerender.proposed.json`:
+## Hosting configuration
 
 ```json
 {
+  "installCommand": "bun install --frozen-lockfile",
   "buildCommand": "npm run build:prerender",
   "outputDirectory": "dist",
   "cleanUrls": true,
@@ -41,14 +28,18 @@ Replace `vercel.json` with `docs/launch/vercel.prerender.proposed.json`:
 }
 ```
 
-- The catch-all rewrite is removed: every real route is a static file, so unknown URLs get Vercel's
-  `404.html` with HTTP 404 instead of a soft 200.
-- `/api/contact` (see `contact-form.md`) is unaffected; Functions are routed before static files.
-- The install step is unchanged (separate package-manager decision in `docs/engineering.md`).
+- There is no catch-all rewrite: every real route is a static file, so an unknown URL gets `404.html` with
+  HTTP 404 instead of a soft 200.
+- `/api/contact` is a Vercel Function; Functions are routed before static files.
+- New routes must be added to `src/lib/sitemap.ts` (and so to the prerender), or they will 404 on a direct visit.
 
-## How to test it safely before production
+## Checks on a Preview deployment
 
-1. On a branch, swap `vercel.json` for the proposed file and push **to a Preview deployment only**.
-2. Check: `curl -I https://<preview>/nope` → 404; view-source of `/systems/ai-chatbot` shows the page title
-   and heading; a social card debugger shows per-page titles; client navigation still works.
-3. Only then merge.
+1. `curl -sI https://<preview>/nope` → `404`; `curl -sI https://<preview>/systems/ai-chatbot` → `200`.
+2. `curl -s https://<preview>/systems/ai-chatbot | grep -o '<title>[^<]*'` shows that page's title.
+3. `curl -sI https://<preview>/about/` → `308` to `/about`.
+4. Client-side navigation, the browser Back button and `/work?tool=…` filters still work.
+5. A social card debugger shows the per-page title and description.
+
+To return to the previous single-page setup, restore the earlier `vercel.json` (SPA rewrite of every path to
+`/index.html` with `buildCommand: "vite build"`); the bundle works unchanged with either build.

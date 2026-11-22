@@ -1,6 +1,5 @@
 // Writes static HTML for every sitemap route plus 404.html into dist/.
-// Run via `npm run build:prerender` (NOT the production build until vercel.json is
-// changed with owner approval; see docs/launch/prerender.md).
+// Run via `npm run build:prerender` (the Vercel build command; see docs/launch/prerender.md).
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
