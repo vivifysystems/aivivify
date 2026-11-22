@@ -69,6 +69,8 @@ running server instead of the local build.
   so the website and the endpoint cannot drift apart. Edit the content modules, never `data.ts`. The tool names,
   input schemas and result shapes are unchanged; `src/content/mcp-content.test.ts` keeps the two in step and keeps
   retired claims out. Removing a project from `src/content/projects.ts` removes it from both.
+- After changing anything MCP-visible, also refresh the committed snapshot the Lovable platform reads:
+  `npx lovable-mcp-extract-manifest` (it rewrites `.lovable/mcp/manifest.json`; a test fails if it is stale).
 - esbuild keeps every value a module touches, so filtering at runtime does not keep data out of the deployed
   source. Data that must not be public must not be imported at all.
 

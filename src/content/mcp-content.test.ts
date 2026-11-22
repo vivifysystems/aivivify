@@ -16,6 +16,7 @@ const mcpSource = [
   .map((f) => readFileSync(fromRoot(f), "utf8"))
   .join("\n");
 const generated = readFileSync(fromRoot("supabase/functions/mcp/index.ts"), "utf8");
+const manifest = readFileSync(fromRoot(".lovable/mcp/manifest.json"), "utf8");
 
 test("MCP data is derived from the website's canonical content", () => {
   assert.equal(mcp.about.brand, brand.name);
@@ -66,7 +67,7 @@ test("MCP shows the same pilot and provider-dependent labels as the website", ()
 });
 
 test("MCP carries no retired content", () => {
-  for (const text of [mcpSource, generated]) {
+  for (const text of [mcpSource, generated, manifest]) {
     assert.ok(!/onlinejobs/i.test(text), "OnlineJobs.ph is still in the MCP server");
     assert.ok(!text.includes("viviene-pitogo"), "the outdated LinkedIn URL is still in the MCP");
     assert.ok(!/VIVIFY Automation/.test(text), "the old brand name is still in the MCP server");
@@ -124,4 +125,13 @@ test("no source file or page ships OnlineJobs.ph or the old LinkedIn URL", () =>
     assert.ok(!/onlinejobs/i.test(text), `${f} mentions OnlineJobs.ph`);
     assert.ok(!text.includes("viviene-pitogo"), `${f} has the outdated LinkedIn URL`);
   }
+});
+
+test("the Lovable manifest snapshot matches the source", () => {
+  const m = JSON.parse(manifest);
+  assert.equal(m.mcp.server.title, "VIVIFY Solutions");
+  assert.deepEqual(
+    m.mcp.tools.map((t: { name: string }) => t.name),
+    ["list_projects", "get_project", "get_services", "get_contact_info", "get_about"],
+  );
 });

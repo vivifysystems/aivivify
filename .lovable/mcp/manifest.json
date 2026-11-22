@@ -8,14 +8,14 @@
   "mcp": {
     "server": {
       "name": "vivify-automation-mcp",
-      "version": "0.1.0",
-      "title": "VIVIFY Automation"
+      "version": "0.2.0",
+      "title": "VIVIFY Solutions"
     },
     "tools": [
       {
         "name": "list_projects",
         "title": "List projects",
-        "description": "List every automation case study VIVIFY has shipped. Returns id, title, tag, one-line summary, and tech stack for each.",
+        "description": "List the case studies VIVIFY Solutions has published. Returns id, title, tag, one-line summary, and tech stack for each.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -61,7 +61,7 @@
       {
         "name": "get_services",
         "title": "Get services",
-        "description": "Return the automation services VIVIFY offers and the platforms Viviene works across.",
+        "description": "Return the service groups, the individual systems and the packages VIVIFY Solutions offers (pilot and provider-dependent services are labelled), plus the platforms used in its projects.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -77,7 +77,7 @@
       {
         "name": "get_contact_info",
         "title": "Get contact info",
-        "description": "Return the public contact channels for VIVIFY Automation (email, website, LinkedIn, OnlineJobs.ph).",
+        "description": "Return the public contact channels for VIVIFY Solutions: email, website, LinkedIn and the free discovery-call booking link.",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
@@ -92,8 +92,8 @@
       },
       {
         "name": "get_about",
-        "title": "Get about VIVIFY",
-        "description": "Return the short bio, brand info, and headline impact metrics for VIVIFY Automation / Viviene Pitogo.",
+        "title": "Get about VIVIFY Solutions",
+        "description": "Return the short bio and brand info for VIVIFY Solutions / Viviene Pitogo, plus any owner-verified statistics (currently none are published).",
         "annotations": {
           "readOnlyHint": true,
           "idempotentHint": true,
