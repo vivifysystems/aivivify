@@ -1,6 +1,8 @@
 import { SectionHeader } from "./Framework";
-import { TiltCard, useStaggerReveal } from "./TiltCard";
+import { TiltCard } from "./TiltCard";
+import { useStaggerReveal } from "@/hooks/use-stagger-reveal";
 import { DinoBackdrop } from "./DinoBackdrop";
+import { links } from "@/content";
 
 const steps = [
   {
@@ -62,7 +64,7 @@ export function Process() {
 
         <div className="mt-12 flex justify-center">
           <a
-            href="https://calendly.com/vivienecreates/automation-discovery-call"
+            href={links.bookingCall.href}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_0_30px_rgba(0,255,65,0.4)] transition-transform hover:scale-105"

@@ -1,14 +1,12 @@
 import { SectionHeader } from "./Framework";
-
-const results = [
-  { value: "15–20", label: "Daily inquiries automated via FB AI Agent" },
-  { value: "3–5 hrs → 10 sec", label: "Customer response time reduced" },
-  { value: "24/7", label: "Uptime across all deployed systems" },
-  { value: "7+", label: "Production workflows shipped" },
-  { value: "1 hr → 6 min", label: "Script production time for 10 UGC scripts" },
-];
+import { publishableStats } from "@/content";
 
 export function Results() {
+  // Only owner-verified numbers are shown; the section is omitted until one exists.
+  // See src/content/stats.ts (candidates wait in stat-claims.ts).
+  const results = publishableStats("results");
+  if (results.length === 0) return null;
+
   return (
     <section className="relative px-6 py-28">
       <div className="mx-auto max-w-6xl">
@@ -21,7 +19,7 @@ export function Results() {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {results.map((r) => (
             <div
-              key={r.label}
+              key={r.id}
               className="glass group relative overflow-hidden rounded-2xl p-7 text-center transition-all hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(0,255,65,0.25)]"
             >
               <p className="font-display text-3xl font-black leading-tight text-primary [text-shadow:0_0_18px_rgba(0,255,65,0.45)] sm:text-4xl">

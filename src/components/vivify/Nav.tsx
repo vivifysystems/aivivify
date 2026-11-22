@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { links as contentLinks } from "@/content";
 
 const links = [
   { href: "#process", label: "Process" },
@@ -25,7 +26,10 @@ export function Nav() {
           scrolled ? "shadow-[0_0_30px_rgba(0,255,65,0.18)]" : ""
         }`}
       >
-        <a href="#top" className="flex items-center gap-2 font-display text-lg font-bold tracking-widest">
+        <a
+          href="#top"
+          className="flex items-center gap-2 font-display text-lg font-bold tracking-widest"
+        >
           <span className="inline-block h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_var(--neon)]" />
           <span className="neon-text">VIVIFY</span>
           <span className="text-foreground/60 text-xs font-mono-ui">/automation</span>
@@ -43,7 +47,7 @@ export function Nav() {
           ))}
         </ul>
         <a
-          href="https://calendly.com/vivienecreates/automation-discovery-call"
+          href={contentLinks.bookingCall.href}
           target="_blank"
           rel="noreferrer"
           className="hidden rounded-full border border-primary/60 bg-primary/10 px-4 py-1.5 font-mono-ui text-xs uppercase tracking-widest text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_20px_var(--neon)] md:inline-flex"
@@ -55,7 +59,14 @@ export function Nav() {
           aria-label="Toggle menu"
           className="md:hidden rounded-full border border-primary/40 p-2 text-primary"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M3 6h18M3 12h18M3 18h18" />
           </svg>
         </button>

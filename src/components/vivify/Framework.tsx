@@ -1,9 +1,18 @@
-import { TiltCard, useStaggerReveal } from "./TiltCard";
+import { TiltCard } from "./TiltCard";
+import { useStaggerReveal } from "@/hooks/use-stagger-reveal";
 import { DinoBackdrop } from "./DinoBackdrop";
 
 const steps = [
-  { letter: "V", title: "Visualize", desc: "Mapping manual bottlenecks into structured blueprints." },
-  { letter: "I", title: "Integrate", desc: "Connecting tech stacks (n8n, Make, GHL) into one ecosystem." },
+  {
+    letter: "V",
+    title: "Visualize",
+    desc: "Mapping manual bottlenecks into structured blueprints.",
+  },
+  {
+    letter: "I",
+    title: "Integrate",
+    desc: "Connecting tech stacks (n8n, Make, GHL) into one ecosystem.",
+  },
   { letter: "V", title: "Validate", desc: "Stress-testing logic for bulletproof reliability." },
   { letter: "I", title: "Implement", desc: "Deploying custom AI agents into live production." },
   { letter: "F", title: "Flow", desc: "Optimizing for 100% hands-off, seamless operations." },
@@ -16,7 +25,11 @@ export function Framework() {
     <section id="performance" className="relative overflow-hidden px-6 py-28">
       <DinoBackdrop side="left" flip />
       <div className="mx-auto max-w-6xl">
-        <SectionHeader kicker="Performance" title="The VIVIFY Framework" sub="A 6-step engineering process behind every system I deliver." />
+        <SectionHeader
+          kicker="Performance"
+          title="The VIVIFY Framework"
+          sub="A 6-step engineering process behind every system I deliver."
+        />
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((s, i) => (
@@ -59,9 +72,7 @@ export function SectionHeader({
       <span className="glass inline-flex items-center gap-2 rounded-full px-3 py-1 font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
         <span className="h-1 w-1 rounded-full bg-primary" /> {kicker}
       </span>
-      <h2 className="font-display text-4xl font-bold leading-tight sm:text-5xl">
-        {title}
-      </h2>
+      <h2 className="font-display text-4xl font-bold leading-tight sm:text-5xl">{title}</h2>
       {sub && <p className="max-w-2xl text-foreground/60">{sub}</p>}
     </div>
   );

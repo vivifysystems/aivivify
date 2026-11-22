@@ -28,8 +28,13 @@ const platforms: Platform[] = [
 ];
 
 export function Marquee() {
-  // Duplicate list so the -50% translate creates a seamless loop.
-  const loop = [...platforms, ...platforms];
+  // The list is rendered twice so the -50% translate creates a seamless loop.
+  // The copy is visual only: hidden from assistive tech, and removed entirely
+  // (along with the animation) for reduced-motion visitors via styles.css.
+  const loop = [
+    ...platforms.map((p) => ({ ...p, clone: false })),
+    ...platforms.map((p) => ({ ...p, clone: true })),
+  ];
 
   return (
     <section
@@ -45,18 +50,19 @@ export function Marquee() {
       <div
         className="relative mt-6 overflow-hidden"
         style={{
-          maskImage:
-            "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+          maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
           WebkitMaskImage:
             "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
         }}
       >
-        <div className="flex w-max animate-marquee items-center gap-14 whitespace-nowrap py-2">
-          {loop.map((p, i) => (
+        <div className="logo-marquee-track flex w-max animate-marquee items-center gap-14 whitespace-nowrap py-2">
+          {loop.map((p) => (
             <img
-              key={`${p.name}-${i}`}
+              key={`${p.name}-${p.clone ? "clone" : "main"}`}
               src={p.src}
-              alt={p.name}
+              alt={p.clone ? "" : p.name}
+              aria-hidden={p.clone || undefined}
+              data-marquee-clone={p.clone || undefined}
               loading="lazy"
               className="h-8 w-auto object-contain opacity-80 grayscale brightness-[2] transition-opacity hover:opacity-100"
             />

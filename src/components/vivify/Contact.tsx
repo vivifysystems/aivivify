@@ -1,4 +1,5 @@
 import { SectionHeader } from "./Framework";
+import { footerLinks, links } from "@/content";
 
 export function Contact() {
   return (
@@ -12,26 +13,34 @@ export function Contact() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <a
-            href="mailto:viviene@vivify.solutions"
+            href={links.email.href}
             className="glass group flex items-center justify-between rounded-2xl p-7 transition-all hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.2)]"
           >
             <div>
-              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">Email</p>
-              <p className="mt-2 font-display text-xl">viviene@vivify.solutions</p>
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Email
+              </p>
+              <p className="mt-2 font-display text-xl">{links.email.label}</p>
             </div>
-            <span className="text-2xl text-primary transition-transform group-hover:translate-x-1">→</span>
+            <span className="text-2xl text-primary transition-transform group-hover:translate-x-1">
+              →
+            </span>
           </a>
           <a
-            href="https://calendly.com/vivienecreates/automation-discovery-call"
+            href={links.bookingCall.href}
             target="_blank"
             rel="noreferrer"
             className="glass group flex items-center justify-between rounded-2xl p-7 transition-all hover:border-primary/60 hover:shadow-[0_0_30px_rgba(0,255,65,0.2)]"
           >
             <div>
-              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">Book a call</p>
+              <p className="font-mono-ui text-[10px] uppercase tracking-[0.3em] text-primary">
+                Book a call
+              </p>
               <p className="mt-2 font-display text-xl">Schedule a Discovery Call</p>
             </div>
-            <span className="text-2xl text-primary transition-transform group-hover:translate-x-1">→</span>
+            <span className="text-2xl text-primary transition-transform group-hover:translate-x-1">
+              →
+            </span>
           </a>
         </div>
       </div>
@@ -51,14 +60,13 @@ export function Footer() {
               </p>
               <p className="mt-1 text-sm text-foreground/60">
                 Let’s explore smarter systems.{" "}
-                <span className="text-foreground/45">(P.S. Meet the friendly dinosaur on our call! 🦖)</span>
+                <span className="text-foreground/45">
+                  (P.S. Meet the friendly dinosaur on our call! 🦖)
+                </span>
               </p>
             </div>
             <ul className="flex flex-wrap gap-3">
-              {[
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/vivienepitogo/" },
-                { label: "OnlineJobs.ph", href: "https://v2.onlinejobs.ph/jobseekers/info/4855809" },
-              ].map((l) => (
+              {footerLinks.map((l) => (
                 <li key={l.label}>
                   <a
                     href={l.href}
@@ -74,7 +82,9 @@ export function Footer() {
           </div>
           <div className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-white/5 pt-5 text-xs text-foreground/40 sm:flex-row sm:items-center">
             <p>© 2026 Viviene Pitogo | VIVIFY Automation</p>
-            <p className="font-mono-ui uppercase tracking-widest">status: <span className="text-primary">all systems operational</span></p>
+            <p className="font-mono-ui uppercase tracking-widest">
+              status: <span className="text-primary">all systems operational</span>
+            </p>
           </div>
         </div>
       </div>

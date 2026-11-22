@@ -25,9 +25,7 @@ export function TiltCard({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.matchMedia("(hover: none)").matches) return;
 
-    const layers = parallax
-      ? Array.from(el.querySelectorAll<HTMLElement>("[data-depth]"))
-      : [];
+    const layers = parallax ? Array.from(el.querySelectorAll<HTMLElement>("[data-depth]")) : [];
     const glint = parallax ? el.querySelector<HTMLElement>(".card-glint") : null;
 
     let raf = 0;
@@ -82,28 +80,4 @@ export function TiltCard({
       {children}
     </Tag>
   );
-}
-
-// Hook to add staggered fade-in-up to children when scrolled into view
-export function useStaggerReveal(selector = "[data-reveal]") {
-  useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>(selector));
-    if (!els.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const i = Number(el.dataset.revealIndex ?? 0);
-            el.style.transitionDelay = `${Math.min(i * 90, 600)}ms`;
-            el.classList.add("is-revealed");
-            io.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.15 },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [selector]);
 }

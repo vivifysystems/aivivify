@@ -1,18 +1,39 @@
+import { links } from "@/content";
+import { usePrefersReducedMotion, useSaveData } from "@/hooks/use-motion-preferences";
+
+const HERO_POSTER = "/videos/hero-poster.webp";
+const HERO_VIDEO = "/videos/hero-optimized.mp4";
+
 export function Hero() {
+  const reducedMotion = usePrefersReducedMotion();
+  const saveData = useSaveData();
+  const playVideo = !reducedMotion && !saveData;
+
   return (
     <section id="top" className="relative h-screen min-h-[680px] w-full overflow-hidden">
-      {/* Video background */}
-      <video
-        className="absolute inset-0 h-full w-full object-cover opacity-60"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        poster=""
-      >
-        <source src="/videos/hero.mp4" type="video/mp4" />
-      </video>
+      {/* Background: the poster paints immediately; the looping video is skipped for
+          reduced-motion and data-saver visitors. */}
+      {playVideo ? (
+        <video
+          className="absolute inset-0 h-full w-full object-cover opacity-60"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster={HERO_POSTER}
+          aria-hidden
+        >
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video>
+      ) : (
+        <img
+          src={HERO_POSTER}
+          alt=""
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover opacity-60"
+        />
+      )}
       {/* Overlays */}
       <div className="absolute inset-0 bg-black/35" />
       <div className="absolute inset-0 grid-bg opacity-30" />
@@ -41,7 +62,9 @@ export function Hero() {
         </p>
 
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-foreground/85 sm:text-base [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
-          I build the systems that answer your customers, follow up on every lead, and book your appointments — automatically, 24/7. So no inquiry ever goes cold, no follow-up gets forgotten, and your team focuses on closing, not chasing.
+          I build the systems that answer your customers, follow up on every lead, and book your
+          appointments — automatically, 24/7. So no inquiry ever goes cold, no follow-up gets
+          forgotten, and your team focuses on closing, not chasing.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-5">
@@ -50,7 +73,7 @@ export function Hero() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://calendly.com/vivienecreates/automation-discovery-call"
+              href={links.bookingCall.href}
               target="_blank"
               rel="noreferrer"
               className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-mono-ui text-sm font-semibold uppercase tracking-widest text-primary-foreground shadow-[0_0_30px_rgba(0,255,65,0.45)] transition-transform hover:scale-105"
