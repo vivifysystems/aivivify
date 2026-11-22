@@ -151,7 +151,7 @@ function HeroVivi() {
           </div>
         ))}
       </div>
-      <p className="absolute bottom-0 right-0 text-[0.8125rem] text-mist">Example activity</p>
+      <p className="absolute bottom-0 right-0 text-[0.8125rem] text-mist">Sample activity</p>
     </div>
   );
 }
@@ -186,8 +186,8 @@ export function Hero() {
             style={{ animationDelay: "180ms" }}
           >
             Service teams miss inquiries while they're doing the work. We build the websites, AI
-            customer assistants and connected systems that catch every inquiry, answer it and keep
-            the follow-up moving.
+            customer assistants and connected systems that capture inquiries, answer them quickly
+            and keep the follow-up moving.
           </p>
           <div
             className="anim-rise mt-9 flex flex-wrap items-center gap-3"
@@ -231,7 +231,7 @@ export function Hero() {
               className="h-10 w-10 rounded-full object-cover ring-2 ring-snow/15"
             />
             <span>
-              Founder-led by{" "}
+              Founder &mdash;{" "}
               <span className="font-semibold text-snow group-hover:underline">Viviene Pitogo</span>
             </span>
           </Link>

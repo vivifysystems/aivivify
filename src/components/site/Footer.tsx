@@ -1,66 +1,51 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { brand, enabledSystems, footerLinks, links } from "@/content";
+import { brand, links } from "@/content";
 import { Wordmark } from "./Header";
-import { BookingLink } from "./BookingLink";
 
+const explore = [
+  ["/solutions", "Solutions"],
+  ["/systems", "Systems"],
+  ["/demos", "Demos"],
+  ["/work", "Work"],
+  ["/about", "About"],
+] as const;
+
+/** Footer links: 44px tall tap targets on touch screens, compact on pointer screens. */
+const linkClass =
+  "inline-flex min-h-11 items-center gap-1 text-snow/85 transition-colors hover:text-cyan md:min-h-0 md:py-1";
+
+/** Compact footer: brand, two short link lists, and one quiet bottom line. */
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative overflow-hidden bg-navy pt-20 pb-10">
+    <footer className="border-t border-snow/10 bg-navy pt-10 pb-6 md:pt-14 md:pb-7">
       <div className="shell">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
-          <div className="col-span-2 lg:col-span-1">
-            <Wordmark />
-            <p className="mt-5 max-w-xs text-mist">{brand.positioning}</p>
-            <BookingLink className="mt-7" />
+        <div className="grid gap-x-8 gap-y-8 min-[360px]:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr] md:gap-x-12">
+          <div className="min-[360px]:col-span-2 md:col-span-1">
+            <Wordmark className="min-h-11 md:min-h-0" />
+            <p className="mt-4 max-w-[17rem] text-[0.95rem] leading-relaxed text-mist">
+              AI automation and business systems for service businesses.
+            </p>
           </div>
-          <nav aria-label="Systems">
-            <p className="kicker text-cyan">Systems</p>
-            <ul className="mt-4 space-y-2.5">
-              {enabledSystems
-                .filter(
-                  (s) => s.featured || s.id === "business-websites" || s.id === "ai-receptionist",
-                )
-                .map((s) => (
-                  <li key={s.id}>
-                    <Link to={`/systems/${s.id}`} className="text-snow/85 hover:text-snow">
-                      {s.title}
-                    </Link>
-                  </li>
-                ))}
-              <li>
-                <Link to="/systems" className="font-semibold text-purple-300 hover:text-purple-200">
-                  All systems
-                </Link>
-              </li>
-            </ul>
-          </nav>
-          <nav aria-label="Company">
-            <p className="kicker text-cyan">VIVIFY</p>
-            <ul className="mt-4 space-y-2.5">
-              {[
-                ["/solutions", "Solutions"],
-                ["/demos", "Demos"],
-                ["/work", "Work"],
-                ["/about", "About"],
-                ["/contact", "Contact"],
-                ["/privacy", "Privacy"],
-              ].map(([to, label]) => (
+          <nav aria-label="Explore">
+            <p className="kicker text-cyan">Explore</p>
+            <ul className="mt-2 md:mt-3">
+              {explore.map(([to, label]) => (
                 <li key={to}>
-                  <Link to={to} className="text-snow/85 hover:text-snow">
+                  <Link to={to} className={linkClass}>
                     {label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="col-span-2 sm:col-span-1">
-            <p className="kicker text-cyan">Contact</p>
-            <ul className="mt-4 space-y-2.5">
+          <nav aria-label="Connect">
+            <p className="kicker text-cyan">Connect</p>
+            <ul className="mt-2 md:mt-3">
               <li>
-                <a href={links.email.href} className="text-snow/85 hover:text-snow">
-                  {links.email.label}
+                <a href={links.email.href} className={linkClass}>
+                  Email us
                 </a>
               </li>
               <li>
@@ -68,51 +53,41 @@ export function Footer() {
                   href={links.bookingCall.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-snow/85 hover:text-snow"
+                  className={linkClass}
                 >
-                  {links.bookingCall.label}
+                  Book a call
+                  <ArrowUpRight className="h-4 w-4" aria-hidden />
+                  <span className="sr-only">(opens Calendly in a new tab)</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={links.linkedin.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={linkClass}
+                >
+                  LinkedIn
                   <ArrowUpRight className="h-4 w-4" aria-hidden />
                   <span className="sr-only">(opens in a new tab)</span>
                 </a>
               </li>
-              {footerLinks.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-snow/85 hover:text-snow"
-                  >
-                    {l.label}
-                    <ArrowUpRight className="h-4 w-4" aria-hidden />
-                    <span className="sr-only">(opens in a new tab)</span>
-                  </a>
-                </li>
-              ))}
             </ul>
-          </div>
+          </nav>
         </div>
 
-        <svg aria-hidden viewBox="0 0 1000 205" className="mt-20 w-full select-none">
-          <text
-            x="-8"
-            y="196"
-            fontFamily="Sora, sans-serif"
-            fontWeight="700"
-            fontSize="262"
-            letterSpacing="-14"
-            fill="rgb(248 250 255 / 0.06)"
-            textLength="1010"
-            lengthAdjust="spacingAndGlyphs"
-          >
-            VIVIFY
-          </text>
-        </svg>
-        <div className="mt-8 flex flex-col gap-3 text-sm text-mist sm:flex-row sm:items-start sm:justify-between">
-          <p>© {year} VIVIFY Solutions. Founder-led by Viviene Pitogo.</p>
-          <p className="max-w-xl sm:text-right">
-            VIVI is VIVIFY's brand character. Service demos use a fictional sample business and are
-            simulations, not real customer data.
+        <div className="mt-8 flex flex-col gap-1 border-t border-snow/10 pt-5 text-sm text-mist min-[480px]:flex-row min-[480px]:items-center min-[480px]:justify-between">
+          <p>
+            © {year} {brand.name}.
+          </p>
+          <p>
+            Founded by {brand.operator} <span aria-hidden>·</span>{" "}
+            <Link
+              to="/privacy"
+              className="inline-flex min-h-11 items-center text-snow/85 underline-offset-4 transition-colors hover:text-cyan hover:underline md:min-h-0"
+            >
+              Privacy
+            </Link>
           </p>
         </div>
       </div>

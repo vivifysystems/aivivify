@@ -138,7 +138,7 @@ export function DemoPlayer({ demo, autoPlay = true, className }: Props) {
       className={cn("grid gap-8 lg:grid-cols-[19.5rem_minmax(0,1fr)] lg:gap-12", className)}
     >
       <h3 id={titleId} className="sr-only">
-        {demo.title}: simulated demo
+        {demo.title}: sample scenario
       </h3>
 
       <div className="relative">

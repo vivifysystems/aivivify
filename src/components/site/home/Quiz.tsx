@@ -119,11 +119,9 @@ export function Quiz() {
             lede="Answer six quick questions about how your business runs today. You'll get an indicative recommendation straight away, with no sign-up and no contact details needed."
           />
           <p data-reveal className="mt-6 max-w-md text-sm text-slate">
-            Indicative only, not a business diagnosis. Your answers stay in your browser and are
-            never sent anywhere.{" "}
-            {contactFormActive
-              ? "If you choose to talk through your result, a short summary is added to the contact form for you to edit or delete before you send anything."
-              : "If you choose to talk through your result, we'll take you to the contact page; nothing from your answers is sent."}
+            Explore a starting point for your business. Your answers stay in your browser.
+            {contactFormActive &&
+              " A short summary can be added to the contact form if you choose to talk it through."}
           </p>
         </div>
 

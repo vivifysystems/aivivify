@@ -8,7 +8,7 @@ export const packages: readonly Package[] = [
   {
     id: "launch",
     name: "VIVIFY Launch",
-    tagline: "Get found and capture every inquiry.",
+    tagline: "Get found and capture inquiries.",
     summary: "Website, lead capture, basic CRM and booking coordination.",
     bestFor: "Service businesses that need a dependable online foundation.",
     systems: ["business-websites", "inbox-crm", "appointment-booking"],

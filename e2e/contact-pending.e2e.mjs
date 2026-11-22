@@ -197,7 +197,7 @@ test("the privacy page and the readiness check match the email-only experience",
   await page.goto(env.base + "/");
   assert.match(
     await page.locator("#readiness").textContent(),
-    /take you to the contact page; nothing from your answers is sent/,
+    /Your answers stay in your browser\./,
   );
   assert.doesNotMatch(await page.locator("#readiness").textContent(), /added to the contact form/);
   await page.goto(env.base + "/contact");

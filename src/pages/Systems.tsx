@@ -15,7 +15,7 @@ export default function Systems() {
         label="Systems & features"
         title="Every system, in plain English."
         lede="Use one on its own or connect several. Each page explains what it does, how we build it, what we need from you and its honest limits."
-        vivi="Look for the demo button. Most systems have a short simulated walkthrough."
+        vivi="Look for the demo button. Most systems have a short sample walkthrough."
       />
       <section aria-label="Systems catalog" className="bg-ground pb-24">
         <div className="shell space-y-20">

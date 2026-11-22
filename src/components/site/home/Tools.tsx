@@ -1,4 +1,4 @@
-import { toolGroups, tools, toolsDisclaimer } from "@/content";
+import { toolGroups, tools, toolsNote } from "@/content";
 import { SectionHeading } from "../SectionHeading";
 
 export function Tools() {
@@ -50,7 +50,7 @@ export function Tools() {
           </div>
         ))}
       </div>
-      <p className="shell mt-10 text-sm text-mist">{toolsDisclaimer}</p>
+      <p className="shell mt-10 text-sm text-mist">{toolsNote}</p>
     </section>
   );
 }

@@ -76,7 +76,7 @@ test("the home proof section is about an approved project and says only what is 
     !/\d+\s?%|\d+x\b|testimonial|guarantee|never miss|24\/7/i.test(text),
     "an unsupported claim",
   );
-  assert.match(homeProof.caption, /not a real call/);
+  assert.match(homeProof.caption, /^Sample call scenario\.$/);
 });
 
 test("sitemap, MCP and site list the same projects", () => {

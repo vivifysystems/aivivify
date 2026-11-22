@@ -12,8 +12,7 @@ import type { Demo } from "./schema.ts";
  */
 export const SAMPLE_BUSINESS = "Harbor Plumbing";
 
-const SIM =
-  "Simulated demo with a fictional sample business. No real customer data or connected systems.";
+const SIM = "Sample scenario.";
 
 export const demos: readonly Demo[] = [
   {
@@ -159,8 +158,7 @@ export const demos: readonly Demo[] = [
       "Incoming call → AI conversation → request classification → callback request → human handoff.",
     device: "call",
     screenTitle: "Incoming call",
-    simulationNote:
-      "Simulated call transcript. No live voice integration runs on this site, and the AI Receptionist is a pilot service.",
+    simulationNote: "Sample call scenario. The AI Receptionist is a pilot service.",
     steps: [
       {
         stage: "Incoming call",
@@ -620,8 +618,7 @@ export const demos: readonly Demo[] = [
     summary: "Local search → relevant business result → website visit → customer inquiry.",
     device: "browser",
     screenTitle: "search.example",
-    simulationNote:
-      "Illustration only. Not real search results, positions or rankings. Nobody can guarantee rankings.",
+    simulationNote: "Sample scenario, not real search results.",
     steps: [
       {
         stage: "Local search",
@@ -958,7 +955,7 @@ export const demos: readonly Demo[] = [
     summary: "Trigger → extract → file and log → report → error alert.",
     device: "desktop",
     screenTitle: "Automation log",
-    simulationNote: "Simulated workflow run with sample data. No real accounts are connected.",
+    simulationNote: "Sample scenario with sample data.",
     steps: [
       {
         stage: "Trigger",

@@ -10,7 +10,7 @@ export const homeProof = {
   headline: "A phone call that ends with an appointment in the calendar.",
   device: { initial: "B", name: "Local business", channel: "Phone call" },
   figureLabel: "Illustration of a phone call and the booking it produces",
-  caption: "Illustrated example, not a real call. The wording is written for this page.",
+  caption: "Sample call scenario.",
   lines: [
     {
       from: "caller",
@@ -45,5 +45,6 @@ export const homeProof = {
     },
   ],
   role: "designed and built the assistant on n8n and VAPI, connected to Google Calendar and Airtable.",
-  workflowCaption: "The n8n workflow as built (screenshot).",
+  workflowCaption: "The workflow as built in n8n.",
+  pilotNote: "Voice receptionist services are offered as a pilot, case by case.",
 } as const;

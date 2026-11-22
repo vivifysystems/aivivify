@@ -52,7 +52,7 @@ export function SimulationBadge({ className }: { className?: string }) {
       )}
     >
       <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-cyan" />
-      Simulated demo
+      Sample scenario
     </span>
   );
 }

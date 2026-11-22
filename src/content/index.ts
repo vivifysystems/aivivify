@@ -38,5 +38,5 @@ export type {
   Faq,
   QuizQuestion,
 } from "./schema.ts";
-export { tools, toolGroups, toolsDisclaimer } from "./tools.ts";
+export { tools, toolGroups, toolsNote } from "./tools.ts";
 export type { ToolGroup } from "./tools.ts";

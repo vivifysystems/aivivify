@@ -26,7 +26,7 @@ const problems = [
     title: "The same questions, all day",
     line: "Prices, hours, service areas, again and again.",
     without: "“Do you service my area?” ×4",
-    withSys: "Answered from approved info, day or night",
+    withSys: "Answered from approved information",
     system: "ai-chatbot",
   },
   {
@@ -169,9 +169,7 @@ export function Problems() {
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-[0.8125rem] text-mist">
-              Illustrative example, not real customer data.
-            </p>
+            <p className="mt-4 text-[0.8125rem] text-mist">Sample scenario.</p>
           </div>
         </div>
       </div>

@@ -110,6 +110,10 @@ Automated so far: logo, canonical and content tests in headless Chromium.
       check again on the real domain after launch.)
 - [ ] Home: the proof section is about the AI voice receptionist, says "Illustrated example, not a real call", mentions the
       pilot, and shows no testimonial, statistic or recording.
+- [ ] Footer: three compact columns on desktop (brand, Explore, Connect) and a single bottom line, "© 2026 VIVIFY Solutions." and
+      "Founded by Viviene Pitogo · Privacy". Email us, Book a call, LinkedIn and Privacy all work; there is no repeated booking
+      button, VIVI disclaimer or systems list. On a phone it stacks, with no sideways scroll.
+- [ ] Demos: one line, "Interactive demonstrations using sample scenarios.", and each demo is labelled "Sample scenario".
 - [ ] Work: exactly five projects. Social Media Auto Poster and UGC Script Generator show "Concept demo" and a notice on their
       pages. No project shows a recording.
 - [ ] Contact page (switch pending): **no form and no "Send a message"**; "Book a free 30-minute call" and "Email me" are the two

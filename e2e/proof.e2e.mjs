@@ -78,10 +78,10 @@ proofTest(
     assert.match(text, /Assistant: /);
     assert.match(text, /I built this/);
     assert.match(text, /Viviene Pitogo/);
-    assert.match(text, /Illustrated example, not a real call/);
+    assert.match(text, /Sample call scenario\./);
     assert.match(text, /written to Google Calendar and logged in Airtable/);
     // Voice receptionists are a pilot service, and the proof says so.
-    assert.match(text, /Pilot: offered case by case/);
+    assert.match(text, /offered as a pilot, case by case/);
     // Honest by construction: no invented statistics or testimonials.
     assert.doesNotMatch(text, /\d+\s?%|\d+x\b|testimonial|“|”|★/i);
     assert.equal(await proof.locator("blockquote").count(), 0, "no quoted testimonial");

@@ -51,7 +51,7 @@ export function topicReply(id: string): AskReply {
     case "demo":
       return {
         id,
-        text: "Every system has a short, simulated walkthrough with a sample business. The chatbot demo is a good place to start.",
+        text: "Every system has a short sample walkthrough. The chatbot demo is a good place to start.",
         links: [
           { label: "Chatbot demo", to: "/demos#chatbot" },
           { label: "All demos", to: "/demos" },
@@ -60,7 +60,7 @@ export function topicReply(id: string): AskReply {
     case "founder":
       return {
         id,
-        text: `VIVIFY Solutions is founder-led by ${founder.name}. ${founder.intro.replace("I'm Viviene, a", "She's a")}`,
+        text: `VIVIFY Solutions was founded by ${founder.name}. ${founder.intro.replace("I'm Viviene, a", "She's a")}`,
         links: [
           { label: "Meet the founder", to: "/about" },
           { label: "See the portfolio", to: "/work" },

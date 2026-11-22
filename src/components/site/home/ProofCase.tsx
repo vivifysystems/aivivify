@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, CalendarCheck, CircleCheck, Phone, Play, type LucideIcon } from "lucide-react";
-import { homeProof, packages, projectById, proofProjectId } from "@/content";
+import { homeProof, projectById, proofProjectId } from "@/content";
 import { ProjectMedia } from "../work/ProjectMedia";
 import { usePrefersReducedMotion } from "@/hooks/use-motion-preferences";
 import portrait from "@/assets/optimized/card/viviene-portrait.webp";
@@ -55,7 +55,6 @@ export function ProofCase() {
   const project = projectById(proofProjectId);
   const { ref, stage } = useSequence(homeProof.steps.length);
   if (!project) return null;
-  const pilotNote = packages.find((p) => p.id === "connect")?.availabilityNote;
 
   return (
     <section
@@ -185,7 +184,7 @@ export function ProofCase() {
               of VIVIFY, {homeProof.role}
             </p>
           </div>
-          {pilotNote && <p className="mt-4 text-[0.875rem] text-mist">{pilotNote}</p>}
+          <p className="mt-4 text-[0.875rem] text-mist">{homeProof.pilotNote}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 sm:mt-8">
             <Link to={`/work/${project.id}`} className="btn btn-primary">

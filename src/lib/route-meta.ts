@@ -32,7 +32,7 @@ const fixed: Record<string, { title: string; description: string }> = {
   "/demos": {
     title: "Interactive service demos",
     description:
-      "Short, simulated walkthroughs of each VIVIFY system with a sample business, showing what customers see and what happens behind the scenes.",
+      "Short interactive walkthroughs of each VIVIFY system, using sample scenarios, showing what customers see and what happens behind the scenes.",
   },
   "/work": {
     title: "Work & portfolio",
@@ -42,7 +42,7 @@ const fixed: Record<string, { title: string; description: string }> = {
   "/about": {
     title: "About Viviene Pitogo, founder",
     description:
-      "VIVIFY Solutions is founder-led by Viviene Pitogo, a Computer Engineering graduate who builds practical websites, AI customer experiences and automated business systems.",
+      "VIVIFY Solutions was founded by Viviene Pitogo, a Computer Engineering graduate who builds practical websites, AI customer experiences and automated business systems.",
   },
   "/contact": {
     title: "Contact & discovery call",

@@ -132,8 +132,8 @@ test("no demo starts on an empty device screen", () => {
 test("every demo is labelled as a simulation", () => {
   for (const d of demos) {
     assert.ok(
-      /simulat|illustration/i.test(d.simulationNote),
-      `${d.id}: simulation note must say it is simulated`,
+      /sample (call )?scenario/i.test(d.simulationNote),
+      `${d.id}: the note must label it a sample scenario`,
     );
   }
   const seoDemo = demos.find((d) => d.id === "local-seo")!;

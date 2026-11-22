@@ -32,8 +32,8 @@ export default function Demos() {
       <PageHero
         label="Demos"
         title="See each system at work."
-        lede="Pick a system to watch a short simulated scenario. Pause, replay or step through at your own pace."
-        vivi="Every demo uses the same fictional sample business, Harbor Plumbing. Nothing here is real customer data."
+        lede="Pick a system to watch a short scenario. Pause, replay or step through at your own pace."
+        vivi="Interactive demonstrations using sample scenarios."
       />
       <section aria-label="Demo gallery" className="bg-ground pb-24">
         <div className="shell grid gap-10 lg:grid-cols-[18rem_1fr]">

@@ -45,7 +45,7 @@ export function Showcase() {
           </h2>
           <p data-reveal className="type-lede mx-auto mt-5 max-w-2xl text-mist">
             What the customer sees and what your team receives, step by step. Each demo plays a
-            short, simulated scenario with a sample business.
+            short sample scenario.
           </p>
         </div>
 

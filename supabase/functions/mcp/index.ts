@@ -80,7 +80,7 @@ var packages = [
   {
     id: "launch",
     name: "VIVIFY Launch",
-    tagline: "Get found and capture every inquiry.",
+    tagline: "Get found and capture inquiries.",
     summary: "Website, lead capture, basic CRM and booking coordination.",
     bestFor: "Service businesses that need a dependable online foundation.",
     systems: ["business-websites", "inbox-crm", "appointment-booking"],
@@ -321,8 +321,8 @@ var systems = [
     icon: "MessagesSquare",
     title: "AI Website Chatbot",
     shortTitle: "AI Chatbot",
-    menuLine: "Answer routine questions from your approved information, day or night.",
-    headline: "Instant answers. A person when it matters.",
+    menuLine: "Answer routine questions from your approved information.",
+    headline: "Fast answers. A person when it matters.",
     benefit: "A website assistant that answers common questions using only the information you approve, collects inquiry details and hands over to your team when a person is needed.",
     benefits: [
       "Answers routine questions from your approved information",
@@ -385,7 +385,7 @@ var systems = [
     availability: "pilot",
     demoId: "receptionist",
     relatedProjects: ["ai-voice-receptionist"],
-    viviLine: "A simulated call: greeting, request, callback record, staff alert.",
+    viviLine: "A sample call: greeting, request, callback record, staff alert.",
     exploreLabel: "Preview AI Receptionist",
     demoLabel: "See Receptionist Demo"
   },
@@ -591,7 +591,7 @@ var systems = [
     ],
     availability: "available",
     demoId: "local-seo",
-    viviLine: "From a local search to an inquiry. Illustration only, no real rankings.",
+    viviLine: "From a local search to an inquiry.",
     exploreLabel: "Explore Local SEO",
     demoLabel: "See Local SEO Demo"
   },
@@ -665,7 +665,7 @@ var systemGroups = [
   {
     id: "capture-respond",
     title: "Capture & respond",
-    line: "Catch every inquiry and answer it quickly."
+    line: "Capture inquiries and answer them quickly."
   },
   {
     id: "follow-up-book",

@@ -23,7 +23,7 @@ export function ContactCta({ title = "Let's find what's worth automating." }: { 
               <p data-reveal className="type-lede mt-5 max-w-xl text-white/90">
                 {contactFormActive
                   ? "Book a free discovery call, send a short message, or ask VIVI a quick question."
-                  : "Book a free discovery call, email us, or ask VIVI a quick question."}
+                  : "Book a free discovery call, email us, or ask VIVI a quick question."}{" "}
                 You'll get an honest view of what's worth automating, and what isn't.
               </p>
               <div data-reveal className="mt-9 flex flex-wrap gap-3">

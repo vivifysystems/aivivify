@@ -29,5 +29,5 @@ export const tools: readonly { name: string; group: ToolGroup }[] = [
   { name: "Buffer", group: "apps" },
 ];
 
-export const toolsDisclaimer =
-  "Tools used in the projects on this site. Listing a tool doesn't imply partnership, endorsement or certification.";
+/** Names identify tools used; they imply no partnership, endorsement or certification. */
+export const toolsNote = "Tools used across selected projects.";
