@@ -1,7 +1,11 @@
 // Server-side handler for the contact form, written against the standard
 // Request/Response API so it runs in a Vercel Function (api/contact.ts) and in
-// unit tests with injected dependencies. NOT ACTIVE until the owner configures
-// environment variables (see docs/launch/contact-form.md).
+// unit tests with injected dependencies. Answers 503 "not_configured" until the
+// environment variables are set (see docs/launch/contact-form.md).
+//
+// Personal data: the visitor's message is forwarded once to the configured inbox
+// and is not stored here. Logs carry event names and status codes only, never
+// the visitor's name, address, business or message.
 import { composeMessage, validateContact, type ContactInput } from "./contact.ts";
 
 export type ContactEnv = {
@@ -13,7 +17,7 @@ export type ContactEnv = {
   CONTACT_FROM_EMAIL?: string;
   /** Optional Cloudflare Turnstile secret. When set, a valid token is required. */
   TURNSTILE_SECRET_KEY?: string;
-  /** Optional exact Origin allowed to post, e.g. https://vivify.solutions. */
+  /** Optional comma-separated exact Origins allowed to post, e.g. https://vivify.solutions. */
   CONTACT_ALLOWED_ORIGIN?: string;
 };
 
@@ -22,7 +26,16 @@ export type ContactDeps = {
   now: () => number;
   /** Returns false when this client has exceeded its quota. */
   allow: (key: string) => boolean;
+  /** Operational log line. Must never receive the visitor's personal data. */
+  log?: (event: string, detail?: Record<string, string | number>) => void;
 };
+
+/** Default log: one JSON line per event in the Vercel Function logs. */
+export function consoleLog(event: string, detail?: Record<string, string | number>) {
+  console.error(JSON.stringify({ event, ...detail }));
+}
+
+const REQUIRED_ENV = ["RESEND_API_KEY", "CONTACT_TO_EMAIL", "CONTACT_FROM_EMAIL"] as const;
 
 export type ContactResult =
   | { ok: true; delivered: true; id?: string }
@@ -83,11 +96,15 @@ export async function handleContact(
   env: ContactEnv,
   deps: ContactDeps,
 ): Promise<Response> {
+  const log = deps.log ?? (() => {});
   if (req.method !== "POST") return json({ ok: false, code: "method_not_allowed" }, 405);
 
   const origin = req.headers.get("origin");
-  if (env.CONTACT_ALLOWED_ORIGIN && origin !== env.CONTACT_ALLOWED_ORIGIN)
-    return json({ ok: false, code: "forbidden_origin" }, 403);
+  if (env.CONTACT_ALLOWED_ORIGIN) {
+    const allowed = env.CONTACT_ALLOWED_ORIGIN.split(",").map((o) => o.trim());
+    if (!origin || !allowed.includes(origin))
+      return json({ ok: false, code: "forbidden_origin" }, 403);
+  }
 
   const raw = await req.text();
   if (raw.length > MAX_BYTES) return json({ ok: false, code: "payload_too_large" }, 413);
@@ -105,8 +122,12 @@ export async function handleContact(
 
   // Spam traps: a hidden field humans never fill, and an implausibly fast submit.
   const elapsed = typeof body.elapsedMs === "number" ? body.elapsedMs : 0;
-  if (str(body.website, 200).trim() !== "" || elapsed < MIN_FILL_MS)
+  const trap =
+    str(body.website, 200).trim() !== "" ? "honeypot" : elapsed < MIN_FILL_MS ? "too_fast" : null;
+  if (trap) {
+    log("contact.filtered", { reason: trap });
     return json({ ok: true, delivered: false, reason: "filtered" }, 200);
+  }
 
   const input: ContactInput = {
     name: str(body.name, 200),
@@ -135,14 +156,21 @@ export async function handleContact(
         body: form,
       });
       const data = (await v.json()) as { success?: boolean };
-      if (!data.success) return json({ ok: false, code: "verification_failed" }, 403);
-    } catch {
+      if (!data.success) {
+        log("contact.verification_failed");
+        return json({ ok: false, code: "verification_failed" }, 403);
+      }
+    } catch (err) {
+      log("contact.verification_error", { error: errorName(err) });
       return json({ ok: false, code: "verification_failed" }, 403);
     }
   }
 
-  if (!env.RESEND_API_KEY || !env.CONTACT_TO_EMAIL || !env.CONTACT_FROM_EMAIL)
+  const missing = REQUIRED_ENV.filter((k) => !env[k]);
+  if (missing.length) {
+    log("contact.not_configured", { missing: missing.join(", ") });
     return json({ ok: false, code: "not_configured" }, 503);
+  }
 
   const { subject, body: text } = composeMessage(input, NEED_LABELS);
   try {
@@ -160,10 +188,16 @@ export async function handleContact(
         text: `${text}\n\n— Sent from the vivify.solutions contact form at ${new Date(deps.now()).toISOString()}`,
       }),
     });
-    if (!res.ok) return json({ ok: false, code: "send_failed" }, 502);
+    if (!res.ok) {
+      log("contact.send_failed", { status: res.status });
+      return json({ ok: false, code: "send_failed" }, 502);
+    }
     const data = (await res.json().catch(() => ({}))) as { id?: string };
     return json({ ok: true, delivered: true, id: data.id }, 200);
-  } catch {
+  } catch (err) {
+    log("contact.send_error", { error: errorName(err) });
     return json({ ok: false, code: "send_failed" }, 502);
   }
 }
+
+const errorName = (err: unknown) => (err instanceof Error ? err.name : "unknown");

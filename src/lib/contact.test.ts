@@ -29,3 +29,20 @@ test("mailto is encoded and strips header-injection characters", () => {
   assert.match(href, /^mailto:viviene@vivify\.solutions\?subject=/);
   assert.ok(!href.includes("\n"));
 });
+
+test("an email address must be a single plain address", () => {
+  for (const email of [
+    "a,b@example.com",
+    "a@example.com, b@example.com",
+    "a;b@example.com",
+    '"a"@example.com',
+    "<a@example.com>",
+    "a@example.com\u0000",
+    "a\u0007@example.com",
+  ]) {
+    assert.ok(validateContact({ ...ok, email }).email, `accepted ${JSON.stringify(email)}`);
+  }
+  for (const email of ["first.last+tag@sub.example.co.uk", "o'neil@example.ie", "a_b-c@x.io"]) {
+    assert.equal(validateContact({ ...ok, email }).email, undefined, `rejected ${email}`);
+  }
+});

@@ -10,7 +10,11 @@ export type ContactInput = {
 
 export type ContactErrors = Partial<Record<keyof ContactInput, string>>;
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// One plain address: no spaces, list separators, quotes, angle brackets or control characters
+// (the address becomes the email's reply-to, so "a,b@x.com" must not turn into two recipients).
+const EMAIL =
+  // eslint-disable-next-line no-control-regex
+  /^[^\s@,;<>"()[\]\\\u0000-\u001F\u007F]+@[^\s@,;<>"()[\]\\\u0000-\u001F\u007F]+\.[^\s@,;<>"()[\]\\\u0000-\u001F\u007F]{2,}$/;
 
 export function validateContact(input: ContactInput): ContactErrors {
   const e: ContactErrors = {};

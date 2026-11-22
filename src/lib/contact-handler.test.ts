@@ -29,13 +29,21 @@ function req(body: unknown, init: { method?: string; headers?: Record<string, st
 
 function deps(over: Partial<{ fetch: typeof fetch; allow: (k: string) => boolean }> = {}) {
   const calls: { url: string; init?: RequestInit }[] = [];
+  const logs: { event: string; detail?: Record<string, string | number> }[] = [];
   const fakeFetch = (async (url: string, init?: RequestInit) => {
     calls.push({ url, init });
     return new Response(JSON.stringify({ id: "email_123" }), { status: 200 });
   }) as unknown as typeof fetch;
   return {
     calls,
-    d: { fetch: over.fetch ?? fakeFetch, now: () => 0, allow: over.allow ?? (() => true) },
+    logs,
+    d: {
+      fetch: over.fetch ?? fakeFetch,
+      now: () => 0,
+      allow: over.allow ?? (() => true),
+      log: (event: string, detail?: Record<string, string | number>) =>
+        logs.push({ event, detail }),
+    },
   };
 }
 
@@ -110,4 +118,52 @@ test("Turnstile is enforced when a secret is configured", async () => {
     deps({ fetch: verifyFails }).d,
   );
   assert.equal(res.status, 403);
+});
+
+test("the allowed origin can list several origins (production and a preview)", async () => {
+  const { d } = deps();
+  const env = {
+    ...configured,
+    CONTACT_ALLOWED_ORIGIN: "https://vivify.solutions, https://preview.example.vercel.app",
+  };
+  const from = (origin: string) => handleContact(req(valid, { headers: { origin } }), env, d);
+  assert.equal((await from("https://vivify.solutions")).status, 200);
+  assert.equal((await from("https://preview.example.vercel.app")).status, 200);
+  assert.equal((await from("https://evil.example")).status, 403);
+});
+
+test("failures are logged for the owner without the visitor's personal data", async () => {
+  const visitor = [valid.name, valid.email, valid.business, valid.message];
+  const noPersonalData = (logs: unknown[]) => {
+    const text = JSON.stringify(logs);
+    for (const v of visitor) assert.ok(!text.includes(v), `log contains ${v}`);
+  };
+
+  const missing = deps();
+  await handleContact(req(valid), { RESEND_API_KEY: "k" }, missing.d);
+  assert.equal(missing.logs[0]?.event, "contact.not_configured");
+  assert.equal(missing.logs[0]?.detail?.missing, "CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL");
+  noPersonalData(missing.logs);
+
+  const failing = (async () =>
+    new Response('{"message":"domain not verified"}', { status: 403 })) as unknown as typeof fetch;
+  const rejected = deps({ fetch: failing });
+  await handleContact(req(valid), configured, rejected.d);
+  assert.deepEqual(rejected.logs, [{ event: "contact.send_failed", detail: { status: 403 } }]);
+  noPersonalData(rejected.logs);
+
+  const offline = (async () => {
+    throw new TypeError("fetch failed");
+  }) as unknown as typeof fetch;
+  const unreachable = deps({ fetch: offline });
+  const res = await handleContact(req(valid), configured, unreachable.d);
+  assert.equal(res.status, 502);
+  assert.deepEqual(unreachable.logs, [
+    { event: "contact.send_error", detail: { error: "TypeError" } },
+  ]);
+
+  const spam = deps();
+  await handleContact(req({ ...valid, website: "http://spam" }), configured, spam.d);
+  assert.deepEqual(spam.logs, [{ event: "contact.filtered", detail: { reason: "honeypot" } }]);
+  noPersonalData(spam.logs);
 });
