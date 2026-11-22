@@ -20,7 +20,7 @@ headings and copy. React then hydrates the page in the browser.
 
 ```json
 {
-  "installCommand": "bun install --frozen-lockfile",
+  "installCommand": "bunx bun@1.4.4 install --frozen-lockfile",
   "buildCommand": "npm run build:prerender",
   "outputDirectory": "dist",
   "cleanUrls": true,

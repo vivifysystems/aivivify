@@ -17,7 +17,9 @@ bun install --frozen-lockfile
 
 `--frozen-lockfile` fails instead of silently re-resolving when `package.json` and the lockfile disagree, so every
 install (local, CI, Vercel) gets the same dependency tree. Run scripts with `npm run <script>` or `bun run <script>`.
-`bunfig.toml` keeps the binary lockfile format that Lovable maintains. Do not add a `package-lock.json`: Vercel picks
+On Vercel, `vercel.json` pins the install to Bun 1.4.4 (`bunx bun@1.4.4 install --frozen-lockfile`), the release that
+last wrote `bun.lockb`; without a pin Vercel uses whichever Bun 1 release its build image carries. When the lockfile is
+regenerated with a newer Bun, update the pin. `bunfig.toml` keeps the binary lockfile format that Lovable maintains. Do not add a `package-lock.json`: Vercel picks
 npm over Bun when both files exist.
 
 Node 22.18 or newer is needed locally (the unit tests use Node's built-in TypeScript type stripping).
