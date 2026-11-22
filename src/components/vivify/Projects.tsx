@@ -5,13 +5,8 @@ import proofVoice from "@/assets/proof-voice-receptionist.jpg";
 import proofFbAgent from "@/assets/proof-fb-messenger-agent.png";
 import proofFileManagement from "@/assets/proof-file-management.png";
 import proofRag from "@/assets/proof-rag.png";
-import proofLeadNurturing from "@/assets/proof-lead-nurturing.png";
-import proofFinancialSync from "@/assets/proof-financial-sync.png";
 import proofLeadRouting from "@/assets/proof-lead-routing.png";
 import proofSocialEngine from "@/assets/proof-social-engine.png";
-import proofEmailRouting from "@/assets/proof-email-routing.png";
-import proofSocialAuto from "@/assets/proof-social-auto.png";
-import proofUgcScript from "@/assets/proof-ugc-script.png";
 import coverEmailRouting from "@/assets/cover-email-routing.png";
 import coverSocialAuto from "@/assets/cover-social-auto.png";
 import coverUgcScript from "@/assets/cover-ugc-script.png";
@@ -114,8 +109,6 @@ const projects: Project[] = [
     value:
       "Smart branching logic for automated SMS, Call, and Email follow-ups built in GoHighLevel (GHL).",
     stack: ["GoHighLevel", "SMS", "Email", "Conditional Logic"],
-    image: proofLeadNurturing,
-    proofImage: proofLeadNurturing,
     impact:
       "No lead goes cold. Every prospect gets the right follow-up on the right channel at the right time — automatically.",
     caseStudy: {
@@ -133,8 +126,6 @@ const projects: Project[] = [
     value:
       "Automated accounting audit logs and task synchronization between Xero and Asana via Make.com.",
     stack: ["Xero", "Asana", "Make.com", "Google Sheets"],
-    image: proofFinancialSync,
-    proofImage: proofFinancialSync,
     impact:
       "Financial tasks are logged and assigned automatically — no manual data entry between tools.",
     caseStudy: {
@@ -209,7 +200,6 @@ const projects: Project[] = [
       "Watches Gmail for new emails, classifies them using Gemini AI, logs to Google Sheets, drafts a reply, notifies via Slack, then routes each email to the correct team folder automatically.",
     stack: ["N8N", "GEMINI AI", "GMAIL", "GOOGLE SHEETS", "SLACK"],
     image: coverEmailRouting,
-    proofImage: proofEmailRouting,
     impact:
       "Inbox triage is fully hands-off. Every email lands in the right team folder with a draft reply ready and Slack notified — in seconds.",
     caseStudy: {
@@ -228,7 +218,6 @@ const projects: Project[] = [
       "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets — fully automated.",
     stack: ["MAKE.COM", "OPENAI", "AIRTABLE", "BUFFER", "GOOGLE SHEETS"],
     image: coverSocialAuto,
-    proofImage: proofSocialAuto,
     impact:
       "An entire content calendar publishes itself — captions written, links shortened, posts scheduled, results logged — zero manual posting.",
     caseStudy: {
@@ -247,7 +236,6 @@ const projects: Project[] = [
       "Triggers daily at 8AM, reads product research, competitor ads, and audience insights from Google Sheets, builds an AI context brief, generates UGC video scripts via Groq, formats the output, and saves it to a new dated Google Doc automatically.",
     stack: ["N8N", "GROQ AI", "GOOGLE SHEETS", "GOOGLE DRIVE", "GOOGLE DOCS"],
     image: coverUgcScript,
-    proofImage: proofUgcScript,
     impact:
       "A fresh, ready-to-record UGC script lands in Google Drive every morning before the team even logs in.",
     caseStudy: {
