@@ -128,6 +128,18 @@ through Resend (processing in the United States, Resend's own retention) and `sr
 both wordings. Update `lastUpdated` in the same change. Never leave the page on `"pending"` once the form delivers
 real messages, and never set `"active"` before it does.
 
+**Two things to check before Production (seen in public DNS and HTTP headers on 2026-11-22):**
+
+- **Which host is primary.** `vivify.solutions` currently answers `308` to `https://www.vivify.solutions/`, and the
+  site is served through Cloudflare in front of Vercel. This release writes `https://vivify.solutions` into
+  canonicals, the sitemap, social tags and structured data. Pick one primary host in Vercel and Cloudflare (a live
+  setting, so it needs your approval), then make the release match it. `CONTACT_ALLOWED_ORIGIN` must list the host
+  visitors actually use, or the form answers 403.
+- **Rate-limit identity behind Cloudflare.** The limiter keys on the first `x-forwarded-for` address. Behind a
+  proxy that can be the proxy's address instead of the visitor's, so limits may be shared or weaker than intended.
+  Look at the Preview's behaviour from a real visitor connection before relying on it; the limiter is per function
+  instance and best-effort in any case.
+
 **To switch delivery off** at any time: remove `RESEND_API_KEY` from Production and redeploy. The form then shows
 "Not sent yet" with the email fallback; no code change is needed.
 
