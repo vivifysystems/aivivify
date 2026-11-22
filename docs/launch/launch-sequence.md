@@ -28,6 +28,22 @@ predictable (Vercel shortens addresses over 63 characters, and `release/vivify-2
 
     git push origin release/vivify-2.0-sanitized:refs/heads/preview/v2
 
+**GitHub authentication.** The push must be made as the account that owns the repository (`vivifysystems`), not as any other
+GitHub login stored on the computer. A stored login for a different account is refused with HTTP 403 ("Permission denied").
+Use a **fine-grained personal access token** created while signed in to that account: Settings → Developer settings →
+Personal access tokens → Fine-grained tokens → Generate new token; Repository access: **only this repository**; Repository
+permissions: **Contents: Read and write** (nothing else); expiry: the shortest that suits you (for example 7 days). Give the
+token to Git for this one command only, without saving it and without changing any Git or keychain setting:
+
+    read -rs VIVIFY_GH_TOKEN; echo; export VIVIFY_GH_TOKEN
+    git -c credential.helper= -c 'credential.helper=!f() { echo username=vivifysystems; echo "password=$VIVIFY_GH_TOKEN"; }; f' \
+      push origin release/vivify-2.0-sanitized:refs/heads/preview/v2
+    unset VIVIFY_GH_TOKEN
+
+The first `-c credential.helper=` switches off the stored helper for this command. Never paste the token into chat, a file or
+a commit. Revoke it (same settings page) when the release is live. A repository deploy key with write access, used through
+`GIT_SSH_COMMAND="ssh -i <key> -o IdentitiesOnly=yes"` and the `git@github.com:vivifysystems/aivivify.git` address, works too.
+
 The expected stable address is `https://aivivify-git-preview-v2-vivifysystems-projects.vercel.app` (copy the exact address
 from Vercel → Deployments → the Preview). Vercel Authentication protects Previews: you must be signed in to open it.
 **The repository is public, so pushing this branch publishes the release source on GitHub before launch** (the code is not
