@@ -119,7 +119,14 @@ Environment variables apply to **new** deployments: redeploy the Preview after a
 
 After the Preview passes, add the same variables with **Production** scope: `CONTACT_TO_EMAIL` = the real inbox,
 `CONTACT_ALLOWED_ORIGIN` = `https://vivify.solutions` (add `https://www.vivify.solutions` if that host serves the
-site rather than redirecting). Deploy, then send one real test message. Confirm the privacy page wording first.
+site rather than redirecting). Deploy, then send one real test message.
+
+**Privacy policy switch (do this in the same release).** `src/content/privacy.ts` has
+`contactDelivery: "pending"`, which makes `/privacy` say the form is not switched on yet and names no email
+provider. Before real delivery goes live, change it to `"active"`. The page then states that messages are emailed
+through Resend (processing in the United States, Resend's own retention) and `src/content/privacy.test.ts` checks
+both wordings. Update `lastUpdated` in the same change. Never leave the page on `"pending"` once the form delivers
+real messages, and never set `"active"` before it does.
 
 **To switch delivery off** at any time: remove `RESEND_API_KEY` from Production and redeploy. The form then shows
 "Not sent yet" with the email fallback; no code change is needed.

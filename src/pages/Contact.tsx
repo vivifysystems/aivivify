@@ -407,7 +407,7 @@ export default function Contact() {
                   <p className="text-sm text-mist">
                     See the{" "}
                     <a href="/privacy" className="text-cyan underline-offset-4 hover:underline">
-                      privacy note
+                      privacy policy
                     </a>
                     .
                   </p>

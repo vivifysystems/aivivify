@@ -1,60 +1,74 @@
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { links } from "@/content";
+import { formatLastUpdated, privacy, privacySections } from "@/content/privacy";
 import { useRouteMeta } from "@/hooks/use-document-meta";
 import { PageHero } from "@/components/site/PageHero";
 
+const linkClass = "text-cyan underline underline-offset-4 hover:text-snow";
+
+/** Turns the contact email and the NPC address inside a paragraph into links. */
+function Linked({ text }: { text: string }) {
+  const parts = text.split(/(viviene@vivify\.solutions|privacy\.gov\.ph)/);
+  return (
+    <>
+      {parts.map((part, i) => (
+        <Fragment key={i}>
+          {part === links.email.label ? (
+            <a href={links.email.href} className={linkClass}>
+              {part}
+            </a>
+          ) : part === "privacy.gov.ph" ? (
+            <a href="https://privacy.gov.ph" target="_blank" rel="noreferrer" className={linkClass}>
+              {part}
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          ) : (
+            part
+          )}
+        </Fragment>
+      ))}
+    </>
+  );
+}
+
 export default function Privacy() {
   useRouteMeta();
-  const items = [
-    ["Readiness check", "Your answers are scored in your browser and are never sent or stored."],
-    [
-      "Ask VIVI",
-      "A guided assistant with pre-written answers. What you type stays in your browser and isn't sent anywhere.",
-    ],
-    [
-      "Contact form",
-      "When you send the form, your name, email, optional business details and message are emailed to VIVIFY so we can reply. If sending fails, nothing is stored and you can email us directly instead.",
-    ],
-    [
-      "Booking",
-      "Discovery calls are scheduled through Calendly, which has its own privacy policy.",
-    ],
-    [
-      "Demo recordings",
-      "Some case studies offer recordings hosted on Google Drive. Google's player loads only when you choose to play one.",
-    ],
-  ];
+  const sections = privacySections();
   return (
     <>
       <PageHero
         label="Privacy"
         title="Plainly put."
-        lede="This site is designed to work without collecting your personal information."
+        lede="What this website collects, who handles it, how long we keep it, and how to ask us to delete it."
       />
-      <section aria-label="Privacy details" className="bg-ground pb-24">
+      <section aria-label="Privacy policy" className="bg-ground pb-24">
         <div className="shell max-w-3xl">
-          <dl className="space-y-8">
-            {items.map(([t, d]) => (
-              <div key={t}>
-                <dt className="font-display text-xl font-semibold">{t}</dt>
-                <dd className="mt-2 text-lg text-snow/85">{d}</dd>
-              </div>
+          <p className="text-mist">Last updated {formatLastUpdated(privacy.lastUpdated)}</p>
+          <div className="mt-8 space-y-10">
+            {sections.map((s) => (
+              <section key={s.id} aria-labelledby={`privacy-${s.id}`}>
+                <h2 id={`privacy-${s.id}`} className="font-display text-xl font-semibold">
+                  {s.title}
+                </h2>
+                {s.paragraphs.map((p, i) => (
+                  <p key={i} className="mt-3 text-lg text-snow/85">
+                    <Linked text={p} />
+                  </p>
+                ))}
+              </section>
             ))}
-          </dl>
+          </div>
           <p className="mt-12 text-mist">
             Questions? Email{" "}
-            <a href={links.email.href} className="text-cyan underline-offset-4 hover:underline">
+            <a href={links.email.href} className={linkClass}>
               {links.email.label}
             </a>{" "}
             or visit the{" "}
-            <Link to="/contact" className="text-cyan underline-offset-4 hover:underline">
+            <Link to="/contact" className={linkClass}>
               contact page
             </Link>
             .
-          </p>
-          <p className="mt-6 text-sm text-mist">
-            This summary describes how the site works today. Have it reviewed before launch if your
-            jurisdiction requires a formal privacy policy.
           </p>
         </div>
       </section>
