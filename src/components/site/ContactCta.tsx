@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, Mail, MessageCircle } from "lucide-react";
+import { contactFormActive, links } from "@/content";
 import { openAskVivi } from "./ask-vivi-events";
 import { BookingLink } from "./BookingLink";
 import { viviArt } from "./vivi-art";
@@ -20,14 +21,23 @@ export function ContactCta({ title = "Let's find what's worth automating." }: { 
                 {title}
               </h2>
               <p data-reveal className="type-lede mt-5 max-w-xl text-white/90">
-                Book a free discovery call, send a short message, or ask VIVI a quick question.
+                {contactFormActive
+                  ? "Book a free discovery call, send a short message, or ask VIVI a quick question."
+                  : "Book a free discovery call, email us, or ask VIVI a quick question."}
                 You'll get an honest view of what's worth automating, and what isn't.
               </p>
               <div data-reveal className="mt-9 flex flex-wrap gap-3">
                 <BookingLink className="!bg-snow !text-navy hover:!bg-white" />
-                <Link to="/contact" className="btn bg-navy/40 text-white hover:bg-navy/60">
-                  Send a message <ArrowRight className="h-4 w-4" aria-hidden />
-                </Link>
+                {contactFormActive ? (
+                  <Link to="/contact" className="btn bg-navy/40 text-white hover:bg-navy/60">
+                    Send a message <ArrowRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                ) : (
+                  <a href={links.email.href} className="btn bg-navy/40 text-white hover:bg-navy/60">
+                    <Mail className="h-4 w-4" aria-hidden /> Email me
+                    <span className="sr-only"> at {links.email.label}</span>
+                  </a>
+                )}
                 <button
                   type="button"
                   onClick={() => openAskVivi()}

@@ -75,7 +75,7 @@ Emulated so far: all 11 demos readable step by step with reduced motion; no loop
 - [ ] Mac: System Settings → Accessibility → Display → Reduce motion **on**. Same checks in Safari and Chrome.
 - [ ] With reduced motion **off**: the hero VIVI drift stops after a few loops.
 
-## 6. Contact form delivery (needs the Resend setup first)
+## 6. Contact form delivery (needs the Resend setup first; only after the switch is set to "active" on the Preview)
 
 Simulated so far: every success and failure path against a fake email provider. **No real email has been sent.**
 Follow `docs/launch/contact-form.md` steps 1–6, then:
@@ -112,8 +112,11 @@ Automated so far: logo, canonical and content tests in headless Chromium.
       pilot, and shows no testimonial, statistic or recording.
 - [ ] Work: exactly five projects. Social Media Auto Poster and UGC Script Generator show "Concept demo" and a notice on their
       pages. No project shows a recording.
-- [ ] Privacy page: reads correctly; says the contact form is **not switched on yet** until delivery is activated; mentions the
-      Philippines, Cloudflare, Gmail, and promises no deletion schedule.
+- [ ] Contact page (switch pending): **no form and no "Send a message"**; "Book a free 30-minute call" and "Email me" are the two
+      obvious options; the address is on screen; "Email me" opens your email app addressed to viviene@vivify.solutions on iPhone,
+      Android, Mac Mail and Gmail-in-browser; "Copy email" copies it (paste it somewhere to check) and a screen reader announces "copied".
+- [ ] Privacy page: says there is **no online contact form** while the switch is pending; mentions the Philippines, Cloudflare, Gmail,
+      and promises no deletion schedule. After activation it describes the form and names Resend.
 - [ ] View source on the home page: canonical and `og:url` start with `https://www.vivify.solutions`.
 
 ## 9. After launch, on the real domain

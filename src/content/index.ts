@@ -15,6 +15,7 @@ export { quizQuestions } from "./quiz.ts";
 export { founder } from "./founder.ts";
 export { brand } from "./brand.ts";
 export { homeProof } from "./proof.ts";
+export { contactFormActive } from "./privacy.ts";
 export {
   workCategories,
   projectCategory,

@@ -10,7 +10,7 @@ import {
   Mail,
   MessageCircle,
 } from "lucide-react";
-import { links, packages, systemById, systemGroups } from "@/content";
+import { contactFormActive, links, packages, systemById, systemGroups } from "@/content";
 import { useRouteMeta } from "@/hooks/use-document-meta";
 import {
   composeMessage,
@@ -19,6 +19,7 @@ import {
   type ContactErrors,
   type ContactInput,
 } from "@/lib/contact";
+import { CopyEmailButton } from "@/components/site/CopyEmailButton";
 import { PageHero } from "@/components/site/PageHero";
 import { BookingLink } from "@/components/site/BookingLink";
 import { ViviAvatar } from "@/components/site/Vivi";
@@ -79,6 +80,44 @@ function readHandoff(state: unknown): QuizHandoff | null {
     packageId: q.packageId ?? null,
     summary: q.summary.slice(0, 1200),
   };
+}
+
+/**
+ * Shown instead of the form while contactDelivery is "pending" (src/content/privacy.ts). The form
+ * below is kept complete and returns, unchanged, when delivery is switched to "active".
+ */
+function EmailPanel() {
+  return (
+    <div>
+      <h2 id="email-us" className="type-h3">
+        Email us
+      </h2>
+      <p className="mt-3 max-w-xl text-mist">
+        Tell us what's taking up your time, in your own email app. We'll reply with an honest view
+        of what's worth automating, and what isn't.
+      </p>
+      <p
+        data-testid="public-email"
+        className="mt-6 break-all font-display text-2xl font-semibold select-all sm:text-3xl"
+      >
+        {links.email.label}
+      </p>
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <a href={links.email.href} className="btn btn-primary">
+          <Mail className="h-4 w-4" aria-hidden /> Email me
+          <span className="sr-only"> at {links.email.label}</span>
+        </a>
+        <CopyEmailButton address={links.email.label} />
+      </div>
+      <p className="mt-5 text-sm text-mist">
+        No email app on this device? Copy the address and use any email service. See the{" "}
+        <a href="/privacy" className="text-cyan underline underline-offset-4 hover:text-snow">
+          privacy policy
+        </a>
+        .
+      </p>
+    </div>
+  );
 }
 
 export default function Contact() {
@@ -177,7 +216,11 @@ export default function Contact() {
       <PageHero
         label="Contact"
         title="Tell us what's taking up your time."
-        lede="Book a free discovery call, or send a short message. You'll get an honest view of what's worth automating, and what isn't."
+        lede={
+          contactFormActive
+            ? "Book a free discovery call, or send a short message. You'll get an honest view of what's worth automating, and what isn't."
+            : "Book a free discovery call, or email us. You'll get an honest view of what's worth automating, and what isn't."
+        }
       >
         {/* Both paths are visible before the form, on every screen size. */}
         <div
@@ -186,19 +229,26 @@ export default function Contact() {
         >
           <BookingLink />
           {/* Plain mailto: opens the visitor's email app addressed to the public address. */}
-          <a href={links.email.href} className="btn btn-ghost">
+          <a
+            href={links.email.href}
+            className={cn("btn", contactFormActive ? "btn-ghost" : "btn-primary")}
+          >
             <Mail className="h-4 w-4" aria-hidden /> Email me
             <span className="sr-only"> at {links.email.label}</span>
           </a>
-          <Link to="/contact#send-message" className="btn btn-ghost">
-            <Mail className="h-4 w-4" aria-hidden /> Send a message
-          </Link>
+          {contactFormActive && (
+            <Link to="/contact#send-message" className="btn btn-ghost">
+              <Mail className="h-4 w-4" aria-hidden /> Send a message
+            </Link>
+          )}
         </div>
       </PageHero>
       <section aria-label="Contact options" className="bg-ground pb-24">
         <div className="shell grid gap-8 lg:grid-cols-[1.25fr_0.75fr]">
           <div className="rounded-[2rem] bg-navy-800 p-6 sm:p-10">
-            {status.kind === "sent" ? (
+            {!contactFormActive ? (
+              <EmailPanel />
+            ) : status.kind === "sent" ? (
               <div className="anim-pop" role="status">
                 <span className="grid h-12 w-12 place-items-center rounded-full bg-cyan/15 text-cyan">
                   <Check className="h-6 w-6" aria-hidden />
@@ -449,16 +499,18 @@ export default function Contact() {
                 <span className="sr-only">(opens in a new tab)</span>
               </span>
             </a>
-            <a
-              href={links.email.href}
-              className="block rounded-[2rem] bg-navy-800 p-7 hover:bg-navy-700"
-            >
-              <Mail className="h-6 w-6 text-cyan" aria-hidden />
-              <p className="mt-4 text-sm text-mist">Email directly</p>
-              <p className="mt-1 break-all font-display text-xl font-semibold">
-                {links.email.label}
-              </p>
-            </a>
+            {contactFormActive && (
+              <a
+                href={links.email.href}
+                className="block rounded-[2rem] bg-navy-800 p-7 hover:bg-navy-700"
+              >
+                <Mail className="h-6 w-6 text-cyan" aria-hidden />
+                <p className="mt-4 text-sm text-mist">Email directly</p>
+                <p className="mt-1 break-all font-display text-xl font-semibold">
+                  {links.email.label}
+                </p>
+              </a>
+            )}
             <div className="rounded-[2rem] bg-navy-800 p-7">
               <div className="flex items-center gap-3">
                 <ViviAvatar size={48} />

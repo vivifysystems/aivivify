@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { links } from "./links.ts";
 import { projects } from "./projects.ts";
-import { formatLastUpdated, privacy, privacySections } from "./privacy.ts";
+import { contactFormActive, formatLastUpdated, privacy, privacySections } from "./privacy.ts";
 
 const text = (state: Parameters<typeof privacySections>[0] = privacy, rec?: boolean) =>
   privacySections(state, rec)
@@ -41,13 +42,19 @@ test("the policy covers every provider the site actually uses", () => {
   }
 });
 
-test("Resend is described as operational only once contact delivery is active", () => {
-  const pending = text({ contactDelivery: "pending", retentionMonths: 12 });
-  const active = text({ contactDelivery: "active", retentionMonths: 12 });
+test("Resend and the form's data are described only once contact delivery is active", () => {
+  const pending = text({ contactDelivery: "pending", retentionMonths: null });
+  const active = text({ contactDelivery: "active", retentionMonths: null });
   assert.ok(!/Resend/.test(pending), "pending text must not claim Resend is in use");
-  assert.match(pending, /not switched on yet/);
+  assert.match(pending, /There is no online contact form on this site at the moment/);
+  assert.match(pending, /will name our email provider before any online form is switched on/);
+  assert.ok(
+    !/name, email address, the business name|spam-check|send the contact form/.test(pending),
+    "pending text must not describe form data",
+  );
   assert.match(active, /through Resend/);
-  assert.ok(!/not switched on yet/.test(active));
+  assert.match(active, /name, email address, the business name/);
+  assert.ok(!/There is no online contact form/.test(active));
 });
 
 test("the launch default is the safe one: delivery pending until Resend is configured", () => {
@@ -80,4 +87,16 @@ test("no deletion schedule is promised until the owner commits to one", () => {
 test("the recordings clause is gone from the provider list while no recording is published", () => {
   assert.ok(!/demo recordings/i.test(text(privacy, false)));
   assert.match(text(privacy, true), /Google also serves demo recordings/);
+});
+
+test("the switch is committed as pending, and its test mode is never used by a production build", () => {
+  const src = readFileSync(new URL("./privacy.ts", import.meta.url), "utf8");
+  assert.match(src, /const CONTACT_DELIVERY: ContactDelivery = "pending";/);
+  const pkg = JSON.parse(readFileSync(new URL("../../package.json", import.meta.url), "utf8"));
+  for (const name of ["build", "build:prerender"])
+    assert.ok(!/e2e-contact-active/.test(pkg.scripts[name]), `${name} must not use the test mode`);
+  assert.ok(
+    !/e2e-contact-active/.test(readFileSync(new URL("../../vercel.json", import.meta.url), "utf8")),
+  );
+  assert.equal(contactFormActive, false);
 });

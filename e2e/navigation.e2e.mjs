@@ -2,12 +2,18 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { newPage, VIEWPORTS } from "./helpers.mjs";
-import { setup } from "./setup.mjs";
+import { setup, setupActive } from "./setup.mjs";
 import { hasProofCase } from "../src/content/work.ts";
 
-let env;
-before(async () => (env = await setup()));
-after(async () => env.teardown());
+let env, formActive;
+before(async () => {
+  env = await setup();
+  formActive = await setupActive();
+});
+after(async () => {
+  await env.teardown();
+  await formActive.teardown();
+});
 
 const active = (page) =>
   page.evaluate(() => {
@@ -315,9 +321,9 @@ test("on-screen keyboard (shorter viewport): Ask VIVI input and send stay visibl
   await page.context().close();
 });
 
-test("on-screen keyboard: the focused contact field is never hidden under the fixed header", async () => {
-  const page = await newPage(env.browser, VIEWPORTS["390"], { touch: true });
-  await page.goto(env.base + "/contact");
+test("on-screen keyboard: the focused contact field is never hidden under the fixed header (form active)", async () => {
+  const page = await newPage(formActive.browser, VIEWPORTS["390"], { touch: true });
+  await page.goto(formActive.base + "/contact");
   await page.setViewportSize({ width: 390, height: 430 });
   for (const label of ["Your name", "Email", "What's taking up your time?"]) {
     const f = page.getByLabel(label);

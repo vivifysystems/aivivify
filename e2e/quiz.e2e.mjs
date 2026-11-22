@@ -2,11 +2,17 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { newPage, VIEWPORTS } from "./helpers.mjs";
-import { setup } from "./setup.mjs";
+import { setup, setupActive } from "./setup.mjs";
 
-let env;
-before(async () => (env = await setup()));
-after(async () => env.teardown());
+let env, active;
+before(async () => {
+  env = await setup();
+  active = await setupActive();
+});
+after(async () => {
+  await env.teardown();
+  await active.teardown();
+});
 
 const REVIEW_PATH = [
   "Often",
@@ -48,9 +54,9 @@ test("review path: the result leads with Missed-Call Text Back and the Connect p
   await page.context().close();
 });
 
-test("the selected system and an editable summary carry into Contact, without answers in the URL", async () => {
-  const page = await newPage(env.browser, VIEWPORTS["1440"]);
-  await page.goto(env.base + "/");
+test("the selected system and an editable summary carry into the form (form active), without answers in the URL", async () => {
+  const page = await newPage(active.browser, VIEWPORTS["1440"]);
+  await page.goto(active.base + "/");
   const quiz = await answer(page, REVIEW_PATH);
   await quiz.getByRole("link", { name: /Talk through my result/ }).click();
   await page.waitForURL("**/contact**");
@@ -75,8 +81,8 @@ test("the selected system and an editable summary carry into Contact, without an
 });
 
 test("an all-low-need path still reports no urgent need and offers no package", async () => {
-  const page = await newPage(env.browser, VIEWPORTS["1440"]);
-  await page.goto(env.base + "/");
+  const page = await newPage(active.browser, VIEWPORTS["1440"]);
+  await page.goto(active.base + "/");
   const quiz = await answer(page, ALL_LOW);
   const text = await quiz.textContent();
   assert.match(text, /Nothing stands out as urgent/);

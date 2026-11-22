@@ -15,9 +15,19 @@ import { projects } from "./projects.ts";
  */
 export type ContactDelivery = "pending" | "active";
 
+/**
+ * THE SWITCH. "pending" until a real message has been delivered through Resend and checked;
+ * then change this one word to "active" (and refresh lastUpdated). While "pending" the Contact
+ * page shows no form (email and the booking call only) and the privacy page says so; "active"
+ * restores the complete form and its disclosure. The browser tests build the "active" state with
+ * `vite build --mode e2e-contact-active`; no production build ever uses that mode.
+ */
+const CONTACT_DELIVERY: ContactDelivery = "pending";
+const activeForTests = import.meta.env?.MODE === "e2e-contact-active";
+
 export const privacy = {
   lastUpdated: "2026-11-22",
-  contactDelivery: "pending" as ContactDelivery,
+  contactDelivery: (activeForTests ? "active" : CONTACT_DELIVERY) as ContactDelivery,
   /**
    * Months after the last communication that inquiry emails are kept, or null for "no fixed
    * schedule". The owner has NOT yet committed to a deletion routine (2026-11-22), so this is
@@ -26,6 +36,9 @@ export const privacy = {
    */
   retentionMonths: null as number | null,
 };
+
+/** True when the contact form is live: the Contact page shows the form and the privacy page names Resend. */
+export const contactFormActive = privacy.contactDelivery === "active";
 
 export type PrivacySection = { id: string; title: string; paragraphs: string[] };
 
@@ -46,13 +59,16 @@ export function privacySections(
 ): PrivacySection[] {
   const active = state.contactDelivery === "active";
 
-  const contactForm: string[] = [
-    "If you use the contact form, we receive your name, email address, the business name if you add one, the areas of help you tick, and your message. Your browser also tells our server how long the form was open and whether a hidden spam-check field was filled in. That is used only to filter automated spam. Please don't put sensitive details in the message, such as passwords, bank or ID numbers, or health information.",
-    "We use what you send to reply to you and to work out whether we can help. We don't keep a separate inquiry database or notes after we've replied: your message stays in our email inbox.",
-    active
-      ? "When you send the form, your message is emailed to our inbox through Resend, an email delivery provider that processes data in the United States. We don't keep a separate database of form submissions. The copy we hold is the email in our inbox. Resend also keeps its own delivery records under its own privacy policy and retention rules, which we don't control."
-      : "The online form is not switched on yet. Until it is, sending it does not deliver your message: its contents reach our website server (hosted by Vercel), which replies that delivery isn't set up and discards them. Please email us or book a call instead. This page will name our email provider before the form is switched on.",
-  ];
+  const contactForm: string[] = active
+    ? [
+        "If you use the contact form, we receive your name, email address, the business name if you add one, the areas of help you tick, and your message. Your browser also tells our server how long the form was open and whether a hidden spam-check field was filled in. That is used only to filter automated spam. Please don't put sensitive details in the message, such as passwords, bank or ID numbers, or health information.",
+        "We use what you send to reply to you and to work out whether we can help. We don't keep a separate inquiry database or notes after we've replied: your message stays in our email inbox.",
+        "When you send the form, your message is emailed to our inbox through Resend, an email delivery provider that processes data in the United States. We don't keep a separate database of form submissions. The copy we hold is the email in our inbox. Resend also keeps its own delivery records under its own privacy policy and retention rules, which we don't control.",
+      ]
+    : [
+        "There is no online contact form on this site at the moment, so the site collects nothing through one. To reach us, email us or book a call. This page will name our email provider before any online form is switched on.",
+        "We use what you send us by email to reply to you and to work out whether we can help. We don't keep a separate inquiry database or notes after we've replied: your message stays in our email inbox.",
+      ];
 
   const sections: PrivacySection[] = [
     {
@@ -66,10 +82,10 @@ export function privacySections(
       id: "short",
       title: "The short version",
       paragraphs: [
-        "You can browse this site without giving us any personal information. We only receive your details if you send the contact form, email us or book a call. We don't sell, rent or disclose visitors' information to third parties for their own independent use, and this site has no advertising or analytics trackers. The providers named below handle information only to run this site and our email for us.",
+        `You can browse this site without giving us any personal information. We only receive your details if you ${active ? "send the contact form, " : ""}email us or book a call. We don't sell, rent or disclose visitors' information to third parties for their own independent use, and this site has no advertising or analytics trackers. The providers named below handle information only to run this site and our email for us.`,
       ],
     },
-    { id: "form", title: "Contact form", paragraphs: contactForm },
+    { id: "form", title: active ? "Contact form" : "Contact options", paragraphs: contactForm },
     {
       id: "email",
       title: "Email",
@@ -88,7 +104,7 @@ export function privacySections(
       id: "hosting",
       title: "Hosting and server logs",
       paragraphs: [
-        "This site is hosted on Vercel and served through Cloudflare. Like any web host, Vercel and Cloudflare receive technical details when your browser loads a page, such as your IP address, the pages requested and your browser type, and keep their own logs under their own privacy policies. Our own logs for the contact form record only event names and status codes, never your name, email or message. To limit abuse, the form's server keeps a short-lived count of requests per IP address in memory; it isn't saved to a database.",
+        `This site is hosted on Vercel and served through Cloudflare. Like any web host, Vercel and Cloudflare receive technical details when your browser loads a page, such as your IP address, the pages requested and your browser type, and keep their own logs under their own privacy policies.${active ? " Our own logs for the contact form record only event names and status codes, never your name, email or message. To limit abuse, the form's server keeps a short-lived count of requests per IP address in memory; it isn't saved to a database." : ""}`,
         "Fonts, images and scripts are served from this site itself, so loading a page doesn't contact Google Fonts or any analytics or advertising company.",
       ],
     },
@@ -114,7 +130,7 @@ export function privacySections(
       id: "providers",
       title: "Who else handles information",
       paragraphs: [
-        `Vercel hosts this site and Cloudflare serves it, and Cloudflare also forwards mail sent to our address. Google (Gmail) hosts our mailbox. ${active ? "Resend delivers contact form messages to our inbox. " : "An email provider will deliver contact form messages once the form is switched on; it is not in use yet. "}Calendly handles bookings you make. ${hasRecordings ? "Google also serves demo recordings if you play them. " : ""}A public, read-only endpoint that lets AI assistants read the same public information as this site runs on Supabase, which may log requests; it doesn't ask for or store personal information. The footer links to our LinkedIn profile, which LinkedIn's own terms cover.`,
+        `Vercel hosts this site and Cloudflare serves it, and Cloudflare also forwards mail sent to our address. Google (Gmail) hosts our mailbox. ${active ? "Resend delivers contact form messages to our inbox. " : "An email delivery provider will be named here before any online contact form is switched on; none is in use yet. "}Calendly handles bookings you make. ${hasRecordings ? "Google also serves demo recordings if you play them. " : ""}A public, read-only endpoint that lets AI assistants read the same public information as this site runs on Supabase, which may log requests; it doesn't ask for or store personal information. The footer links to our LinkedIn profile, which LinkedIn's own terms cover.`,
         "These providers process information in the United States and other countries, so your information may be transferred outside the country where you live when you use them. Each publishes its own privacy and data protection terms.",
       ],
     },

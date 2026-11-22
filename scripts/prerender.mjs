@@ -3,6 +3,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { stripDefaultHead } from "./head-strip.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = join(root, "dist");
@@ -12,12 +13,7 @@ const { render, sitemapPaths } = await import(
 const template = readFileSync(join(dist, "index.html"), "utf8");
 
 // Strip the template's default per-page tags; each page gets its own.
-const base = template
-  .replace(/<title>[\s\S]*?<\/title>/, "<!--head-->")
-  .replace(/\s*<meta name="description"[\s\S]*?\/>/, "")
-  .replace(/\s*<link rel="canonical"[^>]*>/, "")
-  .replace(/\s*<meta property="og:(title|description|url|image)"[\s\S]*?\/>/g, "")
-  .replace(/\s*<meta name="twitter:(title|description|image)"[\s\S]*?\/>/g, "");
+const base = stripDefaultHead(template);
 
 function page(url) {
   const { html, head } = render(url);

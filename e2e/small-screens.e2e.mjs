@@ -2,11 +2,17 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { newPage, docOverflow, VIEWPORTS } from "./helpers.mjs";
-import { setup } from "./setup.mjs";
+import { setup, setupActive } from "./setup.mjs";
 
-let env;
-before(async () => (env = await setup()));
-after(async () => env.teardown());
+let env, active;
+before(async () => {
+  env = await setup();
+  active = await setupActive();
+});
+after(async () => {
+  await env.teardown();
+  await active.teardown();
+});
 
 const PAGES = [
   "/",
@@ -126,10 +132,10 @@ test("Ask VIVI exposes all six topics without sideways scrolling at 390", async 
 });
 
 for (const key of ["320", "390"]) {
-  test(`Contact shows booking and messaging options before the form at ${key}`, async () => {
+  test(`Contact shows booking and messaging options before the form (form active) at ${key}`, async () => {
     const vp = VIEWPORTS[key];
-    const page = await newPage(env.browser, vp, { touch: true });
-    await page.goto(env.base + "/contact");
+    const page = await newPage(active.browser, vp, { touch: true });
+    await page.goto(active.base + "/contact");
     const book = page
       .getByRole("main")
       .getByRole("link", { name: /Book a free 30-minute call/ })
@@ -159,8 +165,8 @@ for (const key of ["320", "390"]) {
 }
 
 test("the homepage demo stage describes both the desktop and the stacked layouts", async () => {
-  const page = await newPage(env.browser, VIEWPORTS["390"], { touch: true });
-  await page.goto(env.base + "/");
+  const page = await newPage(active.browser, VIEWPORTS["390"], { touch: true });
+  await page.goto(active.base + "/");
   const lede = await page
     .locator("section", { hasText: "See what happens behind the scenes" })
     .first()

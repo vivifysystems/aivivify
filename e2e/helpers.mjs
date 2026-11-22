@@ -61,6 +61,8 @@ export async function startStatic(dir, api) {
 }
 
 export const distDir = fileURLToPath(new URL("../dist/", import.meta.url));
+/** The build with the contact form switched on (`npm run build:contact-active`), for the form tests only. */
+export const activeDistDir = fileURLToPath(new URL("../dist-contact-active/", import.meta.url));
 
 function chromiumPath() {
   if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;

@@ -11,12 +11,13 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "test": "node --test \"src/**/*.test.ts\"",
+    "test": "node --test \"src/**/*.test.ts\" \"scripts/*.test.mjs\"",
     "content:report": "node scripts/content-report.ts > src/content/internal/content-discrepancies.md",
     "optimize:media": "bash scripts/optimize-media.sh",
     "sitemap": "node scripts/build-sitemap.ts",
     "build:prerender": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
-    "test:e2e": "vite build && node --test \"e2e/*.e2e.mjs\""
+    "build:contact-active": "vite build --mode e2e-contact-active --outDir dist-contact-active",
+    "test:e2e": "vite build && npm run build:contact-active && node --test \"e2e/*.e2e.mjs\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

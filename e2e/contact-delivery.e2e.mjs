@@ -5,7 +5,7 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { handleContact, memoryRateLimiter } from "../src/lib/contact-handler.ts";
-import { launch, newPage, startStatic, distDir, VIEWPORTS } from "./helpers.mjs";
+import { launch, newPage, startStatic, activeDistDir, VIEWPORTS } from "./helpers.mjs";
 
 let server, browser;
 let env = {};
@@ -24,7 +24,7 @@ const fakeProvider = async (url, init) => {
 
 before(async () => {
   const allow = memoryRateLimiter(50);
-  server = await startStatic(distDir, async (req, res, url) => {
+  server = await startStatic(activeDistDir, async (req, res, url) => {
     if (url.pathname !== "/api/contact") {
       res.writeHead(404).end();
       return;

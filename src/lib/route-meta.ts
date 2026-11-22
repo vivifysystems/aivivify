@@ -1,6 +1,7 @@
 // Per-route <head> metadata, shared by the browser (useRouteMeta) and the static
 // prerender (src/entry-server.tsx), so both always agree.
 import { brand } from "../content/brand.ts";
+import { contactFormActive } from "../content/privacy.ts";
 import { projects } from "../content/projects.ts";
 import { systems } from "../content/systems.ts";
 
@@ -45,8 +46,9 @@ const fixed: Record<string, { title: string; description: string }> = {
   },
   "/contact": {
     title: "Contact & discovery call",
-    description:
-      "Book a free discovery call with VIVIFY Solutions or send a short message about the inquiries, follow-ups and admin you'd like to automate.",
+    description: contactFormActive
+      ? "Book a free discovery call with VIVIFY Solutions or send a short message about the inquiries, follow-ups and admin you'd like to automate."
+      : "Book a free discovery call with VIVIFY Solutions or email us about the inquiries, follow-ups and admin you'd like to automate.",
   },
   "/privacy": {
     title: "Privacy",

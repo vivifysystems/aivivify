@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
-import { packages, quizQuestions, systemById, systems } from "@/content";
+import { contactFormActive, packages, quizQuestions, systemById, systems } from "@/content";
 import { describeRecommendation, scoreQuiz, type QuizAnswers } from "@/lib/quiz";
 import { cn } from "@/lib/utils";
 import { Icon } from "../icons";
@@ -120,8 +120,10 @@ export function Quiz() {
           />
           <p data-reveal className="mt-6 max-w-md text-sm text-slate">
             Indicative only, not a business diagnosis. Your answers stay in your browser and are
-            never sent anywhere. If you choose to talk through your result, a short summary is added
-            to the contact form for you to edit or delete before you send anything.
+            never sent anywhere.{" "}
+            {contactFormActive
+              ? "If you choose to talk through your result, a short summary is added to the contact form for you to edit or delete before you send anything."
+              : "If you choose to talk through your result, we'll take you to the contact page; nothing from your answers is sent."}
           </p>
         </div>
 

@@ -1,21 +1,22 @@
 # Contact form: setting up email delivery with Resend
 
-**Status:** the endpoint is built and tested, but no email is sent until the environment variables below are set.
-Until then `/api/contact` answers `503 not_configured` and the site shows "Not sent yet" with an email fallback.
-The site shows "Message sent" **only** when the server confirms that Resend accepted the message.
+**Status:** the endpoint is built and tested, but no email is sent until the environment variables below are set, and the Contact
+page **shows no form** until the switch `CONTACT_DELIVERY` in `src/content/privacy.ts` is set to `"active"` (see "The one switch"
+below). Until then `/api/contact` answers `503 not_configured` and visitors use "Book a free 30-minute call" or "Email me".
+Once the form is active, the site shows "Message sent" **only** when the server confirms that Resend accepted the message.
 
 ## The confirmed setup (owner decisions, 2026-11-22)
 
-| Item                                             | Value                                                                            |
-| ------------------------------------------------ | -------------------------------------------------------------------------------- |
-| Canonical host                                   | `https://www.vivify.solutions` (`CONTACT_ALLOWED_ORIGIN` in Production)          |
-| Sending domain                                   | `mail.vivify.solutions` (a Resend-verified subdomain)                            |
-| Sender (`CONTACT_FROM_EMAIL`)                    | `VIVIFY Website <forms@mail.vivify.solutions>`                                   |
-| Public recipient (Production `CONTACT_TO_EMAIL`) | `viviene@vivify.solutions`                                                       |
-| Preview recipient                                | a **separate** test inbox you control; never the production address              |
-| Credentials                                      | server-only environment variables in Vercel; nothing in code, the browser or Git |
-| Other destinations                               | none. The endpoint only calls Resend: no CRM, spreadsheet, Slack or database     |
-| Privacy page                                     | stays `contactDelivery: "pending"` until delivery really works (step 7)          |
+| Item                                             | Value                                                                                      |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| Canonical host                                   | `https://www.vivify.solutions` (`CONTACT_ALLOWED_ORIGIN` in Production)                    |
+| Sending domain                                   | `mail.vivify.solutions` (a Resend-verified subdomain)                                      |
+| Sender (`CONTACT_FROM_EMAIL`)                    | `VIVIFY Website <forms@mail.vivify.solutions>`                                             |
+| Public recipient (Production `CONTACT_TO_EMAIL`) | `viviene@vivify.solutions`                                                                 |
+| Preview recipient                                | a **separate** test inbox you control; never the production address                        |
+| Credentials                                      | server-only environment variables in Vercel; nothing in code, the browser or Git           |
+| Other destinations                               | none. The endpoint only calls Resend: no CRM, spreadsheet, Slack or database               |
+| Contact page and privacy page                    | stay in the email-only state (`"pending"`, see below) until delivery really works (step 7) |
 
 **Current state of the domain** (public DNS, read on 2026-11-22): nameservers are Cloudflare's; the root has MX records
 for Cloudflare Email Routing, an SPF record `v=spf1 include:_spf.mx.cloudflare.net ~all` and a DMARC record
@@ -171,12 +172,21 @@ After the Preview passes, add the same variables with **Production** scope: `CON
 `CONTACT_ALLOWED_ORIGIN` = `https://www.vivify.solutions` (the primary host; the apex `vivify.solutions` only
 redirects to it, so browsers never post from the apex). Deploy, then send one real test message.
 
-**Privacy policy switch (do this in the same release).** `src/content/privacy.ts` has
-`contactDelivery: "pending"`, which makes `/privacy` say the form is not switched on yet and names no email
-provider. Before real delivery goes live, change it to `"active"`. The page then states that messages are emailed
-through Resend (processing in the United States, Resend's own retention) and `src/content/privacy.test.ts` checks
-both wordings. Update `lastUpdated` in the same change. Never leave the page on `"pending"` once the form delivers
-real messages, and never set `"active"` before it does.
+**The one switch: `CONTACT_DELIVERY` in `src/content/privacy.ts`.** It is committed as `"pending"`.
+
+- **While `"pending"`:** the Contact page shows **no form and no "Send a message" button**. The two primary options are
+  "Book a free 30-minute call" (Calendly) and "Email me" (`mailto:viviene@vivify.solutions`); the address is shown with a
+  "Copy email" button. The site-wide call to action offers "Email me", the readiness check says it only takes visitors to
+  the contact page, and `/privacy` says there is no online contact form and names no email provider.
+- **When you change it to `"active"`** (and refresh `lastUpdated`): the complete form returns unchanged, with its validation
+  and its not-sent fallback, "Send a message" and the "Email directly" card return, and `/privacy` describes the form's data
+  and names Resend (processing in the United States, Resend's own retention). Nothing is rebuilt.
+- **Order matters:** the form must not appear before real delivery has been verified. So the order is (1) test delivery
+  against the Preview's `/api/contact` directly (the endpoint works whatever the page shows), (2) flip the switch on the
+  Preview branch and test the form itself, (3) only then go live. See `launch-sequence.md`.
+- Tests: `e2e/contact-pending.e2e.mjs` (default build) and `e2e/contact-active.e2e.mjs` (built with
+  `npm run build:contact-active`, a test-only mode that no production build uses) cover both states;
+  `src/content/privacy.test.ts` checks both wordings and that the committed value is `"pending"`.
 
 **Two things to check before Production (seen in public DNS and HTTP headers on 2026-11-22):**
 
@@ -191,8 +201,7 @@ real messages, and never set `"active"` before it does.
   Look at the Preview's behaviour from a real visitor connection before relying on it; the limiter is per function
   instance and best-effort in any case.
 
-**To switch delivery off** at any time: remove `RESEND_API_KEY` from Production and redeploy. The form then shows
-"Not sent yet" with the email fallback; no code change is needed.
+**To switch the form off** at any time: set `CONTACT_DELIVERY` back to `"pending"` and deploy. The form disappears and the page returns to "Book a call" and "Email me"; the privacy page matches. Removing `RESEND_API_KEY` as well is optional (the endpoint then answers 503).
 
 ## Routing
 

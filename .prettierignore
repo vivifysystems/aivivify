@@ -1,5 +1,6 @@
 node_modules
 dist
+dist-contact-active
 .output
 .vinxi
 pnpm-lock.yaml

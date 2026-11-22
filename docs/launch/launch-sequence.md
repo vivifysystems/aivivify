@@ -1,7 +1,9 @@
 # VIVIFY 2.0: Preview, launch and rollback sequence
 
-Everything below waits for the owner's explicit approval at each marked step. Contact delivery stays **off** (the privacy page
-stays `contactDelivery: "pending"`) until a real message has been delivered and checked.
+Everything below waits for the owner's explicit approval at each marked step. Contact delivery stays **off** (the switch
+`CONTACT_DELIVERY` in `src/content/privacy.ts` stays `"pending"`) until a real message has been delivered and checked. While it is
+pending, the Contact page has **no form**: visitors get "Book a free 30-minute call" and "Email me" (a plain `mailto:`), with the
+address and a Copy email button, and the privacy page says there is no online contact form.
 
 ## Where things stand
 
@@ -46,10 +48,16 @@ address must match `CONTACT_ALLOWED_ORIGIN`; the per-deployment unique address d
 
 ## 4. End-to-end contact test (needs approval before the first real message)
 
-Run the table in `docs/launch/contact-form.md` step 6 in this order: (a) the endpoint without credentials answers
-`503 not_configured`; (b) with credentials, one message to the test inbox from a phone and one from a desktop; (c) the
-negative tests (empty form, trapped honeypot, `curl` with a wrong origin, offline phone); (d) check headers for SPF and DKIM
-pass and that it is not in spam; (e) Vercel function logs show event names only. Only then is "delivery verified".
+The Preview shows the email-only Contact page while the switch is `"pending"`, so test in two rounds:
+
+1. **Endpoint round (switch still pending).** Using the Preview address, `curl` the `/api/contact` endpoint (examples in
+   `docs/launch/contact-form.md` step 6): without credentials it answers `503 not_configured`; with credentials, one real message
+   to the test inbox; the negative tests (invalid body, trapped honeypot, wrong origin); check the headers for SPF and DKIM pass,
+   that it is not in spam, and that Vercel function logs show event names only. Only then is "delivery verified".
+2. **Form round.** On the Preview branch only, change `CONTACT_DELIVERY` to `"active"` and refresh `lastUpdated`, push the branch
+   (approval), and use the real form from a phone on mobile data and from a desktop; try an empty submit, a message with the phone
+   offline, and "Back to the form". Confirm the privacy page now describes the form and Resend.
+   If round 2 fails, revert that one commit; the site returns to the email-only state.
 
 ## 5. Manual acceptance
 
@@ -60,7 +68,7 @@ phone keyboard, reduced motion, contact delivery, Calendly (a test booking needs
 
 1. Add the same variables with **Production** scope (`CONTACT_TO_EMAIL` = `viviene@vivify.solutions`,
    `CONTACT_ALLOWED_ORIGIN` = `https://www.vivify.solutions`; a different key from Preview).
-2. In `src/content/privacy.ts` set `contactDelivery: "active"` and refresh `lastUpdated`; commit it on the branch; re-run the checks.
+2. The `"active"` commit from step 4 round 2 is already on the branch (it must not reach `main` without a verified delivery). Re-run the checks.
 3. Fast-forward `main` to the branch: `git push origin release/vivify-2.0-sanitized:main`. Vercel deploys to production.
 4. Verify with the "after launch" section of the acceptance checklist, then send one real test message through the live form.
 
@@ -69,8 +77,7 @@ phone keyboard, reduced motion, contact delivery, Calendly (a test booking needs
 - **Site:** Vercel → Deployments → the previous production deployment (the containment build) → **Instant Rollback**. Vercel then stops
   auto-promoting until you undo the rollback; fix forward on the branch and push. Hobby keeps only a few recent deployments, so do
   not wait weeks.
-- **Contact form only:** remove `RESEND_API_KEY` from Production and redeploy: the form shows "Not sent yet" with the email fallback.
-  If you do this, also set `contactDelivery` back to `"pending"` so the privacy page stays true.
+- **Contact form only:** set `CONTACT_DELIVERY` back to `"pending"` and deploy: the form disappears, the Contact page returns to "Book a call" and "Email me", and the privacy page matches. (Removing `RESEND_API_KEY` alone is not enough: the form would still show and visitors would see "Not sent yet".)
 - **Git:** revert the release commits with a new commit; never rewrite `main`.
 
 ## 8. MCP function (separate approval)
