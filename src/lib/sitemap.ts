@@ -1,7 +1,8 @@
+import { brand } from "../content/brand.ts";
 import { projects } from "../content/projects.ts";
 import { systems } from "../content/systems.ts";
 
-export const SITE = "https://vivify.solutions";
+export const SITE = brand.url;
 
 export function sitemapPaths(): string[] {
   return [

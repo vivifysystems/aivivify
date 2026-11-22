@@ -3,6 +3,7 @@ import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { newPage, VIEWPORTS } from "./helpers.mjs";
 import { setup } from "./setup.mjs";
+import { hasProofCase } from "../src/content/work.ts";
 
 let env;
 before(async () => (env = await setup()));
@@ -65,10 +66,14 @@ test("the first page load does not steal focus", async () => {
 
 test("an in-page hash link scrolls to its target and moves focus there", async () => {
   const page = await newPage(env.browser, VIEWPORTS["1440"]);
-  await page.goto(env.base + "/");
-  await page.getByRole("link", { name: /See a Messenger inquiry answered/ }).click();
-  await page.waitForURL(/#proof$/);
-  await page.waitForFunction(() => document.activeElement?.id === "proof");
+  // The home proof link when that section is published, otherwise the contact page's own hash link.
+  const [path, linkName, hash] = hasProofCase
+    ? ["/", /See a Messenger inquiry answered/, "proof"]
+    : ["/contact", /Send a message/, "send-message"];
+  await page.goto(env.base + path);
+  await page.getByRole("link", { name: linkName }).first().click();
+  await page.waitForURL(new RegExp(`#${hash}$`));
+  await page.waitForFunction((h) => document.activeElement?.id === h, hash);
   await page.context().close();
 });
 

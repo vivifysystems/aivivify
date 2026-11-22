@@ -17,7 +17,7 @@ export type ContactEnv = {
   CONTACT_FROM_EMAIL?: string;
   /** Optional Cloudflare Turnstile secret. When set, a valid token is required. */
   TURNSTILE_SECRET_KEY?: string;
-  /** Optional comma-separated exact Origins allowed to post, e.g. https://vivify.solutions. */
+  /** Optional comma-separated exact Origins allowed to post, e.g. https://www.vivify.solutions. */
   CONTACT_ALLOWED_ORIGIN?: string;
 };
 

@@ -65,17 +65,22 @@ export type Project = {
   tag: string;
   title: string;
   summary: string;
+  /** "concept": a demonstration built with sample data, not a delivered client project. */
+  kind?: "concept";
   stack: string[];
   problem: string;
   solution: string;
   result: string;
 };
 
+export const CONCEPT_PREFIX = "Concept demonstration (sample data, not a client project): ";
+
 export const projects: Project[] = siteProjects.map((p) => ({
   id: p.id,
   tag: p.tag,
   title: p.title,
-  summary: p.summary,
+  summary: p.kind === "concept" ? `${CONCEPT_PREFIX}${p.summary}` : p.summary,
+  ...(p.kind ? { kind: p.kind } : {}),
   stack: [...p.stack],
   problem: p.caseStudy.problem,
   solution: p.caseStudy.solution,

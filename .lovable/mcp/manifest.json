@@ -49,7 +49,7 @@
             "id": {
               "type": "string",
               "minLength": 1,
-              "description": "Project id from list_projects, e.g. 'fb-messenger-agent'."
+              "description": "Project id from list_projects, e.g. 'ai-voice-receptionist'."
             }
           },
           "required": [

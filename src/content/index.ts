@@ -22,6 +22,8 @@ export {
   projectTools,
   toolUsage,
   projectById,
+  proofProjectId,
+  hasProofCase,
 } from "./work.ts";
 export type { WorkCategory } from "./work.ts";
 export type {

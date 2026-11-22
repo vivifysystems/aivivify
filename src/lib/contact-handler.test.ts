@@ -79,7 +79,7 @@ test("provider failure is reported as not delivered", async () => {
 test("rejects bad methods, origins, payloads and invalid fields", async () => {
   const { d } = deps();
   assert.equal((await handleContact(req(null, { method: "GET" }), configured, d)).status, 405);
-  const strict = { ...configured, CONTACT_ALLOWED_ORIGIN: "https://vivify.solutions" };
+  const strict = { ...configured, CONTACT_ALLOWED_ORIGIN: "https://www.vivify.solutions" };
   assert.equal(
     (await handleContact(req(valid, { headers: { origin: "https://evil.example" } }), strict, d))
       .status,
@@ -124,10 +124,10 @@ test("the allowed origin can list several origins (production and a preview)", a
   const { d } = deps();
   const env = {
     ...configured,
-    CONTACT_ALLOWED_ORIGIN: "https://vivify.solutions, https://preview.example.vercel.app",
+    CONTACT_ALLOWED_ORIGIN: "https://www.vivify.solutions, https://preview.example.vercel.app",
   };
   const from = (origin: string) => handleContact(req(valid, { headers: { origin } }), env, d);
-  assert.equal((await from("https://vivify.solutions")).status, 200);
+  assert.equal((await from("https://www.vivify.solutions")).status, 200);
   assert.equal((await from("https://preview.example.vercel.app")).status, 200);
   assert.equal((await from("https://evil.example")).status, 403);
 });

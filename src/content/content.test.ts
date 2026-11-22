@@ -30,6 +30,14 @@ const { discrepancies }: { discrepancies: readonly Discrepancy[] } = hasInternal
 const { withheldClaims }: { withheldClaims: Record<string, readonly WithheldClaim[]> } = hasInternal
   ? await import(internal("withheld-claims.ts").href)
   : { withheldClaims: {} };
+const { withheldProjects }: { withheldProjects: readonly { id: string }[] } =
+  hasInternal && existsSync(internal("withheld-projects.ts"))
+    ? await import(internal("withheld-projects.ts").href)
+    : { withheldProjects: [] };
+const { hiddenProjects }: { hiddenProjects: readonly { id: string }[] } =
+  hasInternal && existsSync(internal("hidden-projects.ts"))
+    ? await import(internal("hidden-projects.ts").href)
+    : { hiddenProjects: [] };
 const { statClaims }: { statClaims: readonly Stat[] } = hasInternal
   ? await import(internal("stat-claims.ts").href)
   : { statClaims: [] };
@@ -123,7 +131,11 @@ test(
   "withheld claims are absent from public copy, with their original wording kept",
   { skip: noInternal },
   () => {
-    const ids = new Set(projects.map((p) => p.id));
+    const ids = new Set([
+      ...projects.map((p) => p.id),
+      ...withheldProjects.map((p) => p.id),
+      ...hiddenProjects.map((p) => p.id),
+    ]);
     for (const id of Object.keys(withheldClaims)) {
       assert.ok(ids.has(id), `withheld-claims.ts references unknown project "${id}"`);
     }

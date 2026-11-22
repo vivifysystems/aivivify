@@ -22,9 +22,9 @@ export function ProjectCard({ project, large = false }: { project: Project; larg
           className="aspect-[16/10]"
           transitionName={`project-${project.id}`}
         />
-        {project.beta && (
+        {(project.beta || project.kind === "concept") && (
           <span className="tech-label absolute left-4 top-4 rounded-full bg-purple-600 px-2.5 py-1 !text-[0.72rem] text-white">
-            Beta
+            {project.kind === "concept" ? "Concept demo" : "Beta"}
           </span>
         )}
       </div>

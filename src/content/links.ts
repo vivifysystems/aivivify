@@ -20,8 +20,8 @@ export const links = {
     status: "verified",
   },
   website: {
-    label: "vivify.solutions",
-    href: "https://vivify.solutions",
+    label: "www.vivify.solutions",
+    href: "https://www.vivify.solutions",
     status: "consistent",
   },
   linkedin: {

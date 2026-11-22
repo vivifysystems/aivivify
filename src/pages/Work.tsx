@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import {
+  type Project,
+  featuredProjectIds,
   projectById,
   projectCategory,
   projects,
@@ -17,11 +19,10 @@ import { ProjectMedia } from "@/components/site/work/ProjectMedia";
 import { ContactCta } from "@/components/site/ContactCta";
 import { cn } from "@/lib/utils";
 
-/** The spotlighted case study: a project whose sources agree (status "consistent"). */
-const SPOTLIGHT_ID = "fb-messenger-agent";
+/** The spotlighted case study: the first featured launch project (sources agree, not a concept demo). */
+const spotlightProject = featuredProjectIds.map((id) => projectById(id)).find(Boolean);
 
-function Spotlight() {
-  const p = projectById(SPOTLIGHT_ID)!;
+function Spotlight({ p }: { p: Project }) {
   const to = `/work/${p.id}`;
   const onClick = useViewTransitionLink(to);
   const cat = workCategories.find((c) => c.id === projectCategory[p.id]);
@@ -96,11 +97,13 @@ export default function Work() {
         title="Systems I've designed and built."
         lede="Automation projects with the problem each one solved, what was built and the tools it runs on. Filter by type of work or by technology."
       />
-      <section aria-label="Featured case study" className="bg-ground pb-16">
-        <div className="shell">
-          <Spotlight />
-        </div>
-      </section>
+      {spotlightProject && (
+        <section aria-label="Featured case study" className="bg-ground pb-16">
+          <div className="shell">
+            <Spotlight p={spotlightProject} />
+          </div>
+        </section>
+      )}
       <section aria-labelledby="projects-heading" className="bg-ground pb-24">
         <div className="shell">
           <h2 id="projects-heading" className="type-h3">

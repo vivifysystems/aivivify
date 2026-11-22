@@ -4,7 +4,7 @@ import { links } from "./links.ts";
 import { projects } from "./projects.ts";
 import { formatLastUpdated, privacy, privacySections } from "./privacy.ts";
 
-const text = (state: Parameters<typeof privacySections>[0] = privacy, rec = true) =>
+const text = (state: Parameters<typeof privacySections>[0] = privacy, rec?: boolean) =>
   privacySections(state, rec)
     .flatMap((s) => [s.title, ...s.paragraphs])
     .join("\n");
@@ -53,8 +53,11 @@ test("the launch default is the safe one: delivery pending until Resend is confi
   assert.equal(privacy.contactDelivery, "pending");
 });
 
-test("the recordings paragraph appears only while a case study has a recording", () => {
-  assert.ok(projects.some((p) => p.demoUrl));
+test("the recordings paragraph appears only when a published case study has a recording", () => {
+  assert.equal(
+    /Demo recordings/.test(text(privacy)),
+    projects.some((p) => p.demoUrl),
+  );
   assert.match(text(privacy, true), /Google Drive/);
   assert.ok(!/Demo recordings/.test(text(privacy, false)));
 });

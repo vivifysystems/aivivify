@@ -16,7 +16,8 @@ var brand = {
   operator: "Viviene Pitogo",
   positioning: "Founder-led AI automation and business systems consultancy for service businesses.",
   focus: "Practical business outcomes and reliable customer operations.",
-  url: "https://vivify.solutions"
+  /** Primary canonical address (owner decision 2026-11-22), matching the existing production redirect from the apex. */
+  url: "https://www.vivify.solutions"
 };
 
 // src/content/founder.ts
@@ -62,8 +63,8 @@ var links = {
     status: "verified"
   },
   website: {
-    label: "vivify.solutions",
-    href: "https://vivify.solutions",
+    label: "www.vivify.solutions",
+    href: "https://www.vivify.solutions",
     status: "consistent"
   },
   linkedin: {
@@ -158,28 +159,27 @@ var projects = [
     media: { card: "proof-social-engine", proof: "proof-social-engine" },
     impact: "Uploaded recordings are transcribed, turned into captions and posted automatically.",
     caseStudy: {
-      problem: "A business had hours of recorded video and audio content sitting unused because manually transcribing, editing, and cross-posting to multiple platforms was too time-consuming.",
-      solution: "Built a Zapier pipeline with AI that auto-transcribes uploaded media, generates platform-optimized captions, and cross-posts to LinkedIn and Facebook Pages automatically.",
+      problem: "Hours of recorded video and audio content can sit unused because transcribing, editing and cross-posting to multiple platforms by hand is too time-consuming.",
+      solution: "Built a Zapier pipeline with AI that auto-transcribes media uploaded to a Google Drive folder, generates posts from the transcript, and publishes them to Facebook Pages and LinkedIn automatically.",
       result: "After upload, content is transcribed, drafted and posted to LinkedIn and Facebook Pages automatically."
     },
-    status: "needs-confirmation",
-    discrepancies: ["social-engine-description"]
+    status: "consistent"
   },
   {
     id: "social-auto-poster",
     tag: "MAKE.COM \xB7 AI \xB7 BUFFER",
     title: "Social Media Auto Poster",
-    summary: "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets \u2014 fully automated.",
+    summary: "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets.",
     stack: ["MAKE.COM", "OPENAI", "AIRTABLE", "BUFFER", "GOOGLE SHEETS"],
     media: { card: "cover-social-auto" },
     impact: "Queued content is captioned, link-shortened, scheduled and logged automatically.",
     caseStudy: {
-      problem: "Maintaining a consistent multi-channel posting cadence required hours each week writing captions, shortening links, scheduling, and tracking what went out.",
+      problem: "Keeping a steady posting cadence across channels takes hours each week: writing captions, shortening links, scheduling, and tracking what went out.",
       solution: "Built a Make.com scenario that reads queued content from Airtable, generates platform-tailored captions with OpenAI, shortens URLs via Bitly, schedules through Buffer, and writes the full audit trail back to Airtable and Google Sheets.",
       result: "Content queued in Airtable is captioned, link-shortened, scheduled through Buffer and logged automatically."
     },
-    status: "needs-confirmation",
-    discrepancies: ["social-auto-poster-source"]
+    kind: "concept",
+    status: "consistent"
   },
   {
     id: "ugc-script-generator",
@@ -190,12 +190,12 @@ var projects = [
     media: { card: "cover-ugc-script" },
     impact: "A new document of draft UGC scripts is created in Google Drive each morning at 8AM.",
     caseStudy: {
-      problem: "Producing daily UGC scripts meant manually combining product research, competitor ads, and audience insights every morning \u2014 slow, repetitive, and a creative bottleneck.",
+      problem: "Producing daily UGC scripts means manually combining product research, competitor ads and audience insights every morning: slow, repetitive, and a creative bottleneck.",
       solution: "Built an n8n workflow that fires at 8AM, ingests all three Google Sheets data sources, assembles a rich AI brief, generates scripts through Groq, formats the output, and writes everything into a freshly created dated Google Doc.",
-      result: "Each morning's run produces a dated Google Doc of draft UGC scripts for the team to review."
+      result: "Each morning's run produces a dated Google Doc of draft UGC scripts."
     },
-    status: "needs-confirmation",
-    discrepancies: ["ugc-script-model"]
+    kind: "concept",
+    status: "consistent"
   }
 ];
 
@@ -737,11 +737,13 @@ var solutionPackages = packages.map((p) => ({
 }));
 var pricing = pricingNote;
 var platforms = tools.map((t) => t.name);
+var CONCEPT_PREFIX = "Concept demonstration (sample data, not a client project): ";
 var projects2 = projects.map((p) => ({
   id: p.id,
   tag: p.tag,
   title: p.title,
-  summary: p.summary,
+  summary: p.kind === "concept" ? `${CONCEPT_PREFIX}${p.summary}` : p.summary,
+  ...p.kind ? { kind: p.kind } : {},
   stack: [...p.stack],
   problem: p.caseStudy.problem,
   solution: p.caseStudy.solution,
@@ -784,7 +786,7 @@ var get_project_default = defineTool2({
   title: "Get project case study",
   description: "Return the full case study (problem, solution, result, stack) for one VIVIFY project by id. Use list_projects first to discover ids.",
   inputSchema: {
-    id: z2.string().min(1).describe("Project id from list_projects, e.g. 'fb-messenger-agent'.")
+    id: z2.string().min(1).describe("Project id from list_projects, e.g. 'ai-voice-receptionist'.")
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: ({ id }) => {

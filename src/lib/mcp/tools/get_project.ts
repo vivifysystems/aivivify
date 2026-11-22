@@ -8,7 +8,7 @@ export default defineTool({
   description:
     "Return the full case study (problem, solution, result, stack) for one VIVIFY project by id. Use list_projects first to discover ids.",
   inputSchema: {
-    id: z.string().min(1).describe("Project id from list_projects, e.g. 'fb-messenger-agent'."),
+    id: z.string().min(1).describe("Project id from list_projects, e.g. 'ai-voice-receptionist'."),
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: ({ id }) => {

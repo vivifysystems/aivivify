@@ -118,8 +118,8 @@ Environment variables apply to **new** deployments: redeploy the Preview after a
 ### 7. Production
 
 After the Preview passes, add the same variables with **Production** scope: `CONTACT_TO_EMAIL` = the real inbox,
-`CONTACT_ALLOWED_ORIGIN` = `https://vivify.solutions` (add `https://www.vivify.solutions` if that host serves the
-site rather than redirecting). Deploy, then send one real test message.
+`CONTACT_ALLOWED_ORIGIN` = `https://www.vivify.solutions` (the primary host; the apex `vivify.solutions` only
+redirects to it, so browsers never post from the apex). Deploy, then send one real test message.
 
 **Privacy policy switch (do this in the same release).** `src/content/privacy.ts` has
 `contactDelivery: "pending"`, which makes `/privacy` say the form is not switched on yet and names no email
@@ -130,11 +130,12 @@ real messages, and never set `"active"` before it does.
 
 **Two things to check before Production (seen in public DNS and HTTP headers on 2026-11-22):**
 
-- **Which host is primary.** `vivify.solutions` currently answers `308` to `https://www.vivify.solutions/`, and the
-  site is served through Cloudflare in front of Vercel. This release writes `https://vivify.solutions` into
-  canonicals, the sitemap, social tags and structured data. Pick one primary host in Vercel and Cloudflare (a live
-  setting, so it needs your approval), then make the release match it. `CONTACT_ALLOWED_ORIGIN` must list the host
-  visitors actually use, or the form answers 403.
+- **Primary host: `https://www.vivify.solutions`** (owner decision, matching the existing production redirect: the
+  apex answers `308` to `www`, and the site is served through Cloudflare in front of Vercel). The release uses this
+  host in canonicals, the sitemap, social tags, structured data and the MCP content. In Vercel, `www` must be the
+  primary domain and the apex must redirect to it; that is a live setting, so check it, don't change it from here.
+  `CONTACT_ALLOWED_ORIGIN` must be exactly `https://www.vivify.solutions` in Production (Preview: the Preview URL),
+  or the form answers 403.
 - **Rate-limit identity behind Cloudflare.** The limiter keys on the first `x-forwarded-for` address. Behind a
   proxy that can be the proxy's address instead of the visitor's, so limits may be shared or weaker than intended.
   Look at the Preview's behaviour from a real visitor connection before relying on it; the limiter is per function

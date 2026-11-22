@@ -42,6 +42,8 @@ export const projectSchema = z.object({
   stack: z.array(z.string().min(1)).min(1),
   impact: z.string().min(1),
   beta: z.boolean().optional(),
+  /** "concept": a demonstration built with sample data, not a delivered client project. */
+  kind: z.enum(["concept"]).optional(),
   media: z.object({
     card: assetName.optional(),
     proof: assetName.optional(),

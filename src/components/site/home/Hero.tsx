@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, BellRing, CalendarCheck, MessageSquareReply } from "lucide-react";
 import portrait from "@/assets/optimized/card/viviene-portrait.webp";
 import { usePrefersReducedMotion } from "@/hooks/use-motion-preferences";
+import { hasProofCase as hasProof } from "@/content";
 import { BookingLink } from "../BookingLink";
 import { viviArt } from "../vivi-art";
 
@@ -193,9 +194,15 @@ export function Hero() {
             style={{ animationDelay: "280ms" }}
           >
             <BookingLink />
-            <Link to="/#proof" className="btn btn-ghost">
-              See a Messenger inquiry answered <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
+            {hasProof ? (
+              <Link to="/#proof" className="btn btn-ghost">
+                See a Messenger inquiry answered <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            ) : (
+              <Link to="/work" className="btn btn-ghost">
+                See the projects <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            )}
           </div>
           <p className="anim-rise mt-5 text-sm text-mist" style={{ animationDelay: "320ms" }}>
             Or{" "}

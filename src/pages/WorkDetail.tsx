@@ -114,6 +114,12 @@ export default function WorkDetail() {
                   In beta, still being refined
                 </p>
               )}
+              {project.kind === "concept" && (
+                <p className="mt-5 max-w-xl rounded-2xl bg-purple-600/20 px-4 py-3 text-sm font-semibold text-purple-100">
+                  Concept demonstration: built with sample data to show the approach. This is not a
+                  delivered client project.
+                </p>
+              )}
             </div>
             <ProjectMedia
               project={project}
@@ -131,7 +137,10 @@ export default function WorkDetail() {
             {[
               ["Category", cat?.label ?? "Automation"],
               ["Built by", "Viviene Pitogo"],
-              ["Status", project.beta ? "Beta" : "Built"],
+              [
+                "Status",
+                project.kind === "concept" ? "Concept demo" : project.beta ? "Beta" : "Built",
+              ],
               ["Tools", tools.join(", ")],
             ].map(([k, v]) => (
               <div key={k} className="bg-navy-800 p-5">

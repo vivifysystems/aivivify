@@ -61,34 +61,33 @@ export const projects: readonly Project[] = [
     impact: "Uploaded recordings are transcribed, turned into captions and posted automatically.",
     caseStudy: {
       problem:
-        "A business had hours of recorded video and audio content sitting unused because manually transcribing, editing, and cross-posting to multiple platforms was too time-consuming.",
+        "Hours of recorded video and audio content can sit unused because transcribing, editing and cross-posting to multiple platforms by hand is too time-consuming.",
       solution:
-        "Built a Zapier pipeline with AI that auto-transcribes uploaded media, generates platform-optimized captions, and cross-posts to LinkedIn and Facebook Pages automatically.",
+        "Built a Zapier pipeline with AI that auto-transcribes media uploaded to a Google Drive folder, generates posts from the transcript, and publishes them to Facebook Pages and LinkedIn automatically.",
       result:
         "After upload, content is transcribed, drafted and posted to LinkedIn and Facebook Pages automatically.",
     },
-    status: "needs-confirmation",
-    discrepancies: ["social-engine-description"],
+    status: "consistent",
   },
   {
     id: "social-auto-poster",
     tag: "MAKE.COM · AI · BUFFER",
     title: "Social Media Auto Poster",
     summary:
-      "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets — fully automated.",
+      "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets.",
     stack: ["MAKE.COM", "OPENAI", "AIRTABLE", "BUFFER", "GOOGLE SHEETS"],
     media: { card: "cover-social-auto" },
     impact: "Queued content is captioned, link-shortened, scheduled and logged automatically.",
     caseStudy: {
       problem:
-        "Maintaining a consistent multi-channel posting cadence required hours each week writing captions, shortening links, scheduling, and tracking what went out.",
+        "Keeping a steady posting cadence across channels takes hours each week: writing captions, shortening links, scheduling, and tracking what went out.",
       solution:
         "Built a Make.com scenario that reads queued content from Airtable, generates platform-tailored captions with OpenAI, shortens URLs via Bitly, schedules through Buffer, and writes the full audit trail back to Airtable and Google Sheets.",
       result:
         "Content queued in Airtable is captioned, link-shortened, scheduled through Buffer and logged automatically.",
     },
-    status: "needs-confirmation",
-    discrepancies: ["social-auto-poster-source"],
+    kind: "concept",
+    status: "consistent",
   },
   {
     id: "ugc-script-generator",
@@ -101,13 +100,12 @@ export const projects: readonly Project[] = [
     impact: "A new document of draft UGC scripts is created in Google Drive each morning at 8AM.",
     caseStudy: {
       problem:
-        "Producing daily UGC scripts meant manually combining product research, competitor ads, and audience insights every morning — slow, repetitive, and a creative bottleneck.",
+        "Producing daily UGC scripts means manually combining product research, competitor ads and audience insights every morning: slow, repetitive, and a creative bottleneck.",
       solution:
         "Built an n8n workflow that fires at 8AM, ingests all three Google Sheets data sources, assembles a rich AI brief, generates scripts through Groq, formats the output, and writes everything into a freshly created dated Google Doc.",
-      result:
-        "Each morning's run produces a dated Google Doc of draft UGC scripts for the team to review.",
+      result: "Each morning's run produces a dated Google Doc of draft UGC scripts.",
     },
-    status: "needs-confirmation",
-    discrepancies: ["ugc-script-model"],
+    kind: "concept",
+    status: "consistent",
   },
 ];

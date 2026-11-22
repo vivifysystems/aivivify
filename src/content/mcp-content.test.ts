@@ -2,7 +2,7 @@
 // derives from src/content; these tests keep it that way and keep the retired
 // claims, links and brand name out of it.
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import test from "node:test";
 import * as mcp from "../lib/mcp/data.ts";
 import { brand, links, packages, projects, systems, tools } from "./index.ts";
@@ -36,7 +36,8 @@ test("MCP data is derived from the website's canonical content", () => {
         id: p.id,
         tag: p.tag,
         title: p.title,
-        summary: p.summary,
+        summary: p.kind === "concept" ? `${mcp.CONCEPT_PREFIX}${p.summary}` : p.summary,
+        ...(p.kind ? { kind: p.kind } : {}),
         stack: [...p.stack],
         problem: p.caseStudy.problem,
         solution: p.caseStudy.solution,
@@ -135,3 +136,30 @@ test("the Lovable manifest snapshot matches the source", () => {
     ["list_projects", "get_project", "get_services", "get_contact_info", "get_about"],
   );
 });
+
+// Projects kept out of the public launch are listed only in the gitignored private files,
+// so this test needs them and is skipped in a public clone.
+const privateFile = (f: string) => new URL(`./internal/${f}`, import.meta.url);
+const havePrivate = existsSync(privateFile("withheld-projects.ts"));
+test(
+  "projects kept out of the launch are absent from the MCP source, function and manifest",
+  { skip: havePrivate ? false : "private project lists not present" },
+  async () => {
+    const lists: { id: string; title: string }[] = [];
+    for (const [file, key] of [
+      ["withheld-projects.ts", "withheldProjects"],
+      ["hidden-projects.ts", "hiddenProjects"],
+    ] as const) {
+      if (!existsSync(privateFile(file))) continue;
+      const mod = await import(privateFile(file).href);
+      lists.push(...mod[key]);
+    }
+    assert.ok(lists.length >= 7, "expected the withheld and hidden projects to be listed");
+    for (const text of [mcpSource, generated, manifest]) {
+      for (const p of lists) {
+        assert.ok(!text.includes(`"${p.id}"`), `${p.id} is in the MCP`);
+        assert.ok(!text.includes(p.title), `"${p.title}" is in the MCP`);
+      }
+    }
+  },
+);

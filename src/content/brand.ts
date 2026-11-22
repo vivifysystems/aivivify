@@ -8,5 +8,6 @@ export const brand = {
   operator: "Viviene Pitogo",
   positioning: "Founder-led AI automation and business systems consultancy for service businesses.",
   focus: "Practical business outcomes and reliable customer operations.",
-  url: "https://vivify.solutions",
+  /** Primary canonical address (owner decision 2026-11-22), matching the existing production redirect from the apex. */
+  url: "https://www.vivify.solutions",
 } as const;

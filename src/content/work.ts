@@ -7,10 +7,8 @@ import type { Project } from "./schema.ts";
  */
 export const workCategories = [
   { id: "customer-assistants", label: "AI customer assistants" },
-  { id: "lead-management", label: "Lead management" },
   { id: "knowledge-documents", label: "Email, files & knowledge" },
   { id: "content-automation", label: "Content automation" },
-  { id: "operations", label: "Operations & finance" },
 ] as const;
 
 export type WorkCategory = (typeof workCategories)[number]["id"];
@@ -23,9 +21,11 @@ export const projectCategory: Record<string, WorkCategory> = {
   "ugc-script-generator": "content-automation",
 };
 
-/** Featured on the homepage: projects whose sources agree (status "consistent"). */
+/** Featured on the homepage: launch projects whose sources agree and that are not concept demonstrations. */
 export const featuredProjectIds = [
   "ai-voice-receptionist",
+  "intelligent-file-management",
+  "social-engine",
 ] as const;
 
 /** Canonical tool names, so "N8N", "n8n" and "GEMINI AI" filter together. */
@@ -80,6 +80,13 @@ export function toolUsage(list: readonly Project[] = projects): { name: string; 
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 }
+
+/**
+ * The home page's proof section is about one specific published project. When that
+ * project is not in the launch content the section (and the hero link to it) is not shown.
+ */
+export const proofProjectId = "fb-messenger-agent";
+export const hasProofCase = projects.some((p) => p.id === proofProjectId);
 
 export function projectById(id: string): Project | undefined {
   return projects.find((p) => p.id === id);

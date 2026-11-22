@@ -1,9 +1,10 @@
 // Per-route <head> metadata, shared by the browser (useRouteMeta) and the static
 // prerender (src/entry-server.tsx), so both always agree.
+import { brand } from "../content/brand.ts";
 import { projects } from "../content/projects.ts";
 import { systems } from "../content/systems.ts";
 
-export const SITE_URL = "https://vivify.solutions";
+export const SITE_URL = brand.url;
 export const OG_IMAGE = `${SITE_URL}/og/vivify-og.png`;
 
 export type RouteMeta = { title: string; description: string; path: string; noindex: boolean };

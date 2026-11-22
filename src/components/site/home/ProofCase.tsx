@@ -8,12 +8,10 @@ import {
   Play,
   type LucideIcon,
 } from "lucide-react";
-import { projectById, projectTools } from "@/content";
+import { projectById, projectTools, proofProjectId } from "@/content";
 import { usePrefersReducedMotion } from "@/hooks/use-motion-preferences";
 import portrait from "@/assets/optimized/card/viviene-portrait.webp";
 import { cn } from "@/lib/utils";
-
-const PROJECT_ID = "fb-messenger-agent";
 
 /**
  * What the business gains, in the order it happens. Each status is a plain statement
@@ -86,7 +84,7 @@ function useSequence(count: number) {
  * the chat plus the documented outcome and Viviene's role. The full portfolio stays in /work.
  */
 export function ProofCase() {
-  const project = projectById(PROJECT_ID);
+  const project = projectById(proofProjectId);
   const { ref, stage } = useSequence(steps.length);
   if (!project) return null;
   const tools = projectTools(project);
