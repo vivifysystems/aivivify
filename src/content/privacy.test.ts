@@ -18,10 +18,11 @@ test("the privacy policy contains no instruction addressed to the site owner", (
 
 test("the policy names the operator, the contact address, the retention period and the date", () => {
   const all = text();
-  assert.match(all, /VIVIFY Solutions, operated by Viviene Pitogo/);
+  assert.match(all, /VIVIFY Solutions, operated by Viviene Pitogo from the Philippines/);
   assert.ok(all.includes(links.email.label));
-  assert.match(all, /12 months after our last communication/);
-  assert.match(all, /by hand, not with an automatic system/);
+  assert.match(all, /We don.t run an automatic deletion system/);
+  assert.match(all, /sell, rent or disclose/);
+  assert.match(all, /don.t keep a separate inquiry database or notes/);
   assert.equal(formatLastUpdated("2026-11-22"), "22 November 2026");
   assert.match(privacy.lastUpdated, /^\d{4}-\d{2}-\d{2}$/);
 });
@@ -64,4 +65,19 @@ test("the recordings paragraph appears only when a published case study has a re
 
 test("no unconditional promise of automatic deletion", () => {
   assert.ok(!/automatically delete/i.test(text()));
+});
+
+test("no deletion schedule is promised until the owner commits to one", () => {
+  assert.equal(privacy.retentionMonths, null);
+  const now = text();
+  assert.ok(!/\b12 months\b/.test(now) && !/we aim to delete/i.test(now));
+  assert.match(now, /we don.t promise a deletion schedule/);
+  // The prepared wording for when the owner commits (not live).
+  const committed = text({ contactDelivery: "pending", retentionMonths: 12 });
+  assert.match(committed, /we aim to delete the emails 12 months after our last communication/);
+});
+
+test("the recordings clause is gone from the provider list while no recording is published", () => {
+  assert.ok(!/demo recordings/i.test(text(privacy, false)));
+  assert.match(text(privacy, true), /Google also serves demo recordings/);
 });
