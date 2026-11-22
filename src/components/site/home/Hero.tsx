@@ -196,7 +196,7 @@ export function Hero() {
             <BookingLink />
             {hasProof ? (
               <Link to="/#proof" className="btn btn-ghost">
-                See a Messenger inquiry answered <ArrowRight className="h-4 w-4" aria-hidden />
+                See a call become a booking <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             ) : (
               <Link to="/work" className="btn btn-ghost">

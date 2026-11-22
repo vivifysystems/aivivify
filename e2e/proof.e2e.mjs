@@ -74,12 +74,14 @@ proofTest(
     await page.goto(env.base + "/");
     const proof = page.locator("#proof");
     const text = await proof.textContent();
-    assert.match(text, /Customer: .*menu and pricelist/);
-    assert.match(text, /Business reply: /);
+    assert.match(text, /Caller: .*Thursday afternoon/);
+    assert.match(text, /Assistant: /);
     assert.match(text, /I built this/);
     assert.match(text, /Viviene Pitogo/);
-    assert.match(text, /Illustrated example, not a real conversation/);
-    assert.match(text, /Common questions are answered automatically/);
+    assert.match(text, /Illustrated example, not a real call/);
+    assert.match(text, /written to Google Calendar and logged in Airtable/);
+    // Voice receptionists are a pilot service, and the proof says so.
+    assert.match(text, /Pilot: offered case by case/);
     // Honest by construction: no invented statistics or testimonials.
     assert.doesNotMatch(text, /\d+\s?%|\d+x\b|testimonial|“|”|★/i);
     assert.equal(await proof.locator("blockquote").count(), 0, "no quoted testimonial");
@@ -97,7 +99,7 @@ test("hero: one prominent booking action and one descriptive link straight to th
     /^https:\/\/calendly\.com\/vivienecreates\/automation-discovery-call$/,
   );
   if (hasProofCase) {
-    const see = hero.getByRole("link", { name: /See a Messenger inquiry answered/ });
+    const see = hero.getByRole("link", { name: /See a call become a booking/ });
     await see.click();
     await page.waitForURL(/#proof$/);
     await page.waitForFunction(() => {
@@ -116,24 +118,21 @@ test("hero: one prominent booking action and one descriptive link straight to th
   await page.context().close();
 });
 
-proofTest("the proof links to the case study and its recorded demo", async () => {
-  const page = await newPage(env.browser, VIEWPORTS["1440"]);
-  await page.goto(env.base + "/");
-  const proof = page.locator("#proof");
-  await proof.getByRole("link", { name: /Watch the recorded demo/ }).click();
-  await page.waitForURL("**/work/fb-messenger-agent#demo");
-  // The recording is the third-party Drive player and loads only on request: assert it is offered, not loaded.
-  await page.getByRole("heading", { name: "Demo recording" }).waitFor();
-  await page.getByRole("button", { name: /Play the demo recording/ }).waitFor();
-  assert.equal(await page.locator("#demo iframe").count(), 0);
-  assert.ok(
-    await page.evaluate(
-      () => document.getElementById("demo").getBoundingClientRect().top < window.innerHeight,
-    ),
-    "demo anchor scrolled into view",
-  );
-  await page.context().close();
-});
+proofTest(
+  "the proof links to the case study, shows the real workflow and offers no recording",
+  async () => {
+    const page = await newPage(env.browser, VIEWPORTS["1440"]);
+    await page.goto(env.base + "/");
+    const proof = page.locator("#proof");
+    assert.equal(await proof.getByRole("link", { name: /recorded demo/ }).count(), 0);
+    assert.equal(await proof.locator("iframe").count(), 0);
+    assert.equal(await proof.getByRole("img", { name: /Workflow screenshot/ }).count(), 1);
+    await proof.getByRole("link", { name: /Read the case study/ }).click();
+    await page.waitForURL("**/work/ai-voice-receptionist");
+    assert.equal(await page.locator("#demo").count(), 0, "no recording section");
+    await page.context().close();
+  },
+);
 
 (hasProofCase ? test.skip : test)(
   "without a published proof project the home page has no proof section and nothing points to it",
@@ -170,8 +169,8 @@ proofTest("with reduced motion every proof status is already in its final state"
   await page.goto(env.base + "/");
   const text = await page.locator("#proof ol").textContent();
   assert.match(text, /Received/);
-  assert.match(text, /Answered/);
-  assert.match(text, /Inquiry kept/);
+  assert.match(text, /Checked/);
+  assert.match(text, /Booked/);
   assert.doesNotMatch(text, /Waiting/);
   await page.context().close();
 });
@@ -181,7 +180,7 @@ proofTest("without reduced motion the statuses resolve once and then rest", asyn
   await page.goto(env.base + "/");
   await page.locator("#proof").scrollIntoViewIfNeeded();
   await page.waitForFunction(
-    () => document.querySelector("#proof ol")?.textContent.includes("Inquiry kept"),
+    () => document.querySelector("#proof ol")?.textContent.includes("Booked"),
     null,
     { timeout: 6000 },
   );

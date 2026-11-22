@@ -1,47 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Bot,
-  CircleCheck,
-  MessageSquareReply,
-  Play,
-  type LucideIcon,
-} from "lucide-react";
-import { projectById, projectTools, proofProjectId } from "@/content";
+import { ArrowRight, CalendarCheck, CircleCheck, Phone, Play, type LucideIcon } from "lucide-react";
+import { homeProof, packages, projectById, proofProjectId } from "@/content";
+import { ProjectMedia } from "../work/ProjectMedia";
 import { usePrefersReducedMotion } from "@/hooks/use-motion-preferences";
 import portrait from "@/assets/optimized/card/viviene-portrait.webp";
 import { cn } from "@/lib/utils";
 
-/**
- * What the business gains, in the order it happens. Each status is a plain statement
- * taken from the documented case study (problem, solution, result); nothing here is a metric.
- */
-const steps: { icon: LucideIcon; title: string; detail: string; pending: string; done: string }[] =
-  [
-    {
-      icon: MessageSquareReply,
-      title: "A customer asks",
-      detail:
-        "Pricelist, menu, location: the questions that arrived every day, often at peak order preparation.",
-      pending: "Waiting",
-      done: "Received",
-    },
-    {
-      icon: Bot,
-      title: "The agent answers",
-      detail: "From the business's own knowledge base, with nobody on the team stopping work.",
-      pending: "Waiting",
-      done: "Answered",
-    },
-    {
-      icon: CircleCheck,
-      title: "The team keeps working",
-      detail: "",
-      pending: "Waiting",
-      done: "Inquiry kept",
-    },
-  ];
+/** Icons for the three steps in `homeProof.steps`. */
+const stepIcons: LucideIcon[] = [Phone, CalendarCheck, CircleCheck];
 
 /** Runs the three statuses once when the section scrolls into view; instant with reduced motion. */
 function useSequence(count: number) {
@@ -80,14 +47,15 @@ function useSequence(count: number) {
 }
 
 /**
- * Proof close to the hero: one built project, shown as a plainly labelled illustration of
- * the chat plus the documented outcome and Viviene's role. The full portfolio stays in /work.
+ * Proof close to the hero: one approved project, shown as a plainly labelled illustration of
+ * the call, what the workflow does step by step, and the real workflow screenshot. The full
+ * portfolio stays in /work. It carries no testimonial, statistic or outcome claim.
  */
 export function ProofCase() {
   const project = projectById(proofProjectId);
-  const { ref, stage } = useSequence(steps.length);
+  const { ref, stage } = useSequence(homeProof.steps.length);
   if (!project) return null;
-  const tools = projectTools(project);
+  const pilotNote = packages.find((p) => p.id === "connect")?.availabilityNote;
 
   return (
     <section
@@ -97,56 +65,73 @@ export function ProofCase() {
     >
       <div className="shell grid gap-7 sm:gap-10 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)] lg:items-center lg:gap-16">
         <div className="lg:col-start-2 lg:row-start-1">
-          <p className="kicker text-cyan">A built example · Facebook Messenger</p>
+          <p className="kicker text-cyan">{homeProof.kicker}</p>
           <h2 id="proof-title" className="type-h2 mt-3 sm:mt-4">
-            Inquiries answered while the team is busy preparing orders.
+            {homeProof.headline}
           </h2>
           <p className="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-mist sm:mt-5 sm:text-[1.2rem]">
-            A local catering business got pricelist, menu and location questions on Facebook every
-            day, and messages sat unanswered during peak order preparation.
+            {project.caseStudy.problem}
           </p>
         </div>
 
         <div className="lg:row-span-2 lg:row-start-1">
-          <figure
-            aria-label="Illustration of a Messenger inquiry and reply"
-            className="mx-auto max-w-sm"
-          >
+          <figure aria-label={homeProof.figureLabel} className="mx-auto max-w-sm">
             <div className="overflow-hidden rounded-[1.75rem] bg-ground ring-1 ring-snow/12 shadow-[0_40px_70px_-35px_rgb(0_0_0/0.9)]">
               <div className="flex items-center gap-3 bg-navy-800 px-4 py-2.5 sm:py-3">
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-purple-600 text-sm font-semibold text-white">
-                  C
+                  {homeProof.device.initial}
                 </span>
                 <span className="leading-tight">
-                  <span className="block text-[0.95rem] font-semibold">Catering business</span>
-                  <span className="block text-[0.8125rem] text-mist">Messenger</span>
+                  <span className="block text-[0.95rem] font-semibold">
+                    {homeProof.device.name}
+                  </span>
+                  <span className="block text-[0.8125rem] text-mist">
+                    {homeProof.device.channel}
+                  </span>
                 </span>
               </div>
               <div className="space-y-2.5 px-4 py-4 sm:space-y-3 sm:py-5">
-                <div className="flex justify-end">
-                  <p className="max-w-[82%] rounded-2xl rounded-br-md bg-purple-600 px-4 py-2.5 text-[0.95rem] leading-snug text-white">
-                    <span className="sr-only">Customer: </span>
-                    Hi! Could I see your menu and pricelist?
-                  </p>
-                </div>
-                <div className="flex justify-start">
-                  <p className="max-w-[82%] rounded-2xl rounded-bl-md bg-navy-700 px-4 py-2.5 text-[0.95rem] leading-snug">
-                    <span className="sr-only">Business reply: </span>
-                    Of course. Here's our current menu and pricelist.
-                  </p>
-                </div>
+                {homeProof.lines.map((l, i) => (
+                  <div
+                    key={i}
+                    className={cn("flex", l.from === "caller" ? "justify-end" : "justify-start")}
+                  >
+                    <p
+                      className={cn(
+                        "max-w-[82%] rounded-2xl px-4 py-2.5 text-[0.95rem] leading-snug",
+                        l.from === "caller"
+                          ? "rounded-br-md bg-purple-600 text-white"
+                          : "rounded-bl-md bg-navy-700",
+                      )}
+                    >
+                      <span className="sr-only">{l.speaker}: </span>
+                      {l.text}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
             <figcaption className="mt-3 text-center text-[0.8125rem] text-mist">
-              Illustrated example, not a real conversation. The wording is written for this page.
+              {homeProof.caption}
+            </figcaption>
+          </figure>
+          <figure className="mx-auto mt-6 max-w-sm max-sm:hidden">
+            <ProjectMedia
+              project={project}
+              tinted={false}
+              className="aspect-[16/10] rounded-2xl ring-1 ring-snow/10"
+            />
+            <figcaption className="mt-2 text-center text-[0.8125rem] text-mist">
+              {homeProof.workflowCaption}
             </figcaption>
           </figure>
         </div>
 
         <div ref={ref} className="lg:col-start-2 lg:row-start-2">
           <ol className="grid gap-3" aria-label="What happens, in order">
-            {steps.map((s, i) => {
+            {homeProof.steps.map((s, i) => {
               const done = stage > i;
+              const Icon = stepIcons[i];
               return (
                 <li
                   key={s.title}
@@ -158,7 +143,7 @@ export function ProofCase() {
                       done ? "bg-cyan text-navy" : "bg-navy-700 text-purple-300",
                     )}
                   >
-                    <s.icon className="h-5 w-5" aria-hidden />
+                    <Icon className="h-5 w-5" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
@@ -180,9 +165,7 @@ export function ProofCase() {
                         {done ? s.done : s.pending}
                       </span>
                     </span>
-                    <span className="mt-1 block text-[0.95rem] text-mist">
-                      {s.detail || project.impact}
-                    </span>
+                    <span className="mt-1 block text-[0.95rem] text-mist">{s.detail}</span>
                   </span>
                 </li>
               );
@@ -199,18 +182,20 @@ export function ProofCase() {
             />
             <p className="text-[0.95rem] text-snow/90">
               <span className="font-semibold text-snow">I built this.</span> Viviene Pitogo, founder
-              of VIVIFY, designed and built the agent on {tools.slice(0, 2).join(" and ")},
-              connected to the business's actual knowledge base.
+              of VIVIFY, {homeProof.role}
             </p>
           </div>
+          {pilotNote && <p className="mt-4 text-[0.875rem] text-mist">{pilotNote}</p>}
 
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 sm:mt-8">
             <Link to={`/work/${project.id}`} className="btn btn-primary">
               Read the case study <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
-            <Link to={`/work/${project.id}#demo`} className="link-arrow text-cyan">
-              <Play className="h-4 w-4" aria-hidden /> Watch the recorded demo
-            </Link>
+            {project.demoUrl && (
+              <Link to={`/work/${project.id}#demo`} className="link-arrow text-cyan">
+                <Play className="h-4 w-4" aria-hidden /> Watch the recorded demo
+              </Link>
+            )}
             <Link to="/work" className="link-arrow text-snow/80 max-sm:hidden">
               See all projects <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>

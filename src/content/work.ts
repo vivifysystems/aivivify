@@ -85,7 +85,7 @@ export function toolUsage(list: readonly Project[] = projects): { name: string; 
  * The home page's proof section is about one specific published project. When that
  * project is not in the launch content the section (and the hero link to it) is not shown.
  */
-export const proofProjectId = "fb-messenger-agent";
+export const proofProjectId = "ai-voice-receptionist";
 export const hasProofCase = projects.some((p) => p.id === proofProjectId);
 
 export function projectById(id: string): Project | undefined {

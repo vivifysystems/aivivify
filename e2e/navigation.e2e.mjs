@@ -68,7 +68,7 @@ test("an in-page hash link scrolls to its target and moves focus there", async (
   const page = await newPage(env.browser, VIEWPORTS["1440"]);
   // The home proof link when that section is published, otherwise the contact page's own hash link.
   const [path, linkName, hash] = hasProofCase
-    ? ["/", /See a Messenger inquiry answered/, "proof"]
+    ? ["/", /See a call become a booking/, "proof"]
     : ["/contact", /Send a message/, "send-message"];
   await page.goto(env.base + path);
   await page.getByRole("link", { name: linkName }).first().click();
