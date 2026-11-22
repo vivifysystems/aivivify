@@ -1,63 +1,131 @@
-# Contact form: enabling server-side delivery
+# Contact form: setting up email delivery with Resend
 
-Status: **implemented, inactive.** `api/contact.ts` (Vercel Function) wraps `src/lib/contact-handler.ts`.
-Without credentials it answers `503 not_configured` and the site shows an honest "Not sent yet" panel
-with a mailto fallback. The UI shows "Message sent" **only** when the server confirms the email provider
-accepted the message (`{ ok: true, delivered: true }`).
+**Status:** the endpoint is built and tested, but no email is sent until the environment variables below are set.
+Until then `/api/contact` answers `503 not_configured` and the site shows "Not sent yet" with an email fallback.
+The site shows "Message sent" **only** when the server confirms that Resend accepted the message.
 
 ## What the endpoint does
 
-1. Accepts `POST` JSON only (405 otherwise); optional exact-Origin check (`CONTACT_ALLOWED_ORIGIN`).
+`api/contact.ts` (Vercel Function) wraps `src/lib/contact-handler.ts`:
+
+1. Accepts `POST` JSON only (405 otherwise). Optional Origin allow-list (`CONTACT_ALLOWED_ORIGIN`, 403 otherwise).
 2. Rejects bodies over 10 KB (413) and malformed JSON (400).
-3. Best-effort rate limit: 5 posts per 10 minutes per IP per function instance (429). For a durable limit,
-   add Vercel KV / Upstash later.
-4. Spam traps: hidden `website` field and a 3-second minimum fill time. Trapped posts get a quiet
-   `{ ok: true, delivered: false }` and nothing is sent.
-5. Same validation as the browser (`validateContact`), returning field errors (422).
-6. Optional Cloudflare Turnstile verification when `TURNSTILE_SECRET_KEY` is set (403 on failure).
-7. Sends one plain-text email through the Resend REST API with `reply_to` set to the visitor. Strips
-   control characters from the subject (header-injection safe). No data is stored.
+3. Rate limit: 5 posts per 10 minutes per IP (429). Best effort: the count is kept per function instance.
+4. Spam traps: a hidden `website` field and a 3-second minimum fill time. Trapped posts send nothing and the
+   visitor sees "Not sent yet".
+5. Validates fields with the same rules as the browser (422 with field errors). The email must be one plain
+   address, because it becomes the email's reply-to.
+6. Optional Cloudflare Turnstile check when `TURNSTILE_SECRET_KEY` is set (403 on failure).
+7. Sends one plain-text email through the Resend API with `reply_to` set to the visitor. Control characters are
+   stripped from the subject.
 
-Tests: `src/lib/contact-handler.test.ts` (6 cases, fake `fetch`; no network, no real keys).
+**Personal data.** The visitor's name, email, optional business and message are forwarded once to the configured
+inbox. Nothing is stored by the site. Function logs contain only event names, provider status codes and missing
+variable names (`{"event":"contact.send_failed","status":403}`), never the visitor's details (tested). Resend
+keeps its own record of sent emails under its retention policy.
 
-## Owner steps to enable (needs approval: external account + production config)
+Tests: `src/lib/contact-handler.test.ts` (fake `fetch`, no network), `src/lib/api-build.test.ts` (the compiled
+function's imports resolve on Vercel), `e2e/contact-delivery.e2e.mjs` (the real form against the real handler
+with a simulated provider).
 
-1. **Resend account** (resend.com), free tier is enough for low volume.
-2. **Verify the sending domain** in Resend → Domains → Add `vivify.solutions` (or a subdomain such as
-   `mail.vivify.solutions`). Add the DNS records Resend shows (SPF `TXT`, DKIM `CNAME`/`TXT`, optional
-   DMARC `TXT`) at the domain's DNS host and wait for "Verified".
-3. **Create an API key** in Resend with "Sending access" only, limited to that domain.
-4. **(Recommended) Cloudflare Turnstile**: create a widget for `vivify.solutions`; note the site key and
-   secret. The site key would be added to the form as `VITE_TURNSTILE_SITE_KEY` (widget code not yet
-   added; honeypot + time-trap + rate limit are active without it).
-5. **Vercel → Project → Settings → Environment Variables** (Production and Preview):
+## Setup, step by step
 
-   | Name                     | Example                                   | Required                             |
-   | ------------------------ | ----------------------------------------- | ------------------------------------ |
-   | `RESEND_API_KEY`         | `re_…`                                    | yes                                  |
-   | `CONTACT_TO_EMAIL`       | `viviene@vivify.solutions`                | yes                                  |
-   | `CONTACT_FROM_EMAIL`     | `VIVIFY Website <forms@vivify.solutions>` | yes (must be on the verified domain) |
-   | `CONTACT_ALLOWED_ORIGIN` | `https://vivify.solutions`                | recommended (set per environment)    |
-   | `TURNSTILE_SECRET_KEY`   | `0x…`                                     | optional                             |
+### 1. Create the Resend account
 
-6. **Deploy a Preview** of the branch and test: valid submit → email arrives with reply-to; invalid
-   email → field error; submit within 3 s → not sent; unset key → "Not sent yet" panel.
-7. Confirm the privacy wording on `/privacy` (what is collected, why, retention) before production.
+Sign up at [resend.com](https://resend.com). The free plan is enough for a contact form. Use an inbox you control
+(you will receive the account emails there).
 
-## Routing compatibility
+### 2. Choose the sending address
 
-- Today `vercel.json` rewrites `/(.*)` to `/index.html`. Vercel resolves the filesystem and Functions in
-  `/api` before rewrites, so `/api/contact` should still reach the function; **verify on the Preview
-  deployment** (this cannot be emulated locally without the Vercel CLI).
-- With the proposed prerendering config (`docs/launch/prerender.md`) the catch-all rewrite is removed, so
-  there is no conflict at all.
-- `api/contact.ts` imports `../src/lib/contact-handler.ts` with a `.ts` extension (needed by the Node test
-  runner). If the Vercel build rejects that import, inline the handler into `api/` or drop the extension.
-  This is the main thing the Preview deployment must confirm.
+Resend recommends sending from a subdomain, which keeps the form's sending reputation separate from your
+everyday mail. Suggested:
 
-## Phase 4 QA status (2026-11-22)
+- Domain to verify: `mail.vivify.solutions`
+- Sender (`CONTACT_FROM_EMAIL`): `VIVIFY Website <forms@mail.vivify.solutions>`
 
-- Verified locally: the real UI against the real `handleContact` with a **simulated** provider (valid submit, not
-  configured, provider failure, network failure + retry, spam trap, field errors). See `e2e/contact-delivery.e2e.mjs`.
-- **Not verified: real delivery.** Blocked on the owner steps above (Resend account, verified domain, env vars on a
-  Preview deployment, and a designated test inbox). Do not describe the form as delivering until step 6 is done.
+Verifying the root domain (`vivify.solutions`, sender `forms@vivify.solutions`) also works. Verifying a subdomain
+does **not** change where mail to `@vivify.solutions` is delivered.
+
+### 3. Verify the domain (DNS)
+
+1. Resend → **Domains** → **Add domain** → enter the domain from step 2 → pick the region closest to you.
+2. Resend shows the records to add. Typically:
+
+   | Purpose | Type                      | Name (host), when verifying `mail.vivify.solutions` | Value                                               |
+   | ------- | ------------------------- | --------------------------------------------------- | --------------------------------------------------- |
+   | DKIM    | TXT                       | `resend._domainkey.mail`                            | the long `p=…` key Resend shows                     |
+   | SPF     | MX                        | `send.mail`                                         | the `feedback-smtp…amazonses.com` host, priority 10 |
+   | SPF     | TXT                       | `send.mail`                                         | `v=spf1 include:amazonses.com ~all`                 |
+   | DMARC   | TXT (optional, see below) | `_dmarc`                                            | e.g. `v=DMARC1; p=none;`                            |
+
+   **Copy the exact names and values Resend shows**; they are the source of truth. Domains added recently may show
+   CNAME records instead of the MX/TXT pair.
+
+3. Find where DNS for `vivify.solutions` is managed: `dig NS vivify.solutions +short`. If the nameservers are
+   Vercel's, add the records in Vercel → **Domains** → `vivify.solutions` → **DNS Records**; otherwise at that
+   provider.
+4. Enter only the host part (`send.mail`, not `send.mail.vivify.solutions`). Paste values without extra quotes or
+   spaces. If the DNS host is Cloudflare, set the records to **DNS only** (grey cloud).
+5. **Do not edit or remove existing records** for the root domain (its MX and SPF records deliver your current
+   email). If a `_dmarc` record already exists, leave it as it is; only add one if there is none.
+6. Back in Resend, press **Verify**. It usually completes within 15 minutes, occasionally up to 72 hours. Check
+   with `dig TXT resend._domainkey.mail.vivify.solutions +short`.
+
+### 4. Create an API key
+
+Resend → **API Keys** → **Create API key** → permission **Sending access**, restricted to the verified domain.
+Copy the key (`re_…`) once; it is not shown again. Do not paste it into chat, email, code or a commit.
+
+### 5. Add the Preview environment variables in Vercel
+
+Vercel → project → **Settings** → **Environment Variables** → **Add**. Select **Preview** only (optionally only the
+release branch) and mark the key **Sensitive**.
+
+| Name                     | Preview value                                                            | Notes                                                                        |
+| ------------------------ | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| `RESEND_API_KEY`         | the key from step 4                                                      | required                                                                     |
+| `CONTACT_TO_EMAIL`       | your designated **test** inbox                                           | required                                                                     |
+| `CONTACT_FROM_EMAIL`     | `VIVIFY Website <forms@mail.vivify.solutions>`                           | required; must be on the verified domain                                     |
+| `CONTACT_ALLOWED_ORIGIN` | the Preview URL, e.g. `https://<project>-git-<branch>-<team>.vercel.app` | recommended; comma-separate several origins; no trailing slash               |
+| `TURNSTILE_SECRET_KEY`   | **leave unset**                                                          | the form has no Turnstile widget yet, so setting it rejects every submission |
+
+Environment variables apply to **new** deployments: redeploy the Preview after adding or changing them.
+
+**Test sender and recipient.**
+
+- Before the domain is verified you can try the path with Resend's shared sender
+  `VIVIFY Test <onboarding@resend.dev>`; it may only deliver to the address your Resend account is registered with,
+  so use that as `CONTACT_TO_EMAIL`.
+- `delivered@resend.dev` as `CONTACT_TO_EMAIL` simulates a successful delivery without a real inbox (visible in
+  Resend → Emails). Test sends count toward the sending quota.
+- For the real test, use the verified sender and a test inbox you control.
+
+### 6. Validate end to end on the Preview
+
+| Do this                                                                          | Expect                                                                                                                   |
+| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Fill the form normally (take more than 3 seconds) and send                       | "Message sent". Email arrives within about a minute; Resend → Emails shows **Delivered**                                 |
+| Open the email                                                                   | From = your sender; subject "Discovery inquiry from …"; all fields present; sent-at timestamp at end                     |
+| Press Reply                                                                      | The reply is addressed to the email typed in the form                                                                    |
+| Email client: "Show original" / view headers                                     | SPF **pass** and DKIM **pass**                                                                                           |
+| Type `name@` in the email field and send                                         | Inline error on the field; nothing sent                                                                                  |
+| Send 6 messages within 10 minutes from the same network                          | Usually the 6th shows "Too many attempts from this connection…"; the count is per function instance, so it can take more |
+| `curl -s -X POST <preview>/api/contact -H 'origin: https://example.com' -d '{}'` | `403 {"ok":false,"code":"forbidden_origin"}` (when `CONTACT_ALLOWED_ORIGIN` is set)                                      |
+| `curl -s <preview>/api/contact`                                                  | `405`                                                                                                                    |
+| Vercel → deployment → **Logs**, filter `/api/contact`                            | Only JSON event lines; no names, addresses or message text                                                               |
+| Temporarily remove `RESEND_API_KEY` and redeploy (optional)                      | "Not sent yet" with the email fallback                                                                                   |
+
+### 7. Production
+
+After the Preview passes, add the same variables with **Production** scope: `CONTACT_TO_EMAIL` = the real inbox,
+`CONTACT_ALLOWED_ORIGIN` = `https://vivify.solutions` (add `https://www.vivify.solutions` if that host serves the
+site rather than redirecting). Deploy, then send one real test message. Confirm the privacy page wording first.
+
+**To switch delivery off** at any time: remove `RESEND_API_KEY` from Production and redeploy. The form then shows
+"Not sent yet" with the email fallback; no code change is needed.
+
+## Routing
+
+`vercel.json` has no catch-all rewrite (see `docs/launch/prerender.md`), so `/api/contact` is served by the
+function and unknown `/api/*` paths return 404. Verified with a local `vercel build`: the function compiles to
+`api/contact.js`, its imports resolve, and it answers 503/400/405 as above without credentials.
