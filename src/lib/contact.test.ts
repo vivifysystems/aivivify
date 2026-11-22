@@ -46,3 +46,9 @@ test("an email address must be a single plain address", () => {
     assert.equal(validateContact({ ...ok, email }).email, undefined, `rejected ${email}`);
   }
 });
+
+test("the public email link is a plain mailto to the one public address", async () => {
+  const { links } = await import("../content/links.ts");
+  assert.equal(links.email.href, "mailto:viviene@vivify.solutions");
+  assert.equal(links.email.label, "viviene@vivify.solutions");
+});

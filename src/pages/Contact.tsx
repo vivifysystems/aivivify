@@ -185,6 +185,11 @@ export default function Contact() {
           style={{ animationDelay: "200ms" }}
         >
           <BookingLink />
+          {/* Plain mailto: opens the visitor's email app addressed to the public address. */}
+          <a href={links.email.href} className="btn btn-ghost">
+            <Mail className="h-4 w-4" aria-hidden /> Email me
+            <span className="sr-only"> at {links.email.label}</span>
+          </a>
           <Link to="/contact#send-message" className="btn btn-ghost">
             <Mail className="h-4 w-4" aria-hidden /> Send a message
           </Link>
