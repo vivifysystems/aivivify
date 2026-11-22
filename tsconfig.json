@@ -10,6 +10,8 @@
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
+    /* Vercel runs the compiled api/ output: emit ".js" for relative ".ts" imports. */
+    "rewriteRelativeImportExtensions": true,
     "verbatimModuleSyntax": false,
     "noEmit": true,
 
