@@ -7,7 +7,7 @@ export const services: readonly Service[] = [
     icon: "⚡",
     title: "Customer Reply Systems",
     description:
-      "AI agents that answer Facebook, website, and chat inquiries instantly — 24/7, no staff needed.",
+      "AI assistants that answer Facebook, website and chat inquiries quickly, with a person stepping in when it matters.",
     status: "consistent",
   },
   {
@@ -15,7 +15,7 @@ export const services: readonly Service[] = [
     icon: "🧠",
     title: "Smart Follow-Up",
     description:
-      "Automated sequences that chase every lead across email, SMS, and chat so nothing falls through the cracks.",
+      "Automated sequences that follow up with leads across email, SMS and chat so fewer inquiries are forgotten.",
     status: "consistent",
   },
   {
@@ -23,7 +23,7 @@ export const services: readonly Service[] = [
     icon: "🗄️",
     title: "Bookings & Scheduling",
     description:
-      "Voice and chat assistants that book appointments directly into your calendar with zero human involvement.",
+      "Chat assistants, and voice assistants offered as a pilot, that book appointments directly into your calendar.",
     status: "consistent",
   },
   {
@@ -31,7 +31,7 @@ export const services: readonly Service[] = [
     icon: "📡",
     title: "Reports & Data Sync",
     description:
-      "Your tools talk to each other automatically — no manual data entry, no missed updates.",
+      "Your tools share data automatically, reducing manual data entry and missed updates.",
     status: "consistent",
   },
 ];

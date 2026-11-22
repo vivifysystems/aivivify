@@ -3,9 +3,9 @@ import { about, results } from "../data";
 
 export default defineTool({
   name: "get_about",
-  title: "Get about VIVIFY",
+  title: "Get about VIVIFY Solutions",
   description:
-    "Return the short bio, brand info, and headline impact metrics for VIVIFY Automation / Viviene Pitogo.",
+    "Return the short bio and brand info for VIVIFY Solutions / Viviene Pitogo, plus any owner-verified statistics (currently none are published).",
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: () => ({

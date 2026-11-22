@@ -9,72 +9,130 @@ import { defineMcp } from "npm:@lovable.dev/mcp-js@0.23.0";
 import { defineTool } from "npm:@lovable.dev/mcp-js@0.23.0";
 import { z } from "npm:zod@^4.4.3";
 
-// src/lib/mcp/data.ts
-var about = {
+// src/content/brand.ts
+var brand = {
+  name: "VIVIFY Solutions",
+  /** Operator shown in the privacy policy and structured data. */
+  operator: "Viviene Pitogo",
+  positioning: "Founder-led AI automation and business systems consultancy for service businesses.",
+  focus: "Practical business outcomes and reliable customer operations.",
+  url: "https://vivify.solutions"
+};
+
+// src/content/founder.ts
+var founder = {
   name: "Viviene Pitogo",
-  brand: "VIVIFY Automation",
-  role: "AI Automation Specialist",
-  location: "Philippines",
-  bio: "Computer Engineering graduate turned AI Automation Specialist. I build customer reply systems, smart follow-up sequences, booking automations, and data-sync pipelines for e-commerce brands and agencies \u2014 so their ops keep running 24/7 without extra staff.",
-  availability: "Available for projects",
-  site: "https://vivify.solutions"
+  firstName: "Viviene",
+  role: "Founder, VIVIFY Solutions",
+  intro: "I'm Viviene, a Computer Engineering graduate who builds automation systems for service businesses.",
+  story: [
+    "Before I ever touched n8n or Make, I was writing code in C++ and building embedded systems. That programming foundation shapes how I build workflows: tested, documented and made to hold up under pressure.",
+    "I started with my own family's businesses, a catering operation and a computer caf\xE9, and turned their manual chaos into systems that run without them. Now I build those same systems for founders who are done doing it manually."
+  ],
+  approach: [
+    {
+      title: "Business problem first",
+      line: "We start from the missed calls and the repeated questions, not from the technology."
+    },
+    {
+      title: "People stay in charge",
+      line: "Automation handles the repetitive parts. Judgment calls go to a person."
+    },
+    {
+      title: "Honest about limits",
+      line: "If a tool can't do something reliably, you hear it from us first."
+    },
+    {
+      title: "Yours to keep",
+      line: "Accounts in your name and plain-English documentation for everything we build."
+    }
+  ]
 };
-var contact = {
-  email: "viviene@vivify.solutions",
-  website: "https://vivify.solutions",
-  linkedin: "https://www.linkedin.com/in/viviene-pitogo",
-  onlinejobs: "https://www.onlinejobs.ph/jobseekers/info/2872196"
+
+// src/content/links.ts
+var links = {
+  bookingCall: {
+    label: "Book a free 30-minute call",
+    href: "https://calendly.com/vivienecreates/automation-discovery-call",
+    status: "verified"
+  },
+  email: {
+    label: "viviene@vivify.solutions",
+    href: "mailto:viviene@vivify.solutions",
+    status: "verified"
+  },
+  website: {
+    label: "vivify.solutions",
+    href: "https://vivify.solutions",
+    status: "consistent"
+  },
+  linkedin: {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/vivienepitogo/",
+    status: "verified"
+  }
 };
-var services = [
+var footerLinks = [links.linkedin];
+
+// src/content/packages.ts
+var packages = [
   {
-    title: "Customer Reply Systems",
-    description: "AI agents that answer Facebook, website, and chat inquiries instantly \u2014 24/7, no staff needed."
+    id: "launch",
+    name: "VIVIFY Launch",
+    tagline: "Get found and capture every inquiry.",
+    summary: "Website, lead capture, basic CRM and booking coordination.",
+    bestFor: "Service businesses that need a dependable online foundation.",
+    systems: ["business-websites", "inbox-crm", "appointment-booking"],
+    addOns: ["local-seo", "printing"],
+    availability: "available"
   },
   {
-    title: "Smart Follow-Up",
-    description: "Automated sequences that chase every lead across email, SMS, and chat so nothing falls through the cracks."
+    id: "growth",
+    name: "VIVIFY Growth",
+    tagline: "Respond faster and follow up automatically.",
+    summary: "AI chatbot, lead qualification, workflow automation, follow-ups, review requests and customer communication.",
+    bestFor: "Businesses with steady inquiries and too little time to answer and chase them.",
+    systems: [
+      "ai-chatbot",
+      "inbox-crm",
+      "lead-follow-up",
+      "workflow-automation",
+      "review-feedback",
+      "marketing-campaigns"
+    ],
+    addOns: ["local-seo"],
+    availability: "available"
   },
   {
-    title: "Bookings & Scheduling",
-    description: "Voice and chat assistants that book appointments directly into your calendar with zero human involvement."
-  },
-  {
-    title: "Reports & Data Sync",
-    description: "Your tools talk to each other automatically \u2014 no manual data entry, no missed updates."
+    id: "connect",
+    name: "VIVIFY Connect",
+    tagline: "Calls answered, routed and followed up.",
+    summary: "AI receptionist, phone systems, call routing and missed-call follow-up.",
+    bestFor: "Phone-heavy businesses that miss calls while they're on the job.",
+    systems: ["ai-receptionist", "business-phone", "missed-call-text-back"],
+    addOns: [],
+    availability: "pilot",
+    availabilityNote: "Pilot: offered case by case while phone integrations, reliability and compliance are verified for your location."
   }
 ];
-var platforms = [
-  "n8n",
-  "Make.com",
-  "Zapier",
-  "GoHighLevel",
-  "OpenAI",
-  "Supabase",
-  "Anthropic",
-  "HubSpot",
-  "Google Gemini",
-  "VAPI"
-];
+var pricingNote = "No fixed prices are published. Each setup is scoped on a free discovery call and quoted in writing before any work starts. Third-party subscriptions such as CRM, phone or messaging plans are billed by those providers.";
+
+// src/content/projects.ts
 var projects = [
-  {
-    id: "fb-messenger-agent",
-    tag: "n8n \xB7 Gemini",
-    title: "24/7 Facebook Messenger AI Agent",
-    summary: "Turns repetitive Facebook inquiries into instant automated replies so no lead is missed during peak hours.",
-    stack: ["n8n", "Google Gemini", "Webhook", "Facebook Messenger"],
-    problem: "A local catering business was receiving 15\u201320 Facebook inquiries daily \u2014 pricelist, menu, location \u2014 but messages sat unanswered for 3\u20135 hours during peak order preparation.",
-    solution: "Built a 24/7 AI agent on Facebook Messenger using n8n and Google Gemini, connected to the business's actual knowledge base.",
-    result: "Response time dropped from 3\u20135 hours to under 10 seconds. The team no longer loses inquiries during their busiest hours."
-  },
   {
     id: "ai-voice-receptionist",
     tag: "n8n + VAPI",
-    title: "24/7 AI Voice Receptionist (Bobby)",
+    title: "AI Voice Receptionist ('Bobby')",
     summary: "Automated booking and customer support for high-volume local businesses using n8n and VAPI.",
     stack: ["n8n", "VAPI", "Google Calendar", "Airtable"],
-    problem: "A high-volume local business was missing calls outside business hours and during busy periods. Every missed call was a missed booking.",
-    solution: "Built an AI voice receptionist named Bobby using n8n and VAPI. Bobby answers calls, handles FAQs, and books appointments directly into Google Calendar around the clock.",
-    result: "Zero missed calls after hours. Bookings continue even at 2 AM without any human involvement."
+    media: { card: "proof-voice-receptionist", proof: "proof-voice-receptionist" },
+    impact: "Callers can book appointments by voice, and bookings are written to the calendar automatically.",
+    caseStudy: {
+      problem: "A high-volume local business was missing calls outside business hours and during busy periods. Missed calls meant missed bookings.",
+      solution: "Built an AI voice receptionist named Bobby using n8n and VAPI. Bobby answers calls, handles FAQs, and books appointments directly into Google Calendar.",
+      result: "Appointments are booked straight into Google Calendar without a person on the call."
+    },
+    status: "consistent"
   },
   {
     id: "intelligent-file-management",
@@ -82,112 +140,628 @@ var projects = [
     title: "Intelligent File Management",
     summary: "AI-powered semantic renaming and sorting of Gmail attachments using Make.com and Gemini.",
     stack: ["Make.com", "Gemini", "Gmail", "Google Drive"],
-    problem: "A business was drowning in Gmail attachments \u2014 invoices, contracts, reports \u2014 all arriving with generic filenames and piling up unsorted.",
-    solution: "Built an automated pipeline using Make.com and Gemini that monitors Gmail, semantically renames each attachment, and sorts it into the correct Drive folder.",
-    result: "Zero manual file sorting. Every attachment is named, categorized, and filed within seconds of arrival."
-  },
-  {
-    id: "self-updating-rag",
-    tag: "RAG Pipeline",
-    title: "Self-Updating AI Knowledge Base",
-    summary: "A dynamic RAG pipeline that teaches AI agents from new Google Drive uploads using n8n and Supabase.",
-    stack: ["n8n", "Supabase", "pgvector", "Gemini"],
-    problem: "AI agents kept giving outdated answers because their knowledge base was static and had to be manually refreshed whenever the business updated docs.",
-    solution: "Built a self-updating RAG pipeline: new Google Drive uploads are chunked, embedded, and stored in Supabase pgvector automatically.",
-    result: "AI agents stay current automatically \u2014 no manual retraining or document updates needed."
-  },
-  {
-    id: "lead-nurturing",
-    tag: "CRM Automation",
-    title: "Automated Lead Nurturing System",
-    summary: "Cross-channel follow-up sequences that qualify and warm leads automatically.",
-    stack: ["n8n", "GoHighLevel", "HubSpot", "SMS"],
-    problem: "Sales reps were manually chasing every lead, and warm leads went cold because follow-ups were inconsistent.",
-    solution: "Automated multi-channel drip sequences that adapt to lead behavior across email, SMS, and chat.",
-    result: "Every lead gets a timely, personalized touch. Reps focus only on closing, not chasing."
-  },
-  {
-    id: "financial-sync",
-    tag: "Data Sync",
-    title: "Financial Data Sync Pipeline",
-    summary: "Two-way sync between accounting tools, spreadsheets, and dashboards.",
-    stack: ["Make.com", "Google Sheets", "QuickBooks"],
-    problem: "Finance ops was rekeying the same numbers across systems and reports were always out of date.",
-    solution: "Automated bidirectional sync that keeps every system aligned in real time.",
-    result: "Zero manual re-entry. Dashboards reflect the latest financial state at all times."
-  },
-  {
-    id: "lead-routing",
-    tag: "Routing",
-    title: "Smart Lead Routing System",
-    summary: "AI-scored inbound leads routed to the right rep instantly.",
-    stack: ["n8n", "OpenAI", "HubSpot"],
-    problem: "Inbound leads sat in a shared inbox with no owner, and high-value leads were treated the same as spam.",
-    solution: "AI classifies and scores each lead, then routes it to the right rep with full context.",
-    result: "High-value leads get responded to first, and nothing sits unassigned."
+    media: { card: "proof-file-management", proof: "proof-file-management" },
+    impact: "Attachments are renamed and filed automatically as they arrive.",
+    caseStudy: {
+      problem: "A business was drowning in Gmail attachments \u2014 invoices, contracts, reports \u2014 all arriving with generic filenames and piling up unsorted in their inbox.",
+      solution: "Built an automated pipeline using Make.com and Gemini that monitors Gmail, semantically renames each attachment based on its content, and sorts it into the correct Google Drive folder automatically.",
+      result: "Attachments are named, categorized and filed automatically when they arrive."
+    },
+    status: "consistent"
   },
   {
     id: "social-engine",
     tag: "Content Engine",
-    title: "Social Content Engine",
-    summary: "End-to-end pipeline that generates, approves, and schedules social content.",
-    stack: ["n8n", "OpenAI", "Buffer"],
-    problem: "Content teams spent days brainstorming, drafting, and manually scheduling posts across platforms.",
-    solution: "AI generates drafts on-brand, humans approve in one place, and posts are scheduled automatically.",
-    result: "Weeks of content shipped in hours with consistent brand voice."
-  },
-  {
-    id: "email-routing",
-    tag: "AI Email",
-    title: "AI Email Classification & Routing",
-    summary: "Classifies every inbound email and routes it to the right team or automation.",
-    stack: ["n8n", "Gemini", "Gmail"],
-    problem: "Support and sales emails landed in the same inbox and were triaged manually every morning.",
-    solution: "AI classifier tags each email by intent and routes it to the right destination automatically.",
-    result: "Inbox triage went from an hour a day to zero."
+    title: "Social Media Content Engine",
+    summary: "Auto-transcribing media and intelligent cross-posting to LinkedIn and Facebook using Zapier and AI.",
+    stack: ["Zapier", "AI by Zapier", "LinkedIn", "Facebook Pages"],
+    media: { card: "proof-social-engine", proof: "proof-social-engine" },
+    impact: "Uploaded recordings are transcribed, turned into captions and posted automatically.",
+    caseStudy: {
+      problem: "A business had hours of recorded video and audio content sitting unused because manually transcribing, editing, and cross-posting to multiple platforms was too time-consuming.",
+      solution: "Built a Zapier pipeline with AI that auto-transcribes uploaded media, generates platform-optimized captions, and cross-posts to LinkedIn and Facebook Pages automatically.",
+      result: "After upload, content is transcribed, drafted and posted to LinkedIn and Facebook Pages automatically."
+    },
+    status: "needs-confirmation",
+    discrepancies: ["social-engine-description"]
   },
   {
     id: "social-auto-poster",
-    tag: "Auto Poster",
+    tag: "MAKE.COM \xB7 AI \xB7 BUFFER",
     title: "Social Media Auto Poster",
-    summary: "Publishes approved content to multiple social platforms on a schedule.",
-    stack: ["Make.com", "Buffer", "Notion"],
-    problem: "Manual cross-posting to every platform was eating hours a week and inconsistent.",
-    solution: "Approved posts flow from Notion to every platform on schedule with platform-specific formatting.",
-    result: "Cross-posting is fully hands-off and always on time."
+    summary: "Pulls content from Airtable, generates captions using OpenAI, shortens links via Bitly, publishes to Buffer, then logs results back to Airtable and Google Sheets \u2014 fully automated.",
+    stack: ["MAKE.COM", "OPENAI", "AIRTABLE", "BUFFER", "GOOGLE SHEETS"],
+    media: { card: "cover-social-auto" },
+    impact: "Queued content is captioned, link-shortened, scheduled and logged automatically.",
+    caseStudy: {
+      problem: "Maintaining a consistent multi-channel posting cadence required hours each week writing captions, shortening links, scheduling, and tracking what went out.",
+      solution: "Built a Make.com scenario that reads queued content from Airtable, generates platform-tailored captions with OpenAI, shortens URLs via Bitly, schedules through Buffer, and writes the full audit trail back to Airtable and Google Sheets.",
+      result: "Content queued in Airtable is captioned, link-shortened, scheduled through Buffer and logged automatically."
+    },
+    status: "needs-confirmation",
+    discrepancies: ["social-auto-poster-source"]
   },
   {
     id: "ugc-script-generator",
-    tag: "UGC Scripts",
+    tag: "N8N \xB7 GROQ AI \xB7 GOOGLE DRIVE",
     title: "UGC Script Generator",
-    summary: "Generates 10 on-brand UGC scripts in minutes from a single prompt.",
-    stack: ["n8n", "OpenAI", "Google Sheets"],
-    problem: "Creative teams needed a steady flow of UGC scripts but writing 10 variations took an hour each round.",
-    solution: "AI pipeline that ingests a brief and outputs 10 polished, on-brand script variations to a shared sheet.",
-    result: "Script production time dropped from ~1 hour to ~6 minutes for 10 scripts."
+    summary: "Triggers daily at 8AM, reads product research, competitor ads, and audience insights from Google Sheets, builds an AI context brief, generates UGC video scripts via Groq, formats the output, and saves it to a new dated Google Doc automatically.",
+    stack: ["N8N", "GROQ AI", "GOOGLE SHEETS", "GOOGLE DRIVE", "GOOGLE DOCS"],
+    media: { card: "cover-ugc-script" },
+    impact: "A new document of draft UGC scripts is created in Google Drive each morning at 8AM.",
+    caseStudy: {
+      problem: "Producing daily UGC scripts meant manually combining product research, competitor ads, and audience insights every morning \u2014 slow, repetitive, and a creative bottleneck.",
+      solution: "Built an n8n workflow that fires at 8AM, ingests all three Google Sheets data sources, assembles a rich AI brief, generates scripts through Groq, formats the output, and writes everything into a freshly created dated Google Doc.",
+      result: "Each morning's run produces a dated Google Doc of draft UGC scripts for the team to review."
+    },
+    status: "needs-confirmation",
+    discrepancies: ["ugc-script-model"]
   }
 ];
-var results = [
-  { metric: "15\u201320", label: "daily inquiries handled automatically" },
-  { metric: "3\u20135 hrs \u2192 10 sec", label: "response time" },
-  { metric: "24/7", label: "uptime" },
-  { metric: "12+", label: "production workflows shipped" },
-  { metric: "1 hr \u2192 6 min", label: "script production time for 10 UGC scripts" }
+
+// src/content/stats.ts
+var publishedStats = [];
+
+// src/content/systems.ts
+var systems = [
+  {
+    id: "business-websites",
+    enabled: true,
+    featured: false,
+    group: "get-found",
+    icon: "MonitorSmartphone",
+    title: "Functional Business Websites",
+    shortTitle: "Websites",
+    menuLine: "A fast, mobile-friendly website built to turn visitors into inquiries.",
+    headline: "A website that does more than look good.",
+    benefit: "Clear pages, obvious next steps and inquiry forms that land in your system instead of a forgotten inbox.",
+    benefits: [
+      "Mobile-first pages that load quickly and read clearly",
+      "Inquiry and booking forms connected to your CRM",
+      "A clear next step on every page",
+      "SEO fundamentals: page titles, structure and local details"
+    ],
+    howItWorks: [
+      "We map your services, customers and the questions they ask most.",
+      "We design the pages and write plain-English copy with you.",
+      "We connect forms to your CRM and staff notifications.",
+      "We test on phones, tablets and desktops before launch."
+    ],
+    youProvide: [
+      "Your services, service areas and contact details",
+      "Your logo, photos and any brand guidelines",
+      "Access to your domain, or help choosing one"
+    ],
+    goodToKnow: [
+      "Hosting and domain costs are separate and stay in your name.",
+      "SEO fundamentals help search engines understand your site. Nobody can guarantee rankings."
+    ],
+    availability: "available",
+    demoId: "website",
+    viviLine: "Watch a website visitor become a CRM record and a staff alert.",
+    exploreLabel: "Explore Website System",
+    demoLabel: "See Website Demo"
+  },
+  {
+    id: "inbox-crm",
+    enabled: true,
+    featured: true,
+    group: "capture-respond",
+    icon: "Inbox",
+    title: "All-in-One Inbox & CRM",
+    shortTitle: "Inbox & CRM",
+    menuLine: "See customer conversations and lead status in one place.",
+    headline: "Every conversation. One inbox.",
+    benefit: "Bring website inquiries and supported messaging channels together, so your team can see who asked, who replied and what happens next.",
+    benefits: [
+      "One inbox for supported channels such as web forms, SMS, email and social messages",
+      "Lead stages you can read at a glance",
+      "Notes and history on every contact",
+      "Fewer leads lost between apps"
+    ],
+    howItWorks: [
+      "We list the channels your customers already use.",
+      "We connect the supported ones to a shared inbox.",
+      "We set up lead stages that match how you actually sell.",
+      "We train your team, then refine after the first weeks."
+    ],
+    youProvide: [
+      "Admin access to the channels you want connected",
+      "Your current lead process, even if it's informal"
+    ],
+    goodToKnow: [
+      "Channel support depends on each platform's rules and APIs. We confirm what can connect before we start.",
+      "Inbox and CRM subscriptions are billed by the provider and stay in your name."
+    ],
+    availability: "available",
+    demoId: "inbox",
+    viviLine: "Three channels, one inbox. Watch the lead get qualified and booked.",
+    exploreLabel: "Explore Inbox & CRM",
+    demoLabel: "See Inbox Demo"
+  },
+  {
+    id: "lead-follow-up",
+    enabled: true,
+    featured: false,
+    group: "follow-up-book",
+    icon: "Repeat",
+    title: "Automated Lead Follow-Up",
+    shortTitle: "Lead Follow-Up",
+    menuLine: "Acknowledge every inquiry and follow up on a schedule you approve.",
+    headline: "Follow up without the sticky notes.",
+    benefit: "New inquiries get a prompt acknowledgement, and follow-ups go out on the schedule you approve until the lead replies, books or opts out.",
+    benefits: [
+      "Instant acknowledgement for new inquiries",
+      "Follow-up timing you approve, not guesswork",
+      "Stops automatically when someone replies, books or opts out",
+      "Staff alerts when a lead needs a person"
+    ],
+    howItWorks: [
+      "We agree on the messages and timing with you.",
+      "We build the sequence with clear stop conditions.",
+      "We add staff notifications for leads that need a person.",
+      "We test every path before switching it on."
+    ],
+    youProvide: ["Your usual replies and offers", "Who should be notified, and how"],
+    goodToKnow: [
+      "We only message people who contacted you or agreed to hear from you.",
+      "Opt-out requests are honoured automatically."
+    ],
+    availability: "available",
+    demoId: "lead-follow-up",
+    viviLine: "A follow-up that stops the moment the customer replies. Polite and on time.",
+    exploreLabel: "Explore Lead Follow-Up",
+    demoLabel: "See Follow-Up Demo"
+  },
+  {
+    id: "ai-chatbot",
+    enabled: true,
+    featured: true,
+    group: "capture-respond",
+    icon: "MessagesSquare",
+    title: "AI Website Chatbot",
+    shortTitle: "AI Chatbot",
+    menuLine: "Answer routine questions from your approved information, day or night.",
+    headline: "Instant answers. A person when it matters.",
+    benefit: "A website assistant that answers common questions using only the information you approve, collects inquiry details and hands over to your team when a person is needed.",
+    benefits: [
+      "Answers routine questions from your approved information",
+      "Collects contact details and what the customer needs",
+      "Hands over to a person for anything sensitive or unclear",
+      "Always identifies itself as an automated assistant"
+    ],
+    howItWorks: [
+      "We gather your FAQs, services, policies and hours.",
+      "We set what it may answer and when it must hand over.",
+      "We test it with the real questions your customers ask.",
+      "We review conversations and improve the approved knowledge."
+    ],
+    youProvide: [
+      "Your approved answers, policies and service details",
+      "Who receives handoffs and new inquiries"
+    ],
+    goodToKnow: [
+      "AI can make mistakes. We limit it to approved information and send uncertain questions to a person.",
+      "It doesn't give legal, medical or financial advice on your behalf."
+    ],
+    availability: "available",
+    demoId: "chatbot",
+    viviLine: "Here's how the assistant answers from approved info, then hands over to your team.",
+    exploreLabel: "Explore AI Chatbot",
+    demoLabel: "See Chatbot Demo"
+  },
+  {
+    id: "ai-receptionist",
+    enabled: true,
+    featured: false,
+    group: "capture-respond",
+    icon: "Headset",
+    title: "AI Receptionist",
+    shortTitle: "AI Receptionist",
+    menuLine: "Greet callers, take details and request callbacks. Pilot service.",
+    headline: "Calls handled while your hands are full.",
+    benefit: "An automated voice assistant that greets callers, gathers basic details and records a callback request or supported booking, with a clear path to a person.",
+    benefits: [
+      "Greets callers and asks what they need",
+      "Records callback requests for your team",
+      "Supported booking, or a handoff to a person",
+      "A short call summary sent to your team"
+    ],
+    howItWorks: [
+      "We script the greeting, questions and handoff rules with you.",
+      "We connect a supported phone number and voice provider.",
+      "We run test calls covering common and unusual requests.",
+      "We review call summaries together during the pilot."
+    ],
+    youProvide: [
+      "Your services, hours and the questions callers usually ask",
+      "Who takes callbacks and transfers"
+    ],
+    goodToKnow: [
+      "Pilot: offered case by case until phone infrastructure, reliability and compliance are validated for your area.",
+      "Callers are told they are speaking with an automated assistant.",
+      "Call recording and consent rules vary by location. We confirm them before launch."
+    ],
+    availability: "pilot",
+    demoId: "receptionist",
+    relatedProjects: ["ai-voice-receptionist"],
+    viviLine: "A simulated call: greeting, request, callback record, staff alert.",
+    exploreLabel: "Preview AI Receptionist",
+    demoLabel: "See Receptionist Demo"
+  },
+  {
+    id: "missed-call-text-back",
+    enabled: true,
+    featured: true,
+    group: "capture-respond",
+    icon: "PhoneMissed",
+    title: "Missed-Call Text Back",
+    shortTitle: "Missed-Call Text Back",
+    menuLine: "Text eligible callers back automatically when you can't pick up.",
+    headline: "Missed the call? Keep the conversation.",
+    benefit: "When you can't answer, eligible callers get a short, friendly text so they know you'll help, and your team gets the details.",
+    benefits: [
+      "An automatic text to eligible missed callers",
+      "Rules for business hours, repeat callers and opt-outs",
+      "Replies land in your shared inbox, not a personal phone",
+      "A follow-up task created for your team"
+    ],
+    howItWorks: [
+      "We connect a supported business number and messaging provider.",
+      "We set eligibility rules: hours, repeat callers, opt-outs.",
+      "We write the message with you, in your voice.",
+      "We route replies into your inbox with a follow-up task."
+    ],
+    youProvide: [
+      "A business phone number, or we help set one up",
+      "Your preferred wording and business hours"
+    ],
+    goodToKnow: [
+      "Requires a supported business number and text-messaging provider.",
+      "Messaging rules such as consent and sender registration differ by country. We set it up to comply before launch."
+    ],
+    availability: "integration-dependent",
+    demoId: "missed-call",
+    viviLine: "A missed call becomes a friendly text and a task for your team.",
+    exploreLabel: "Explore Missed-Call Text Back",
+    demoLabel: "See Missed-Call Demo"
+  },
+  {
+    id: "appointment-booking",
+    enabled: true,
+    featured: false,
+    group: "follow-up-book",
+    icon: "CalendarCheck",
+    title: "Smart Appointment Booking",
+    shortTitle: "Booking",
+    menuLine: "Let customers request or book times that match your real availability.",
+    headline: "Booking without the back-and-forth.",
+    benefit: "Customers request or book a time that fits your real availability, then get confirmations and reminders without anyone chasing.",
+    benefits: [
+      "Booking requests or self-booking from your website and messages",
+      "Only offers the times you make available",
+      "Automatic confirmations and reminders",
+      "Simple rescheduling links"
+    ],
+    howItWorks: [
+      "We map your services, durations and buffer times.",
+      "We connect your calendar or booking tool.",
+      "We write confirmation and reminder messages with you.",
+      "We test bookings, changes and cancellations end to end."
+    ],
+    youProvide: ["Your calendar or booking tool access", "Services, durations and working hours"],
+    goodToKnow: [
+      "Works with supported calendars and booking tools. We confirm compatibility first.",
+      "You stay in control of which times are offered."
+    ],
+    availability: "available",
+    demoId: "booking",
+    relatedProjects: ["ai-voice-receptionist"],
+    viviLine: "Request, available times, confirmation, reminder. No phone tag.",
+    exploreLabel: "View Booking System",
+    demoLabel: "See Booking Demo"
+  },
+  {
+    id: "business-phone",
+    enabled: true,
+    featured: false,
+    group: "capture-respond",
+    icon: "PhoneForwarded",
+    title: "Business Phone Systems",
+    shortTitle: "Phone Systems",
+    menuLine: "Business numbers, call routing and voicemail that fit how you work.",
+    headline: "A business line that routes itself.",
+    benefit: "Business numbers with routing, voicemail and supported tools, so calls reach the right person and nothing depends on one personal phone.",
+    benefits: [
+      "Business numbers kept separate from personal phones",
+      "Routing by time of day or team member",
+      "Voicemail with notifications",
+      "Works with missed-call text back and the AI receptionist"
+    ],
+    howItWorks: [
+      "We review how calls reach you today.",
+      "We set up numbers and routing with a supported provider.",
+      "We configure voicemail and notifications.",
+      "We test routing at different times of day."
+    ],
+    youProvide: ["Your current numbers and who answers what", "Your business hours"],
+    goodToKnow: [
+      "Depends on a supported telephony provider and number availability in your area.",
+      "Provider call and number fees are billed separately."
+    ],
+    availability: "integration-dependent",
+    viviLine: "Calls go to the right person at the right time, by rule.",
+    exploreLabel: "Explore Phone Systems"
+  },
+  {
+    id: "review-feedback",
+    enabled: true,
+    featured: true,
+    group: "follow-up-book",
+    icon: "Star",
+    title: "Smart Review & Feedback System",
+    shortTitle: "Reviews",
+    menuLine: "Invite every customer to share honest feedback, publicly or privately.",
+    headline: "More genuine reviews, less awkward asking.",
+    benefit: "After a job, every customer receives the same friendly invitation to leave a public review or send private feedback. Their choice, every time.",
+    benefits: [
+      "Timely invitations after completed jobs",
+      "The same invitation for every customer, with no filtering",
+      "A private feedback option that never blocks a public review",
+      "Alerts so you can respond to every review"
+    ],
+    howItWorks: [
+      "We connect the moment a job is marked complete.",
+      "We write an unbiased invitation with you.",
+      "We link your public review profile and a private feedback form side by side.",
+      "We set alerts so you can reply to every review."
+    ],
+    youProvide: ["Your review profile links", "How jobs are marked complete today"],
+    goodToKnow: [
+      "We never filter out unhappy customers or discourage honest reviews.",
+      "No incentives for reviews and no promised star ratings. Review platforms prohibit both."
+    ],
+    availability: "available",
+    demoId: "review",
+    viviLine: "Same invitation for everyone. The customer decides what to share.",
+    exploreLabel: "Explore Review System",
+    demoLabel: "See Review Demo"
+  },
+  {
+    id: "marketing-campaigns",
+    enabled: true,
+    featured: false,
+    group: "follow-up-book",
+    icon: "Send",
+    title: "Customer Marketing Campaigns",
+    shortTitle: "Campaigns",
+    menuLine: "Permission-based updates, referral and win-back messages.",
+    headline: "Stay in touch with people who asked to hear from you.",
+    benefit: "Referral, reactivation and update campaigns that go only to contacts with permission, with opt-outs handled automatically.",
+    benefits: [
+      "Referral, reactivation and customer-update campaigns",
+      "Sends only to contacts with permission",
+      "Automatic opt-out and suppression handling",
+      "Plain results you can read"
+    ],
+    howItWorks: [
+      "We review your contact list and how permission was given.",
+      "We plan the campaign and write messages with you.",
+      "We schedule sends that respect quiet hours.",
+      "We report replies, bookings and opt-outs."
+    ],
+    youProvide: ["Your customer list and how consent was collected", "Offers or news to share"],
+    goodToKnow: [
+      "Campaigns go only to contacts who have given permission.",
+      "Every message includes a clear way to opt out."
+    ],
+    availability: "available",
+    demoId: "campaign",
+    viviLine: "Approved contacts only, and STOP always works.",
+    exploreLabel: "Explore Campaigns",
+    demoLabel: "See Campaign Demo"
+  },
+  {
+    id: "local-seo",
+    enabled: true,
+    featured: false,
+    group: "get-found",
+    icon: "MapPin",
+    title: "Local SEO",
+    shortTitle: "Local SEO",
+    menuLine: "Help nearby customers find you on search and maps.",
+    headline: "Easier to find, close to home.",
+    benefit: "Improve the fundamentals local search relies on: your business profile, service-area pages, technical SEO and consistent details.",
+    benefits: [
+      "Google Business Profile fundamentals",
+      "Local landing pages for your services and areas",
+      "Technical SEO checks and fixes",
+      "Consistent business details across listings"
+    ],
+    howItWorks: [
+      "We audit your profile, website and listings.",
+      "We fix technical issues and missing details.",
+      "We create pages for your key services and areas.",
+      "We report on visibility signals in plain English."
+    ],
+    youProvide: ["Access to your business profile and website", "Your service areas"],
+    goodToKnow: [
+      "Nobody can guarantee rankings. We improve the fundamentals search engines look for.",
+      "Results take time and depend on local competition."
+    ],
+    availability: "available",
+    demoId: "local-seo",
+    viviLine: "From a local search to an inquiry. Illustration only, no real rankings.",
+    exploreLabel: "Explore Local SEO",
+    demoLabel: "See Local SEO Demo"
+  },
+  {
+    id: "workflow-automation",
+    enabled: true,
+    featured: false,
+    group: "run-improve",
+    icon: "Workflow",
+    title: "Workflow Automation & Reporting",
+    shortTitle: "Workflows",
+    menuLine: "Connect your tools, remove repetitive tasks and see what's happening.",
+    headline: "Let your tools talk to each other.",
+    benefit: "Connect supported business tools, take repetitive admin off your team's plate and get reports you can understand.",
+    benefits: [
+      "Connects supported apps: forms, CRM, email, calendars, spreadsheets",
+      "Automates repetitive admin steps",
+      "Plain-language reports on what's happening",
+      "Error alerts so failures don't go unnoticed"
+    ],
+    howItWorks: [
+      "We map one repetitive process step by step.",
+      "We automate it with the tools you already use where possible.",
+      "We add logging and error alerts.",
+      "We hand over documentation in plain English."
+    ],
+    youProvide: ["Access to the tools involved", "A walkthrough of how the task is done today"],
+    goodToKnow: [
+      "Some tools have limited integrations. We tell you early if something can't be connected reliably."
+    ],
+    availability: "available",
+    demoId: "workflow",
+    relatedProjects: ["intelligent-file-management"],
+    viviLine: "An invoice arrives, gets filed, logged and reported. Nobody touches it.",
+    exploreLabel: "Explore Workflow Automation",
+    demoLabel: "See Workflow Demo"
+  },
+  {
+    id: "printing",
+    enabled: true,
+    featured: false,
+    group: "run-improve",
+    icon: "Printer",
+    title: "Printing Services",
+    shortTitle: "Printing",
+    menuLine: "Optional print materials through a partner, on request.",
+    headline: "Print that matches your website.",
+    benefit: "Optional business cards, flyers and signage, coordinated through a print partner when available.",
+    benefits: [
+      "Business cards, flyers and signage on request",
+      "Designs consistent with your website",
+      "Coordinated through a print partner"
+    ],
+    howItWorks: [
+      "Tell us what you need printed.",
+      "We confirm partner availability, pricing and turnaround.",
+      "We prepare print-ready files that match your brand."
+    ],
+    youProvide: ["Quantities, sizes and delivery details"],
+    goodToKnow: [
+      "Optional partner service. Availability, pricing and turnaround are confirmed per request."
+    ],
+    availability: "partner-optional",
+    viviLine: "Optional, and only through a partner. Ask us first.",
+    exploreLabel: "Ask About Printing"
+  }
 ];
+var enabledSystems = systems.filter((s) => s.enabled);
+var systemGroups = [
+  { id: "get-found", title: "Get found", line: "Be easy to find and easy to contact." },
+  {
+    id: "capture-respond",
+    title: "Capture & respond",
+    line: "Catch every inquiry and answer it quickly."
+  },
+  {
+    id: "follow-up-book",
+    title: "Follow up & book",
+    line: "Turn interest into appointments and reviews."
+  },
+  { id: "run-improve", title: "Run & improve", line: "Connect tools and cut the admin." }
+];
+var availabilityLabel = {
+  available: "Available",
+  pilot: "Pilot \xB7 availability-dependent",
+  "integration-dependent": "Integration-dependent",
+  "partner-optional": "Optional partner service"
+};
+
+// src/content/tools.ts
+var tools = [
+  { name: "n8n", group: "automation" },
+  { name: "Make", group: "automation" },
+  { name: "Zapier", group: "automation" },
+  { name: "Google Gemini", group: "ai" },
+  { name: "OpenAI", group: "ai" },
+  { name: "Groq", group: "ai" },
+  { name: "VAPI", group: "ai" },
+  { name: "Airtable", group: "data" },
+  { name: "Google Sheets", group: "data" },
+  { name: "Gmail", group: "apps" },
+  { name: "Google Drive", group: "apps" },
+  { name: "Google Calendar", group: "apps" },
+  { name: "Buffer", group: "apps" }
+];
+
+// src/lib/mcp/data.ts
+var about = {
+  name: founder.name,
+  brand: brand.name,
+  role: founder.role,
+  positioning: brand.positioning,
+  location: "Philippines",
+  bio: founder.intro,
+  availability: "Free 30-minute discovery calls can be booked online.",
+  site: brand.url
+};
+var contact = {
+  email: links.email.label,
+  website: brand.url,
+  linkedin: links.linkedin.href,
+  booking: links.bookingCall.href,
+  bookingLabel: links.bookingCall.label
+};
+var services = systemGroups.map((g) => ({ title: g.title, description: g.line }));
+var systems2 = enabledSystems.map((s) => ({
+  id: s.id,
+  title: s.title,
+  group: s.group,
+  summary: s.menuLine,
+  availability: availabilityLabel[s.availability]
+}));
+var solutionPackages = packages.map((p) => ({
+  id: p.id,
+  name: p.name,
+  tagline: p.tagline,
+  summary: p.summary,
+  bestFor: p.bestFor,
+  includes: p.systems,
+  optionalAddOns: p.addOns,
+  availability: availabilityLabel[p.availability],
+  ...p.availabilityNote ? { note: p.availabilityNote } : {}
+}));
+var pricing = pricingNote;
+var platforms = tools.map((t) => t.name);
+var projects2 = projects.map((p) => ({
+  id: p.id,
+  tag: p.tag,
+  title: p.title,
+  summary: p.summary,
+  stack: [...p.stack],
+  problem: p.caseStudy.problem,
+  solution: p.caseStudy.solution,
+  result: p.caseStudy.result
+}));
+var results = publishedStats.filter((s) => s.status === "verified" && s.value !== null).map((s) => ({ metric: s.value, label: s.label }));
 
 // src/lib/mcp/tools/list_projects.ts
 var list_projects_default = defineTool({
   name: "list_projects",
   title: "List projects",
-  description: "List every automation case study VIVIFY has shipped. Returns id, title, tag, one-line summary, and tech stack for each.",
+  description: "List the case studies VIVIFY Solutions has published. Returns id, title, tag, one-line summary, and tech stack for each.",
   inputSchema: {
     stack: z.string().optional().describe("Optional tech to filter by, e.g. 'n8n', 'Gemini', 'VAPI'.")
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: ({ stack }) => {
-    const filtered = stack ? projects.filter(
+    const filtered = stack ? projects2.filter(
       (p) => p.stack.some((s) => s.toLowerCase().includes(stack.toLowerCase()))
-    ) : projects;
+    ) : projects2;
     const rows = filtered.map((p) => ({
       id: p.id,
       title: p.title,
@@ -214,7 +788,7 @@ var get_project_default = defineTool2({
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: ({ id }) => {
-    const p = projects.find((x) => x.id === id);
+    const p = projects2.find((x) => x.id === id);
     if (!p) {
       return {
         content: [{ type: "text", text: `No project with id "${id}". Call list_projects to see valid ids.` }],
@@ -233,14 +807,14 @@ import { defineTool as defineTool3 } from "npm:@lovable.dev/mcp-js@0.23.0";
 var get_services_default = defineTool3({
   name: "get_services",
   title: "Get services",
-  description: "Return the automation services VIVIFY offers and the platforms Viviene works across.",
+  description: "Return the service groups, the individual systems and the packages VIVIFY Solutions offers (pilot and provider-dependent services are labelled), plus the platforms used in its projects.",
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: () => ({
     content: [
-      { type: "text", text: JSON.stringify({ services, platforms }, null, 2) }
+      { type: "text", text: JSON.stringify({ services, systems: systems2, packages: solutionPackages, pricing, platforms }, null, 2) }
     ],
-    structuredContent: { services, platforms }
+    structuredContent: { services, systems: systems2, packages: solutionPackages, pricing, platforms }
   })
 });
 
@@ -249,7 +823,7 @@ import { defineTool as defineTool4 } from "npm:@lovable.dev/mcp-js@0.23.0";
 var get_contact_info_default = defineTool4({
   name: "get_contact_info",
   title: "Get contact info",
-  description: "Return the public contact channels for VIVIFY Automation (email, website, LinkedIn, OnlineJobs.ph).",
+  description: "Return the public contact channels for VIVIFY Solutions: email, website, LinkedIn and the free discovery-call booking link.",
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: () => ({
@@ -262,8 +836,8 @@ var get_contact_info_default = defineTool4({
 import { defineTool as defineTool5 } from "npm:@lovable.dev/mcp-js@0.23.0";
 var get_about_default = defineTool5({
   name: "get_about",
-  title: "Get about VIVIFY",
-  description: "Return the short bio, brand info, and headline impact metrics for VIVIFY Automation / Viviene Pitogo.",
+  title: "Get about VIVIFY Solutions",
+  description: "Return the short bio and brand info for VIVIFY Solutions / Viviene Pitogo, plus any owner-verified statistics (currently none are published).",
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: () => ({
@@ -277,9 +851,9 @@ var get_about_default = defineTool5({
 // src/lib/mcp/index.ts
 var mcp_default = defineMcp({
   name: "vivify-automation-mcp",
-  title: "VIVIFY Automation",
-  version: "0.1.0",
-  instructions: "Public MCP server for VIVIFY Automation \u2014 the portfolio of Viviene Pitogo, an AI Automation Specialist. Use `list_projects` to browse case studies and `get_project` for a full problem / solution / result. `get_services` returns the categories of systems Viviene builds. `get_about` returns bio + headline impact metrics. `get_contact_info` returns how to reach her (email, LinkedIn, OnlineJobs.ph, website). All data is public \u2014 no authentication required.",
+  title: "VIVIFY Solutions",
+  version: "0.2.0",
+  instructions: "Public MCP server for VIVIFY Solutions, a founder-led AI automation and business systems consultancy run by Viviene Pitogo. Use `list_projects` to browse case studies and `get_project` for the problem / solution / result of one. `get_services` returns the systems and packages offered, with pilot and provider-dependent services labelled. `get_about` returns the founder bio and any owner-verified statistics (none are published yet). `get_contact_info` returns the website, email, LinkedIn and the booking link. All data is public \u2014 no authentication required.",
   tools: [list_projects_default, get_project_default, get_services_default, get_contact_info_default, get_about_default]
 });
 

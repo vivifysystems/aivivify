@@ -67,7 +67,7 @@ test("the proof shows the question, the reply, Viviene's role and a plain illust
   assert.match(text, /I built this/);
   assert.match(text, /Viviene Pitogo/);
   assert.match(text, /Illustrated example, not a real conversation/);
-  assert.match(text, /The team no longer loses inquiries during their busiest hours/);
+  assert.match(text, /Common questions are answered automatically/);
   // Honest by construction: no invented statistics or testimonials.
   assert.doesNotMatch(text, /\d+\s?%|\d+x\b|testimonial|“|”|★/i);
   assert.equal(await proof.locator("blockquote").count(), 0, "no quoted testimonial");
@@ -116,7 +116,7 @@ test("the proof links to the case study and its recorded demo, and the portfolio
     "demo anchor scrolled into view",
   );
   await page.goto(env.base + "/work");
-  assert.match(await page.getByText(/Showing \d+ of 12 projects/).textContent(), /12 of 12/);
+  assert.match(await page.getByText(/Showing \d+ of 11 projects/).textContent(), /11 of 11/);
   await page.context().close();
 });
 

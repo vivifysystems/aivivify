@@ -33,7 +33,6 @@ const { withheldClaims }: { withheldClaims: Record<string, readonly WithheldClai
 const { statClaims }: { statClaims: readonly Stat[] } = hasInternal
   ? await import(internal("stat-claims.ts").href)
   : { statClaims: [] };
-import * as mcp from "../lib/mcp/data.ts";
 
 const fromSrc = (p: string) => new URL(`../${p}`, import.meta.url);
 const allStats: readonly Stat[] = [...publishedStats, ...statClaims];
@@ -216,45 +215,6 @@ test("components read links from content instead of hard-coding them", () => {
     const code = readFileSync(new URL(file, dir), "utf8");
     for (const re of forbidden) {
       assert.ok(!re.test(code), `${file} hard-codes ${re.source}; use src/content/links.ts`);
-    }
-  }
-});
-
-// Drift guard: the MCP server keeps its own copy of the data until it is migrated.
-// Any conflict with it must stay flagged until the owner resolves it.
-test("conflicts with the MCP server data remain flagged", { skip: noInternal }, () => {
-  const canonical = new Map(projects.map((p) => [p.id, p]));
-
-  for (const m of mcp.projects) {
-    const site = canonical.get(m.id);
-    assert.ok(site, `MCP project "${m.id}" has no canonical counterpart`);
-    const siteText = [site.title, site.summary, ...site.stack, ...Object.values(site.caseStudy)]
-      .join(" ")
-      .toLowerCase();
-    const unknownTools = m.stack.filter((tool) => !siteText.includes(tool.toLowerCase()));
-    if (unknownTools.length) {
-      assert.equal(
-        site.status,
-        "needs-confirmation",
-        `${m.id}: MCP lists ${unknownTools.join(", ")} which the website never mentions`,
-      );
-    }
-  }
-
-  const mcpIds = new Set(mcp.projects.map((p) => p.id));
-  for (const p of projects.filter((p) => !mcpIds.has(p.id))) {
-    assert.equal(p.status, "needs-confirmation", `${p.id} is missing from the MCP server`);
-  }
-
-  for (const key of ["linkedin", "onlinejobs"] as const) {
-    const link: Link = links[key];
-    const mcpValue = mcp.contact[key];
-    if (mcpValue !== link.href) {
-      assert.equal(link.status, "needs-confirmation", `${key} differs from MCP but is not flagged`);
-      const recorded = discrepancies
-        .filter((d) => link.discrepancies?.includes(d.id))
-        .some((d) => d.sources.some((s) => s.value === mcpValue));
-      assert.ok(recorded, `${key}: MCP value not recorded in its discrepancy`);
     }
   }
 });

@@ -6,7 +6,7 @@ export default defineTool({
   name: "list_projects",
   title: "List projects",
   description:
-    "List every automation case study VIVIFY has shipped. Returns id, title, tag, one-line summary, and tech stack for each.",
+    "List the case studies VIVIFY Solutions has published. Returns id, title, tag, one-line summary, and tech stack for each.",
   inputSchema: {
     stack: z
       .string()

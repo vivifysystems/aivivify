@@ -7,9 +7,9 @@ import getAbout from "./tools/get_about";
 
 export default defineMcp({
   name: "vivify-automation-mcp",
-  title: "VIVIFY Automation",
-  version: "0.1.0",
+  title: "VIVIFY Solutions",
+  version: "0.2.0",
   instructions:
-    "Public MCP server for VIVIFY Automation — the portfolio of Viviene Pitogo, an AI Automation Specialist. Use `list_projects` to browse case studies and `get_project` for a full problem / solution / result. `get_services` returns the categories of systems Viviene builds. `get_about` returns bio + headline impact metrics. `get_contact_info` returns how to reach her (email, LinkedIn, OnlineJobs.ph, website). All data is public — no authentication required.",
+    "Public MCP server for VIVIFY Solutions, a founder-led AI automation and business systems consultancy run by Viviene Pitogo. Use `list_projects` to browse case studies and `get_project` for the problem / solution / result of one. `get_services` returns the systems and packages offered, with pilot and provider-dependent services labelled. `get_about` returns the founder bio and any owner-verified statistics (none are published yet). `get_contact_info` returns the website, email, LinkedIn and the booking link. All data is public — no authentication required.",
   tools: [listProjects, getProject, getServices, getContactInfo, getAbout],
 });

@@ -13,6 +13,7 @@ export { faqs } from "./faq.ts";
 export { processSteps } from "./process.ts";
 export { quizQuestions } from "./quiz.ts";
 export { founder } from "./founder.ts";
+export { brand } from "./brand.ts";
 export {
   workCategories,
   projectCategory,

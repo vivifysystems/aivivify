@@ -64,6 +64,11 @@ running server instead of the local build.
   `git status`: the generated file should only change when the MCP source did.
 - Relative imports are inlined. Bare and alias imports (`@/…`) are rewritten to `npm:` specifiers and would
   break the deployed function, so MCP code uses relative imports only.
+- **The MCP data is derived from `src/content`.** `src/lib/mcp/data.ts` maps the website's own content
+  (projects, links, founder, systems, packages, tools, verified statistics) into the shapes the tools return,
+  so the website and the endpoint cannot drift apart. Edit the content modules, never `data.ts`. The tool names,
+  input schemas and result shapes are unchanged; `src/content/mcp-content.test.ts` keeps the two in step and keeps
+  retired claims out. Removing a project from `src/content/projects.ts` removes it from both.
 - esbuild keeps every value a module touches, so filtering at runtime does not keep data out of the deployed
   source. Data that must not be public must not be imported at all.
 

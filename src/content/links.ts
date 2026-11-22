@@ -1,24 +1,23 @@
 import type { Link } from "./schema.ts";
 
 /**
- * Canonical contact and booking links. Components must read from here rather
- * than hard-coding URLs (enforced by content.test.ts).
+ * Canonical contact and booking links. Components and the public MCP endpoint
+ * must read from here rather than hard-coding URLs (enforced by tests).
  *
- * LinkedIn and OnlineJobs.ph: the `href` is the value the live website shows
- * today, kept unchanged. It is NOT a decision — the MCP server lists a different
- * value (recorded only in discrepancies.ts, so the unconfirmed alternative never
- * ships in the public bundle) and the owner must confirm which is correct.
+ * Owner-confirmed 2026-11-22: the LinkedIn profile, the Calendly event
+ * ("active and free") and the viviene@vivify.solutions mailbox. No job-board profile is
+ * listed: VIVIFY Solutions is not presented as a job-seeker profile.
  */
 export const links = {
   bookingCall: {
     label: "Book a free 30-minute call",
     href: "https://calendly.com/vivienecreates/automation-discovery-call",
-    status: "consistent",
+    status: "verified",
   },
   email: {
     label: "viviene@vivify.solutions",
     href: "mailto:viviene@vivify.solutions",
-    status: "consistent",
+    status: "verified",
   },
   website: {
     label: "vivify.solutions",
@@ -28,16 +27,9 @@ export const links = {
   linkedin: {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/vivienepitogo/",
-    status: "needs-confirmation",
-    discrepancies: ["linkedin-url"],
-  },
-  onlinejobs: {
-    label: "OnlineJobs.ph",
-    href: "https://v2.onlinejobs.ph/jobseekers/info/4855809",
-    status: "needs-confirmation",
-    discrepancies: ["onlinejobs-url"],
+    status: "verified",
   },
 } as const satisfies Record<string, Link>;
 
 /** Links shown in the footer's social row, in display order. */
-export const footerLinks: readonly Link[] = [links.linkedin, links.onlinejobs];
+export const footerLinks: readonly Link[] = [links.linkedin];
