@@ -18,18 +18,20 @@ import {
 import { links, projects, publishableStats, publishedStats, services } from "./index.ts";
 import type { Discrepancy, WithheldClaim } from "./schema.ts";
 
-// Registers live in src/content/internal/ (gitignored: internal audit records that must
-// not reach the public repository). Checks that need them are skipped when absent.
-const hasInternal = existsSync(new URL("./internal/discrepancies.ts", import.meta.url));
-const noInternal = hasInternal ? false : "internal registers not present (src/content/internal/)";
+// Content review files live in src/content/internal/ (gitignored, never committed).
+// Checks that need them are skipped when absent. They are loaded by computed URL so
+// that `tsc` also passes in a clone that does not have them.
+const internal = (file: string) => new URL(`./internal/${file}`, import.meta.url);
+const hasInternal = existsSync(internal("discrepancies.ts"));
+const noInternal = hasInternal ? false : "local content review files not present";
 const { discrepancies }: { discrepancies: readonly Discrepancy[] } = hasInternal
-  ? await import("./internal/discrepancies.ts")
+  ? await import(internal("discrepancies.ts").href)
   : { discrepancies: [] };
 const { withheldClaims }: { withheldClaims: Record<string, readonly WithheldClaim[]> } = hasInternal
-  ? await import("./internal/withheld-claims.ts")
+  ? await import(internal("withheld-claims.ts").href)
   : { withheldClaims: {} };
 const { statClaims }: { statClaims: readonly Stat[] } = hasInternal
-  ? await import("./internal/stat-claims.ts")
+  ? await import(internal("stat-claims.ts").href)
   : { statClaims: [] };
 import * as mcp from "../lib/mcp/data.ts";
 
