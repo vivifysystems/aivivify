@@ -30,13 +30,16 @@ export function Wordmark({ className }: { className?: string }) {
       }}
       className={cn("group flex items-center gap-2.5", className)}
     >
-      <img
-        src="/assets/vivi/avatars/vivify-v-mark.webp"
-        alt=""
-        width={39}
-        height={32}
-        className="h-8 w-auto transition-transform duration-300 group-hover:-rotate-6"
-      />
+      {/* Same 39 x 32 footprint as the previous mark, so the header layout does not move. */}
+      <span className="flex h-8 w-[39px] shrink-0 items-center justify-center">
+        <img
+          src="/brand/vivify-mark.svg"
+          alt=""
+          width={30}
+          height={36}
+          className="h-9 w-auto max-w-none transition-transform duration-300 group-hover:-rotate-6"
+        />
+      </span>
       <span className="flex flex-col leading-none">
         <span className="font-display text-[1.15rem] font-bold tracking-[0.04em]">VIVIFY</span>
         <span className="mt-1 font-display text-[0.56rem] font-medium tracking-[0.42em] text-mist">

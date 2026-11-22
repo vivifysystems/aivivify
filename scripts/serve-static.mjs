@@ -19,6 +19,7 @@ const types = {
   ".txt": "text/plain",
   ".ico": "image/x-icon",
   ".json": "application/json",
+  ".svg": "image/svg+xml",
 };
 
 async function file(p) {
