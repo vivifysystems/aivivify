@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { enabledSystems, footerLinks, links } from "@/content";
+import { brand, enabledSystems, footerLinks, links } from "@/content";
 import { Wordmark } from "./Header";
 import { BookingLink } from "./BookingLink";
 
@@ -12,9 +12,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div className="col-span-2 lg:col-span-1">
             <Wordmark />
-            <p className="mt-5 max-w-xs text-mist">
-              Founder-led AI automation and business systems for service businesses.
-            </p>
+            <p className="mt-5 max-w-xs text-mist">{brand.positioning}</p>
             <BookingLink className="mt-7" />
           </div>
           <nav aria-label="Systems">
