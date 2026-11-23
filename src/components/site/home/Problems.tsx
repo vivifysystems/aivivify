@@ -34,7 +34,7 @@ const problems = [
     title: "Slow follow-up",
     line: "Interested leads go quiet before anyone calls back.",
     without: "Quote request from last Tuesday",
-    withSys: "Acknowledged instantly · follow-up scheduled",
+    withSys: "Acknowledged automatically · follow-up scheduled",
     system: "lead-follow-up",
   },
   {

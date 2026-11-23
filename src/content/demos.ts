@@ -354,7 +354,7 @@ export const demos: readonly Demo[] = [
       "Service completed → unbiased invitation → customer feedback → genuine review or support conversation.",
     device: "phone",
     screenTitle: "Messages",
-    simulationNote: `${SIM} Every customer receives the same invitation.`,
+    simulationNote: `${SIM} Everyone invited receives the same invitation.`,
     preface: [
       {
         kind: "message",
@@ -385,20 +385,20 @@ export const demos: readonly Demo[] = [
       {
         stage: "Unbiased invitation",
         icon: "Send",
-        caption: "Every customer gets the same neutral invitation. Nobody is screened out.",
+        caption: "Everyone invited gets the same neutral invitation. Nobody is screened out.",
         items: [
           {
             kind: "message",
             from: "assistant",
             channel: "SMS",
-            text: "Thanks for choosing Harbor Plumbing. We'd value your honest feedback: leave a public review or send us a private message, whichever you prefer.",
+            text: "Thanks for choosing Harbor Plumbing. We'd value your honest feedback: leave a public review or send us a private message, whichever you prefer. Reply STOP to opt out.",
           },
         ],
         ops: [
           {
             kind: "event",
             icon: "ShieldCheck",
-            text: "Same invitation for every customer · no screening",
+            text: "Same invitation for everyone invited · no screening",
           },
         ],
       },
@@ -778,7 +778,7 @@ export const demos: readonly Demo[] = [
     systemId: "lead-follow-up",
     title: "Automated Lead Follow-Up",
     summary:
-      "Inquiry → instant acknowledgement → scheduled follow-up → stop on reply → staff alert.",
+      "Inquiry → automated acknowledgement → scheduled follow-up → stop on reply → staff alert.",
     device: "phone",
     screenTitle: "Messages",
     simulationNote: SIM,
@@ -807,7 +807,7 @@ export const demos: readonly Demo[] = [
       {
         stage: "Acknowledge",
         icon: "Send",
-        caption: "The customer hears back right away, so they know someone's on it.",
+        caption: "The customer receives an automatic acknowledgement, so they know it arrived.",
         items: [
           {
             kind: "message",

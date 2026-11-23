@@ -190,3 +190,28 @@ test("site UI code neither imports registers nor hard-codes contact links", () =
     for (const re of forbidden) assert.ok(!re.test(code), `${file} hard-codes ${re.source}`);
   }
 });
+
+test("follow-up and review copy describes what the demos show, without absolutes", () => {
+  const follow = systems.find((s) => s.id === "lead-follow-up")!;
+  const reviews = systems.find((s) => s.id === "review-feedback")!;
+  const followDemo = demos.find((d) => d.id === "lead-follow-up")!;
+  const reviewDemo = demos.find((d) => d.id === "review")!;
+  assert.equal(
+    follow.menuLine,
+    "Automatically acknowledge incoming inquiries and follow up on a schedule you approve.",
+  );
+  assert.ok(follow.benefits.includes("Automated acknowledgement for new inquiries"));
+  assert.match(followDemo.summary, /automated acknowledgement/);
+  assert.match(reviews.menuLine, /^Send review invitations after completed services/);
+  // The review system keeps its safeguards: same invitation, no filtering, eligibility and opt-out.
+  assert.match(allText(reviews), /never filter/);
+  assert.match(allText(reviews), /only to customers whose service is complete/);
+  assert.match(allText(reviews), /opts out is not contacted again/);
+  assert.match(allText(reviewDemo), /Reply STOP to opt out/);
+  assert.match(reviewDemo.simulationNote, /Everyone invited receives the same invitation/);
+  // The follow-up demo still shows the opt-out and the automatic stop.
+  assert.match(allText(followDemo), /STOP to opt out/);
+  assert.match(allText(followDemo), /Sequence stopped: customer replied/);
+  const both = allText([follow, reviews, followDemo, reviewDemo]);
+  assert.doesNotMatch(both, /instant|Acknowledge every|Invite every|every customer/i);
+});

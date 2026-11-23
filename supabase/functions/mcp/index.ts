@@ -287,11 +287,11 @@ var systems = [
     icon: "Repeat",
     title: "Automated Lead Follow-Up",
     shortTitle: "Lead Follow-Up",
-    menuLine: "Acknowledge every inquiry and follow up on a schedule you approve.",
+    menuLine: "Automatically acknowledge incoming inquiries and follow up on a schedule you approve.",
     headline: "Follow up without the sticky notes.",
-    benefit: "New inquiries get a prompt acknowledgement, and follow-ups go out on the schedule you approve until the lead replies, books or opts out.",
+    benefit: "New inquiries are acknowledged automatically, and follow-ups go out on the schedule you approve until the lead replies, books or opts out.",
     benefits: [
-      "Instant acknowledgement for new inquiries",
+      "Automated acknowledgement for new inquiries",
       "Follow-up timing you approve, not guesswork",
       "Stops automatically when someone replies, books or opts out",
       "Staff alerts when a lead needs a person"
@@ -501,12 +501,12 @@ var systems = [
     icon: "Star",
     title: "Smart Review & Feedback System",
     shortTitle: "Reviews",
-    menuLine: "Invite every customer to share honest feedback, publicly or privately.",
+    menuLine: "Send review invitations after completed services, with a private feedback option.",
     headline: "More genuine reviews, less awkward asking.",
-    benefit: "After a job, every customer receives the same friendly invitation to leave a public review or send private feedback. Their choice, every time.",
+    benefit: "After a completed service, customers receive the same friendly invitation to leave a public review or send private feedback. Their choice, every time.",
     benefits: [
       "Timely invitations after completed jobs",
-      "The same invitation for every customer, with no filtering",
+      "The same invitation for everyone invited, with no filtering",
       "A private feedback option that never blocks a public review",
       "Alerts so you can respond to every review"
     ],
@@ -519,11 +519,12 @@ var systems = [
     youProvide: ["Your review profile links", "How jobs are marked complete today"],
     goodToKnow: [
       "We never filter out unhappy customers or discourage honest reviews.",
+      "Invitations go only to customers whose service is complete, and anyone who opts out is not contacted again.",
       "No incentives for reviews and no promised star ratings. Review platforms prohibit both."
     ],
     availability: "available",
     demoId: "review",
-    viviLine: "Same invitation for everyone. The customer decides what to share.",
+    viviLine: "Same invitation for everyone invited. The customer decides what to share.",
     exploreLabel: "Explore Review System",
     demoLabel: "See Review Demo"
   },
